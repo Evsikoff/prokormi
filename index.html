@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="description" content="Прокорми монстра — создай своего весёлого монстрика" />
+    <title>Прокорми монстра</title>
+  </head>
+  <body>
+    <main id="app" class="app-shell" aria-live="polite">
+      <section id="intro-screen" class="screen intro-screen is-active" aria-label="Заставка">
+        <div class="intro-white" aria-hidden="true"></div>
+        <video id="intro-video" class="intro-video" playsinline preload="auto"></video>
+        <img id="team-card" class="team-card" src="./team.png" alt="Команда Git-R-Done" />
+        <div id="intro-subtitles" class="intro-subtitles is-hidden" role="status">
+          Привет! Добро пожаловать в наш приют для домашних монстров! Выбери себе питомца!
+        </div>
+
+        <div id="start-gate" class="start-gate">
+          <img class="start-logo" src="./name.png" alt="Прокорми монстра" />
+          <p>Приготовься создать своего монстрика!</p>
+          <button id="start-button" class="primary-button start-button" type="button">
+            <span>Играть</span><span aria-hidden="true">▶</span>
+          </button>
+        </div>
+
+        <button id="skip-intro" class="skip-intro is-hidden" type="button">Пропустить</button>
+      </section>
+
+      <section id="creator-screen" class="screen creator-screen" aria-label="Редактор персонажа" hidden>
+        <div class="sky-blob sky-blob-one" aria-hidden="true"></div>
+        <div class="sky-blob sky-blob-two" aria-hidden="true"></div>
+
+        <header class="editor-header">
+          <img src="./name.png" alt="Прокорми монстра" />
+        </header>
+
+        <div class="editor-title">
+          <p class="eyebrow">ТВОЙ НОВЫЙ ДРУГ</p>
+          <h1>Создай монстрика!</h1>
+        </div>
+
+        <div id="monster-stage" class="monster-stage" aria-label="Танцующий трёхмерный монстрик">
+          <div class="monster-tutorial-target" data-tutorial-target="monster" aria-hidden="true"></div>
+          <div class="stage-glow" aria-hidden="true"></div>
+          <div id="model-loading" class="model-loading">
+            <span class="loading-eye" aria-hidden="true"></span>
+            <span>Будим монстрика…</span>
+          </div>
+        </div>
+
+        <div class="customizer-card">
+          <div class="control-group color-group" data-tutorial-target="color">
+            <div class="control-heading">
+              <span class="control-icon paint-icon" aria-hidden="true">●</span>
+              <span>Цвет</span>
+              <output id="color-value">Голубой</output>
+            </div>
+            <div id="color-options" class="color-options" role="radiogroup" aria-label="Цвет монстрика"></div>
+          </div>
+
+          <div class="slider-grid">
+            <label class="control-group slider-group" data-tutorial-target="ears">
+              <span class="control-heading">
+                <span class="control-icon" aria-hidden="true">👂</span>
+                <span>Уши</span>
+                <output id="ears-value">Обычные</output>
+              </span>
+              <input id="ears-input" type="range" min="0" max="4" step="1" value="2" aria-label="Длина ушей" />
+              <span class="range-labels" aria-hidden="true"><span>Короткие</span><span>Длинные</span></span>
+            </label>
+
+            <label class="control-group slider-group" data-tutorial-target="horns">
+              <span class="control-heading">
+                <span class="control-icon" aria-hidden="true">▲</span>
+                <span>Рога</span>
+                <output id="horns-value">Обычные</output>
+              </span>
+              <input id="horns-input" type="range" min="0" max="4" step="1" value="2" aria-label="Длина рогов" />
+              <span class="range-labels" aria-hidden="true"><span>Маленькие</span><span>Большие</span></span>
+            </label>
+          </div>
+
+          <button id="save-character" class="primary-button save-button" data-tutorial-target="save" type="button">
+            <span>Готово!</span><span class="button-star" aria-hidden="true">★</span>
+          </button>
+        </div>
+
+        <div id="name-dialog" class="name-dialog is-hidden" role="dialog" aria-modal="true" aria-labelledby="name-title">
+          <div class="name-card">
+            <div class="name-card-horns" aria-hidden="true"><span></span><span></span></div>
+            <p class="eyebrow">ПОЧТИ ГОТОВО</p>
+            <h2 id="name-title">Как зовут монстрика?</h2>
+            <p>Придумай ему самое классное имя!</p>
+            <form id="name-form" novalidate>
+              <label class="name-input-wrap">
+                <span class="visually-hidden">Имя монстрика</span>
+                <input id="monster-name" type="text" maxlength="12" autocomplete="off" placeholder="Напиши имя" />
+                <span id="name-count" aria-hidden="true">0/12</span>
+              </label>
+              <p id="name-error" class="name-error" role="alert"></p>
+              <button class="primary-button continue-button" type="submit">Продолжить <span aria-hidden="true">→</span></button>
+            </form>
+          </div>
+        </div>
+
+        <div id="tutorial-layer" class="tutorial-layer is-hidden" aria-live="assertive">
+          <div class="tutorial-card">
+            <button id="tutorial-skip" class="tutorial-skip" type="button">Пропустить</button>
+            <div class="tutorial-mascot" aria-hidden="true"><span class="mascot-eye"></span></div>
+            <p id="tutorial-progress" class="tutorial-progress"></p>
+            <p id="tutorial-text" class="tutorial-text"></p>
+            <div class="tutorial-actions">
+              <button id="tutorial-back" class="tutorial-back" type="button">Назад</button>
+              <button id="tutorial-next" class="primary-button tutorial-next" type="button">Дальше <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="briefing-video-screen" class="screen briefing-video-screen" aria-label="Вводный инструктаж" hidden>
+        <video id="briefing-video" class="briefing-video" playsinline preload="auto"></video>
+        <div class="briefing-video-backdrop" aria-hidden="true"></div>
+        <div id="briefing-video-subtitles" class="intro-subtitles briefing-video-subtitles is-hidden" role="status"></div>
+        <button id="skip-briefing-video" class="skip-intro skip-briefing-video is-hidden" type="button">Пропустить</button>
+      </section>
+
+      <section id="preroom-video-screen" class="screen briefing-video-screen" aria-label="Дорога домой" hidden>
+        <video id="preroom-video" class="briefing-video" playsinline preload="auto"></video>
+        <div class="briefing-video-backdrop" aria-hidden="true"></div>
+        <div id="preroom-video-subtitles" class="intro-subtitles briefing-video-subtitles is-hidden" role="status">Это бюджет ответственного хозяина! Забирай монстра домой!</div>
+        <button id="skip-preroom-video" class="skip-intro skip-briefing-video is-hidden" type="button">Пропустить</button>
+      </section>
+
+      <section id="briefing-screen" class="screen briefing-screen" aria-label="Инструктаж по уходу за питомцем" hidden>
+        <header class="briefing-header">
+          <img src="./name.png" alt="Прокорми монстра" />
+          <div>
+            <p class="eyebrow">ВАЖНО ЗНАТЬ</p>
+            <p id="briefing-progress" class="briefing-progress"></p>
+          </div>
+        </header>
+
+        <div class="briefing-image-frame">
+          <img id="briefing-image" class="briefing-image" src="" alt="" />
+        </div>
+
+        <div id="briefing-text-box" class="briefing-text-box">
+          <p id="briefing-text" class="briefing-text"></p>
+        </div>
+
+        <div id="briefing-actions" class="briefing-actions">
+          <button id="briefing-repeat" class="briefing-button briefing-repeat" type="button">
+            <span aria-hidden="true">↻</span><span>Повторить</span>
+          </button>
+          <button id="briefing-back" class="briefing-button briefing-back" type="button">
+            <span aria-hidden="true">←</span><span>Вернуться</span>
+          </button>
+          <button id="briefing-next" class="primary-button briefing-next" type="button">
+            <span>Продолжить</span><span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </section>
+
+      <section id="budget-screen" class="screen budget-screen" aria-label="Распределение бюджета" hidden>
+        <header class="budget-header">
+          <img src="./name.png" alt="Прокорми монстра" />
+          <div class="budget-title-copy">
+            <p class="eyebrow">ГОРОДСКАЯ ДОТАЦИЯ</p>
+            <h1>Распредели бюджет</h1>
+          </div>
+        </header>
+
+        <div class="budget-overview">
+          <div class="budget-summary-card" data-budget-tutorial-target="budget-summary">
+            <span>Фонд к распределению</span>
+            <strong id="budget-total">0 🪙</strong>
+            <span id="budget-allocated">Распределено 0 🪙</span>
+          </div>
+          <div class="budget-remaining-card" data-budget-tutorial-target="budget-balance">
+            <span>Осталось</span>
+            <strong id="budget-remaining">0 🪙</strong>
+            <span id="budget-status">Распредели всю сумму</span>
+          </div>
+        </div>
+
+        <div class="budget-period" data-budget-tutorial-target="budget-period">
+          <span class="budget-calendar" aria-hidden="true">▦</span>
+          <div>
+            <strong>План на три дня</strong>
+          </div>
+        </div>
+
+        <div id="budget-categories" class="budget-categories" data-budget-tutorial-target="budget-categories">
+          <article class="budget-category budget-category-required">
+            <div class="budget-category-heading">
+              <span class="budget-category-icon" aria-hidden="true">🍲</span>
+              <div>
+                <h2>Обязательные расходы</h2>
+                <p>Корм: ≈ <strong id="food-daily-cost">13 🪙</strong> в день</p>
+                <p>Прибор от козявок: ≈ <strong id="nose-cleaner-cost">25 🪙</strong> разово</p>
+              </div>
+              <output id="budget-required-value" for="budget-required">0 🪙</output>
+            </div>
+            <input id="budget-required" class="budget-range" data-budget-key="required" type="range" min="0" max="100" step="1" value="0" aria-label="Бюджет на обязательные расходы" />
+            <div class="budget-category-footer"><span>На все 3 дня</span><span id="budget-required-daily">0 🪙/день</span></div>
+          </article>
+
+          <article class="budget-category budget-category-fun">
+            <div class="budget-category-heading">
+              <span class="budget-category-icon" aria-hidden="true">🎈</span>
+              <div>
+                <h2>Веселье</h2>
+                <p>Игрушки, лакомства и радости</p>
+              </div>
+              <output id="budget-fun-value" for="budget-fun">0 🪙</output>
+            </div>
+            <input id="budget-fun" class="budget-range" data-budget-key="fun" type="range" min="0" max="100" step="1" value="0" aria-label="Бюджет на веселье" />
+            <div class="budget-category-footer"><span>На все 3 дня</span><span id="budget-fun-daily">0 🪙/день</span></div>
+          </article>
+
+          <article class="budget-category budget-category-savings">
+            <div class="budget-category-heading">
+              <span class="budget-category-icon" aria-hidden="true">🐷</span>
+              <div>
+                <h2>Накопления на большую покупку</h2>
+                <p>Отложи немного на мечту</p>
+              </div>
+              <output id="budget-savings-value" for="budget-savings">0 🪙</output>
+            </div>
+            <input id="budget-savings" class="budget-range" data-budget-key="savings" type="range" min="0" max="100" step="1" value="0" aria-label="Бюджет накоплений на большую покупку" />
+            <div class="budget-category-footer"><span>В копилку</span><span id="budget-savings-daily">0 🪙/день</span></div>
+          </article>
+        </div>
+
+        <button id="approve-budget" class="primary-button approve-budget" data-budget-tutorial-target="budget-submit" type="button" disabled>
+          <span>Утвердить бюджет</span><span aria-hidden="true">✓</span>
+        </button>
+
+        <div id="budget-tutorial-layer" class="tutorial-layer budget-tutorial-layer is-hidden" aria-live="assertive">
+          <div class="tutorial-card budget-tutorial-card">
+            <button id="budget-tutorial-skip" class="tutorial-skip" type="button">Пропустить</button>
+            <div class="tutorial-mascot" aria-hidden="true"><span class="mascot-eye"></span></div>
+            <p id="budget-tutorial-progress" class="tutorial-progress"></p>
+            <p id="budget-tutorial-text" class="tutorial-text"></p>
+            <div class="tutorial-actions">
+              <button id="budget-tutorial-back" class="tutorial-back" type="button">Назад</button>
+              <button id="budget-tutorial-next" class="primary-button tutorial-next" type="button">Дальше <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="finish-screen" class="screen finish-screen" aria-label="Комната монстрика" hidden>
+        <div id="finish-monster-stage" class="room-stage" role="button" tabindex="0" aria-label="Комната монстрика. Нажмите, чтобы монстрик помахал"></div>
+        <header class="room-hud">
+          <div class="room-top-row">
+            <div class="room-panel room-day" data-room-target="day">
+              <span class="room-panel-label">День</span>
+              <strong id="room-day">0</strong>
+            </div>
+            <div id="room-wallet" class="room-panel room-wallet room-wallet-button" data-room-target="wallet" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="room-transfer-layer" aria-label="Деньги. Нажми, чтобы переложить монеты из копилки в карман">
+              <div class="room-money" data-room-target="pocket">
+                <span class="room-money-icon" aria-hidden="true">👛</span>
+                <span class="room-panel-label">В кармане</span>
+                <strong id="room-pocket">0 🪙</strong>
+              </div>
+              <div class="room-money" data-room-target="savings">
+                <span class="room-money-icon" aria-hidden="true">🐷</span>
+                <span class="room-panel-label">В копилке</span>
+                <strong id="room-savings">0 🪙</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="room-panel room-pet-card" data-room-target="pet">
+            <div class="room-pet-heading">
+              <strong id="finish-name" class="room-pet-name">Монстрик</strong>
+              <div class="room-conditions">
+                <span id="room-hunger" class="room-condition" data-room-target="hunger">Сытый</span>
+                <span id="room-hygiene" class="room-condition" data-room-target="hygiene">Чистый</span>
+              </div>
+            </div>
+            <div id="room-stats" class="room-stats">
+              <div class="room-stat" data-stat="health" data-room-target="health">
+                <span class="room-stat-label"><span aria-hidden="true">❤️</span>Здоровье<b>0</b></span>
+                <span class="room-stat-scale" role="meter" aria-label="Здоровье" aria-valuemin="-3" aria-valuemax="3" aria-valuenow="0"></span>
+              </div>
+              <div class="room-stat" data-stat="mood" data-room-target="mood">
+                <span class="room-stat-label"><span aria-hidden="true">😊</span>Настроение<b>0</b></span>
+                <span class="room-stat-scale" role="meter" aria-label="Настроение" aria-valuemin="-3" aria-valuemax="3" aria-valuenow="0"></span>
+              </div>
+              <div class="room-stat" data-stat="development" data-room-target="development">
+                <span class="room-stat-label"><span aria-hidden="true">🧠</span>Развитие<b>0</b></span>
+                <span class="room-stat-scale" role="meter" aria-label="Развитие" aria-valuemin="-3" aria-valuemax="3" aria-valuenow="0"></span>
+              </div>
+            </div>
+          </div>
+        </header>
+        <p id="room-status" class="visually-hidden" role="status" aria-live="polite">Монстрик осваивается в комнате</p>
+        <div id="room-loading" class="room-loading" role="status">
+          <span class="loading-eye" aria-hidden="true"></span>
+          <span>Собираем уютную комнату…</span>
+        </div>
+        <div id="room-bottom-bar" class="room-bottom-bar">
+          <p id="room-action-message" class="room-action-message" role="status" hidden></p>
+          <div id="room-action-confirm" class="room-action-confirm" hidden></div>
+          <nav id="room-actions" class="room-actions" aria-label="Действия в комнате">
+            <button class="room-action room-action-help" type="button" data-room-action="briefing" aria-label="Повторить брифинг" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true">?</span></button>
+            <button class="room-action" type="button" data-room-action="shop" aria-label="Магазин" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true">🛒</span></button>
+            <button class="room-action" type="button" data-room-action="tasks" aria-label="Задания" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true">📋</span></button>
+            <button class="room-action" type="button" data-room-action="feed" aria-label="Кормление" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true">🍲</span></button>
+            <button class="room-action" type="button" data-room-action="clean" aria-label="Чистка козявок" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true">🤧</span></button>
+            <button class="room-action" type="button" data-room-action="next" aria-label="Следующий день" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true">🌙</span></button>
+            <button class="room-action" type="button" data-room-action="profiles" aria-label="Профили" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true">👥</span></button>
+            <button class="room-action" type="button" data-room-action="messages" aria-label="Сообщения" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true">💬</span><b id="room-messages-badge" class="room-action-badge" aria-hidden="true" hidden>0</b></button>
+          </nav>
+          <button id="room-economic-episode" class="room-economic-episode" type="button" data-room-target="economic-episode" hidden></button>
+          <button id="room-next-day" class="room-next-day" type="button" data-room-target="next-day" hidden><span aria-hidden="true">🌙</span> Следующий день</button>
+        </div>
+
+        <div id="day-tutorial-layer" class="tutorial-layer shop-tutorial-layer is-hidden" aria-live="assertive">
+          <div id="day-tutorial-focus" class="tutorial-focus-ring" hidden></div>
+          <div class="tutorial-card">
+            <button id="day-tutorial-skip" class="tutorial-skip" type="button">Пропустить</button>
+            <div class="tutorial-mascot" aria-hidden="true"><span class="mascot-eye"></span></div>
+            <p id="day-tutorial-progress" class="tutorial-progress"></p>
+            <p id="day-tutorial-text" class="tutorial-text"></p>
+            <div class="tutorial-actions">
+              <button id="day-tutorial-back" class="tutorial-back" type="button">Назад</button>
+              <button id="day-tutorial-next" class="primary-button tutorial-next" type="button">Дальше <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </div>
+
+        <div id="room-inbox-layer" class="room-inbox-layer" role="dialog" aria-modal="true" aria-labelledby="room-inbox-title" hidden>
+          <section class="room-inbox">
+            <header class="room-inbox-header">
+              <span class="room-inbox-icon" aria-hidden="true">💬</span>
+              <h2 id="room-inbox-title">Сообщения</h2>
+              <button id="room-inbox-close" class="room-inbox-close" type="button" aria-label="Закрыть сообщения">×</button>
+            </header>
+            <ol id="room-inbox-list" class="room-inbox-list"></ol>
+            <p id="room-inbox-empty" class="room-inbox-empty" hidden>Пока сообщений нет</p>
+          </section>
+        </div>
+
+        <div id="room-transfer-layer" class="room-inbox-layer room-transfer-layer" role="dialog" aria-modal="true" aria-labelledby="room-transfer-title" hidden>
+          <section class="room-inbox room-transfer">
+            <header class="room-inbox-header">
+              <span class="room-inbox-icon" aria-hidden="true">🐷</span>
+              <h2 id="room-transfer-title">Из копилки в карман</h2>
+              <button id="room-transfer-close" class="room-inbox-close" type="button" aria-label="Закрыть">×</button>
+            </header>
+            <div class="room-transfer-body">
+              <div class="room-transfer-balances" data-room-target="transfer-balances">
+                <div class="room-transfer-balance">
+                  <span class="room-panel-label">🐷 В копилке</span>
+                  <strong id="room-transfer-savings">0 🪙</strong>
+                  <small id="room-transfer-savings-now">сейчас 0 🪙</small>
+                </div>
+                <span class="room-transfer-arrow" aria-hidden="true">→</span>
+                <div class="room-transfer-balance">
+                  <span class="room-panel-label">👛 В кармане</span>
+                  <strong id="room-transfer-pocket">0 🪙</strong>
+                  <small id="room-transfer-pocket-now">сейчас 0 🪙</small>
+                </div>
+              </div>
+              <div class="room-transfer-amount" data-room-target="transfer-amount">
+                <div class="shop-quantity room-transfer-stepper" role="group" aria-label="Сколько монет переложить">
+                  <button id="room-transfer-minus" type="button" aria-label="На одну монету меньше">−</button>
+                  <output id="room-transfer-value" aria-live="polite">0 🪙</output>
+                  <button id="room-transfer-plus" type="button" aria-label="На одну монету больше">+</button>
+                </div>
+                <input id="room-transfer-range" type="range" min="0" max="0" step="1" value="0" aria-label="Сколько монет переложить из копилки в карман" />
+              </div>
+              <p id="room-transfer-empty" class="room-transfer-empty" hidden>В копилке пока пусто — перекладывать нечего.</p>
+              <button id="room-transfer-submit" class="primary-button room-transfer-submit" type="button" data-room-target="transfer-submit" disabled>Выбери сумму</button>
+            </div>
+          </section>
+        </div>
+
+        <div id="piggy-tutorial-layer" class="tutorial-layer shop-tutorial-layer is-hidden" aria-live="assertive">
+          <div id="piggy-tutorial-focus" class="tutorial-focus-ring" hidden></div>
+          <div class="tutorial-card">
+            <button id="piggy-tutorial-skip" class="tutorial-skip" type="button">Пропустить</button>
+            <div class="tutorial-mascot" aria-hidden="true"><span class="mascot-eye"></span></div>
+            <p id="piggy-tutorial-progress" class="tutorial-progress"></p>
+            <p id="piggy-tutorial-text" class="tutorial-text"></p>
+            <div class="tutorial-actions">
+              <button id="piggy-tutorial-back" class="tutorial-back" type="button">Назад</button>
+              <button id="piggy-tutorial-next" class="primary-button tutorial-next" type="button">Дальше <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </div>
+
+        <div id="room-message-layer" class="room-message-layer" data-placement="center" role="dialog" aria-modal="true" aria-labelledby="room-message-title" aria-describedby="room-message-text" hidden>
+          <div id="room-message-focus" class="tutorial-focus-ring room-message-focus" hidden></div>
+          <article class="room-message-card">
+            <div class="tutorial-mascot" aria-hidden="true"><span class="mascot-eye"></span></div>
+            <p id="room-message-title" class="room-message-eyebrow">СООБЩЕНИЕ</p>
+            <div id="room-message-text-box" class="room-message-text-box">
+              <p id="room-message-text" class="room-message-text"></p>
+            </div>
+            <div class="room-message-actions">
+              <button id="room-message-repeat" class="tutorial-back room-message-repeat" type="button"><span aria-hidden="true">↻</span> Повторить</button>
+              <button id="room-message-close" class="primary-button room-message-close" type="button">Понятно <span aria-hidden="true">✓</span></button>
+            </div>
+          </article>
+        </div>
+
+        <button id="restart-button" type="button" hidden>Начать сначала</button>
+      </section>
+
+      <section id="park-screen" class="screen park-screen" aria-label="Парк" hidden>
+        <div id="park-stage" class="park-stage" aria-label="Трёхмерная сцена парка"></div>
+        <header class="park-hud">
+          <div class="park-title-card">
+            <span>ЭКОНОМИЧЕСКИЙ ЭПИЗОД</span>
+            <strong id="park-title">Прогулка в парке</strong>
+          </div>
+          <button id="park-back" class="park-back" type="button"><span aria-hidden="true">←</span> Домой</button>
+        </header>
+        <p id="park-status" class="visually-hidden" role="status" aria-live="polite">Парк готовится к прогулке</p>
+        <ol id="park-toasts" class="park-toasts" aria-live="polite"></ol>
+
+        <article id="park-speech" class="park-speech" aria-labelledby="park-speech-name" hidden>
+          <p id="park-speech-name" class="park-speech-name">Монстрик</p>
+          <div class="park-speech-text-box">
+            <p id="park-speech-text" class="park-speech-text"></p>
+          </div>
+          <div class="park-speech-actions">
+            <button id="park-speech-repeat" class="tutorial-back park-speech-repeat" type="button"><span aria-hidden="true">↻</span> Повторить</button>
+            <button id="park-speech-next" class="primary-button park-speech-next" type="button">Дальше <span aria-hidden="true">→</span></button>
+          </div>
+        </article>
+
+        <section id="park-choice" class="park-choice" aria-labelledby="park-choice-title" hidden>
+          <header class="park-choice-header">
+            <h2 id="park-choice-title">Что купим?</h2>
+            <p class="park-choice-wallet">
+              <span><span aria-hidden="true">👛</span> В кармане <b id="park-choice-pocket">0 🪙</b></span>
+              <span><span aria-hidden="true">🐷</span> В копилке <b id="park-choice-savings">0 🪙</b></span>
+            </p>
+          </header>
+          <ol id="park-choice-list" class="park-choice-list"></ol>
+          <button id="park-choice-confirm" class="primary-button park-choice-confirm" type="button" disabled>Выбери вариант</button>
+        </section>
+
+        <section id="park-goal" class="park-choice park-goal" aria-labelledby="park-goal-title" hidden>
+          <header class="park-choice-header">
+            <h2 id="park-goal-title">Копим на мечту?</h2>
+            <p class="park-choice-wallet">
+              <span><span aria-hidden="true">🐷</span> В копилке <b id="park-goal-savings">0 🪙</b></span>
+            </p>
+          </header>
+          <div class="park-goal-card">
+            <img id="park-goal-image" class="park-goal-image" src="" alt="" hidden>
+            <div class="park-goal-body">
+              <strong id="park-goal-name">Праздник огней</strong>
+              <p id="park-goal-text" class="park-goal-text"></p>
+              <p class="park-goal-price"><span aria-hidden="true">🎟️</span> Билет — <b id="park-goal-price">0 🪙</b></p>
+            </div>
+          </div>
+          <div class="park-goal-actions">
+            <button id="park-goal-decline" class="tutorial-back park-goal-decline" type="button">Не сейчас</button>
+            <button id="park-goal-accept" class="primary-button" type="button">Копим! <span aria-hidden="true">🐷</span></button>
+          </div>
+        </section>
+        <div id="park-loading" class="room-loading park-loading" role="status">
+          <span class="loading-eye" aria-hidden="true"></span>
+          <span>Готовим парк к прогулке…</span>
+        </div>
+      </section>
+
+      <section id="shop-screen" class="screen shop-screen" aria-label="Магазин" hidden>
+        <div id="shop-stage" class="shop-stage" aria-label="Полка с кормом. Нажми на пачку, чтобы рассмотреть её"></div>
+
+        <header class="room-hud shop-hud">
+          <div class="room-top-row">
+            <div class="room-panel room-day" data-shop-target="shop-day">
+              <span class="room-panel-label">День</span>
+              <strong id="shop-day">0</strong>
+            </div>
+            <div class="room-panel room-wallet">
+              <div class="room-money" data-shop-target="shop-pocket">
+                <span class="room-money-icon" aria-hidden="true">👛</span>
+                <span class="room-panel-label">В кармане</span>
+                <strong id="shop-pocket">0 🪙</strong>
+              </div>
+              <div id="shop-ration" class="room-money" data-shop-target="shop-ration">
+                <span class="room-money-icon" aria-hidden="true">🍲</span>
+                <span class="room-panel-label">Ест в день</span>
+                <strong id="shop-ration-value">100 г</strong>
+              </div>
+            </div>
+          </div>
+          <div class="room-panel shop-payday" data-shop-target="shop-payday">
+            <span class="room-money-icon" aria-hidden="true">🗓️</span>
+            <span class="shop-payday-text">
+              <span class="room-panel-label">Новые деньги</span>
+              <strong id="shop-payday">через 3 дня</strong>
+            </span>
+            <ol id="shop-payday-days" class="shop-payday-days" aria-hidden="true"></ol>
+          </div>
+        </header>
+
+        <div id="shop-loading" class="room-loading" role="status">
+          <span class="loading-eye" aria-hidden="true"></span>
+          <span>Раскладываем корм по полкам…</span>
+        </div>
+
+        <div id="shop-bottom-bar" class="shop-bottom-bar">
+          <div id="shop-browse-bar" class="shop-bar-row">
+            <button id="shop-back" class="shop-back" type="button" data-shop-target="shop-back"><span aria-hidden="true">←</span> В комнату</button>
+            <p class="shop-hint">Нажми на пачку, чтобы рассмотреть её</p>
+          </div>
+          <p id="shop-inspect-hint" class="room-action-message shop-inspect-hint" hidden>Пачку можно крутить и приближать пальцами</p>
+          <section id="shop-inspect-bar" class="shop-purchase" aria-labelledby="shop-purchase-title" hidden>
+            <div class="shop-purchase-heading">
+              <div class="shop-purchase-name">
+                <strong id="shop-purchase-title" class="shop-purchase-title"></strong>
+                <span id="shop-purchase-price" class="shop-purchase-price"></span>
+              </div>
+              <button id="shop-inspect-close" class="shop-inspect-close" type="button">На полку <span aria-hidden="true">↩</span></button>
+            </div>
+            <div class="shop-purchase-controls">
+              <div class="shop-quantity" role="group" aria-label="Количество пачек">
+                <button id="shop-quantity-minus" type="button" aria-label="Одной пачкой меньше">−</button>
+                <output id="shop-quantity" aria-live="polite">1</output>
+                <button id="shop-quantity-plus" type="button" aria-label="Одной пачкой больше">+</button>
+              </div>
+              <button id="shop-buy" class="primary-button shop-buy" type="button">Купить</button>
+            </div>
+            <p id="shop-purchase-note" class="shop-purchase-note" aria-live="polite"></p>
+            <div id="shop-savings-offer" class="shop-savings-offer" hidden>
+              <p>Вместе с копилкой денег хватит. Возьми их дома!</p>
+              <button id="shop-go-home" class="shop-go-home" type="button"><span aria-hidden="true">🏠</span> Домой</button>
+            </div>
+          </section>
+        </div>
+
+        <div id="shop-tutorial-layer" class="tutorial-layer shop-tutorial-layer is-hidden" aria-live="assertive">
+          <div id="shop-tutorial-focus" class="tutorial-focus-ring" hidden></div>
+          <div class="tutorial-card">
+            <button id="shop-tutorial-skip" class="tutorial-skip" type="button">Пропустить</button>
+            <div class="tutorial-mascot" aria-hidden="true"><span class="mascot-eye"></span></div>
+            <p id="shop-tutorial-progress" class="tutorial-progress"></p>
+            <p id="shop-tutorial-text" class="tutorial-text"></p>
+            <div class="tutorial-actions">
+              <button id="shop-tutorial-back" class="tutorial-back" type="button">Назад</button>
+              <button id="shop-tutorial-next" class="primary-button tutorial-next" type="button">Дальше <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="feeding-screen" class="screen shop-screen feeding-screen" data-mode="pantry" aria-label="Кормление" hidden>
+        <div id="feeding-stage" class="shop-stage feeding-stage" aria-label="Полка с кормом. Нажми на пачку, чтобы выбрать её"></div>
+
+        <header class="room-hud shop-hud feeding-hud">
+          <div class="room-top-row">
+            <div class="room-panel room-day">
+              <span class="room-panel-label">День</span>
+              <strong id="feeding-day">0</strong>
+            </div>
+            <div class="room-panel room-wallet">
+              <div class="room-money" data-feeding-target="feeding-stock">
+                <span class="room-money-icon" aria-hidden="true">🥫</span>
+                <span class="room-panel-label">Запас корма</span>
+                <strong id="feeding-stock">0 г</strong>
+              </div>
+              <div class="room-money" data-feeding-target="feeding-goal">
+                <span class="room-money-icon" aria-hidden="true">🎯</span>
+                <span class="room-panel-label">Насыпать, г</span>
+                <strong id="feeding-goal">90–110</strong>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div id="feeding-loading" class="room-loading" role="status">
+          <span class="loading-eye" aria-hidden="true"></span>
+          <span>Достаём корм с полки…</span>
+        </div>
+
+        <div id="feeding-bottom-bar" class="shop-bottom-bar feeding-bottom-bar">
+          <div id="pantry-browse-bar" class="shop-bar-row">
+            <button id="pantry-back" class="shop-back" type="button" data-feeding-target="pantry-back"><span aria-hidden="true">←</span> В комнату</button>
+            <p id="pantry-hint" class="shop-hint">Нажми на пачку, из которой насыплешь корм</p>
+          </div>
+
+          <section id="pantry-choice" class="shop-purchase feeding-panel" aria-labelledby="pantry-choice-title" hidden>
+            <div class="shop-purchase-heading">
+              <div class="shop-purchase-name">
+                <strong id="pantry-choice-title" class="shop-purchase-title"></strong>
+                <span id="pantry-choice-note" class="shop-purchase-price"></span>
+              </div>
+              <button id="pantry-cancel" class="shop-inspect-close" type="button">Отменить <span aria-hidden="true">↩</span></button>
+            </div>
+            <button id="pantry-take" class="primary-button shop-buy feeding-action" type="button">Насыпать из этой пачки <span aria-hidden="true">→</span></button>
+          </section>
+
+          <section id="scale-panel" class="shop-purchase feeding-panel" aria-labelledby="scale-reading" hidden>
+            <div class="shop-purchase-heading">
+              <div class="shop-purchase-name">
+                <strong id="scale-reading" class="shop-purchase-title" aria-live="polite">В миске 0 г</strong>
+                <span id="scale-pack-note" class="shop-purchase-price"></span>
+              </div>
+              <button id="scale-to-shelf" class="shop-inspect-close" type="button" data-feeding-target="scale-to-shelf">К полке <span aria-hidden="true">↩</span></button>
+            </div>
+            <div class="scale-gauge" aria-hidden="true" data-feeding-target="scale-gauge">
+              <span id="scale-gauge-goal" class="scale-gauge-goal"></span>
+              <span id="scale-gauge-fill" class="scale-gauge-fill"></span>
+            </div>
+            <p id="scale-hint" class="shop-purchase-note scale-hint">Нажми на пачку и держи</p>
+            <button id="scale-done" class="primary-button shop-buy feeding-action" type="button" data-feeding-target="scale-done" disabled>Готово <span aria-hidden="true">✓</span></button>
+          </section>
+        </div>
+
+        <div id="feeding-tutorial-layer" class="tutorial-layer shop-tutorial-layer is-hidden" aria-live="assertive">
+          <div id="feeding-tutorial-focus" class="tutorial-focus-ring" hidden></div>
+          <div class="tutorial-card">
+            <button id="feeding-tutorial-skip" class="tutorial-skip" type="button">Пропустить</button>
+            <div class="tutorial-mascot" aria-hidden="true"><span class="mascot-eye"></span></div>
+            <p id="feeding-tutorial-progress" class="tutorial-progress"></p>
+            <p id="feeding-tutorial-text" class="tutorial-text"></p>
+            <div class="tutorial-actions">
+              <button id="feeding-tutorial-back" class="tutorial-back" type="button">Назад</button>
+              <button id="feeding-tutorial-next" class="primary-button tutorial-next" type="button">Дальше <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div id="mentor-layer" class="mentor-layer" role="dialog" aria-modal="true" aria-labelledby="mentor-eyebrow" aria-describedby="mentor-text" hidden>
+        <article class="mentor-card">
+          <div class="mentor-portrait">
+            <div class="tutorial-mascot" aria-hidden="true"><span class="mascot-eye"></span></div>
+            <img id="mentor-image" class="mentor-image" alt="" hidden />
+          </div>
+          <p id="mentor-eyebrow" class="mentor-eyebrow">МЕНТОР</p>
+          <div class="mentor-text-box">
+            <p id="mentor-text" class="mentor-text"></p>
+          </div>
+          <p id="mentor-extra" class="mentor-extra" hidden></p>
+          <button id="mentor-close" class="primary-button mentor-close" type="button">Понятно <span aria-hidden="true">✓</span></button>
+        </article>
+      </div>
+
+      <button id="sound-toggle" class="round-button global-sound-toggle" type="button" aria-label="Выключить звук" aria-pressed="false">
+        <svg class="sound-on" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M5 13v6h5l6 5V8l-6 5H5Z"></path>
+          <path d="M21 11.5c1.4 1.1 2.2 2.6 2.2 4.5s-.8 3.4-2.2 4.5M24.5 8c2.4 2 3.8 4.7 3.8 8s-1.4 6-3.8 8"></path>
+        </svg>
+        <svg class="sound-off" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M5 13v6h5l6 5V8l-6 5H5Z"></path>
+          <path d="m21 12 7 8m0-8-7 8"></path>
+        </svg>
+      </button>
+
+      <audio id="background-music" src="./Tiptoeing_Paws.mp3" preload="auto"></audio>
+      <audio id="tutorial-audio" preload="auto"></audio>
+      <audio id="briefing-audio" preload="auto"></audio>
+      <audio id="budget-tutorial-audio" preload="auto"></audio>
+      <audio id="message-audio" preload="auto"></audio>
+      <audio id="shop-tutorial-audio" preload="auto"></audio>
+      <audio id="mentor-audio" preload="auto"></audio>
+      <audio id="feeding-tutorial-audio" preload="auto"></audio>
+      <audio id="day-tutorial-audio" preload="auto"></audio>
+      <audio id="park-voice-audio" preload="auto"></audio>
+      <audio id="piggy-tutorial-audio" preload="auto"></audio>
+    </main>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

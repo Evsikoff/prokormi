@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+.env.local
+.vercel/
+
+# Рабочие материалы дизайна комнаты и парка (в сборку не попадают)
+room-design/
+park-design/

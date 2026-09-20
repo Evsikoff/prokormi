@@ -1,0 +1,274 @@
+{
+  "version": 1,
+  "model": "monster.glb",
+  "notes": [
+    "three.js removes ':', '.', '/', '[', ']' from node names and turns spaces into '_' (PropertyBinding.sanitizeNodeName), so 'mixamorig:Head' becomes 'mixamorigHead'.",
+    "Colour pipeline, in linear RGB: base colour -> fur hue/saturation/value where furMask is white -> face overlay mixed by its alpha -> mood saturation/value -> multiply by mood tint.",
+    "Overlays and masks use the same UV set as the material's base colour texture; load them with flipY = false."
+  ],
+  "materials": {
+    "Body": {
+      "uv": 0,
+      "furMask": "textures/fur_mask_body.webp"
+    },
+    "Face": {
+      "uv": 1,
+      "furMask": "textures/fur_mask_face.webp",
+      "overlays": {
+        "neutral": "textures/face_neutral.webp",
+        "happy": "textures/face_happy.webp",
+        "sad": "textures/face_sad.webp",
+        "sick": "textures/face_sick.webp",
+        "smart": "textures/face_smart.webp",
+        "silly": "textures/face_silly.webp",
+        "hungry": "textures/face_hungry.webp"
+      }
+    }
+  },
+  "profile": {
+    "default": {
+      "fur": 0,
+      "ears": 2,
+      "horns": 2
+    },
+    "fur": [
+      {
+        "id": "blue",
+        "label": "Голубой",
+        "hueShift": 0,
+        "saturation": 1.0,
+        "value": 1.0
+      },
+      {
+        "id": "pink",
+        "label": "Розовый",
+        "hueShift": 135,
+        "saturation": 1.15,
+        "value": 1.0
+      },
+      {
+        "id": "violet",
+        "label": "Фиолетовый",
+        "hueShift": 70,
+        "saturation": 1.0,
+        "value": 0.95
+      },
+      {
+        "id": "orange",
+        "label": "Оранжевый",
+        "hueShift": -170,
+        "saturation": 1.2,
+        "value": 1.0
+      },
+      {
+        "id": "yellow",
+        "label": "Жёлтый",
+        "hueShift": -160,
+        "saturation": 1.1,
+        "value": 1.05
+      },
+      {
+        "id": "brown",
+        "label": "Коричневый",
+        "hueShift": -170,
+        "saturation": 1.15,
+        "value": 0.62
+      }
+    ],
+    "ears": {
+      "bones": [
+        "Ear_L",
+        "Ear_R"
+      ],
+      "scales": [
+        0.8,
+        0.9,
+        1.0,
+        1.15,
+        1.3
+      ]
+    },
+    "horns": {
+      "small": "Horns_Small",
+      "big": "Horns_Big",
+      "sizes": [
+        -1.0,
+        -0.5,
+        0.0,
+        0.5,
+        1.0
+      ]
+    }
+  },
+  "moods": {
+    "neutral": {
+      "label": "Исходный",
+      "clip": "Mood_neutral",
+      "overlay": "neutral",
+      "tint": {
+        "saturation": 1.0,
+        "value": 1.0,
+        "multiply": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "morphTargets": {
+        "Belly_Thin": 0.0
+      },
+      "props": []
+    },
+    "happy": {
+      "label": "Весёлый",
+      "clip": "Mood_happy",
+      "overlay": "happy",
+      "tint": {
+        "saturation": 1.15,
+        "value": 1.04,
+        "multiply": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "morphTargets": {
+        "Belly_Thin": 0.0
+      },
+      "props": [
+        "Sparkles"
+      ]
+    },
+    "sad": {
+      "label": "Грустный",
+      "clip": "Mood_sad",
+      "overlay": "sad",
+      "tint": {
+        "saturation": 0.65,
+        "value": 0.92,
+        "multiply": [
+          0.8,
+          0.86,
+          1.0
+        ]
+      },
+      "morphTargets": {
+        "Belly_Thin": 0.0
+      },
+      "props": [
+        "RainCloud"
+      ]
+    },
+    "sick": {
+      "label": "Больной",
+      "clip": "Mood_sick",
+      "overlay": "sick",
+      "tint": {
+        "saturation": 0.8,
+        "value": 0.96,
+        "multiply": [
+          0.84,
+          1.0,
+          0.66
+        ]
+      },
+      "morphTargets": {
+        "Belly_Thin": 0.0
+      },
+      "props": [
+        "Thermometer",
+        "SweatDrops"
+      ]
+    },
+    "smart": {
+      "label": "Умный",
+      "clip": "Mood_smart",
+      "overlay": "smart",
+      "tint": {
+        "saturation": 1.0,
+        "value": 1.0,
+        "multiply": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "morphTargets": {
+        "Belly_Thin": 0.0
+      },
+      "props": [
+        "Glasses"
+      ]
+    },
+    "silly": {
+      "label": "Глупый",
+      "clip": "Mood_silly",
+      "overlay": "silly",
+      "tint": {
+        "saturation": 1.1,
+        "value": 1.0,
+        "multiply": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "morphTargets": {
+        "Belly_Thin": 0.0
+      },
+      "props": [
+        "PropellerCap"
+      ]
+    },
+    "hungry": {
+      "label": "Голодный",
+      "clip": "Mood_hungry",
+      "overlay": "hungry",
+      "tint": {
+        "saturation": 0.85,
+        "value": 0.97,
+        "multiply": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "morphTargets": {
+        "Belly_Thin": 1.0
+      },
+      "props": [
+        "ThoughtBubble"
+      ]
+    }
+  },
+  "props": [
+    "Glasses",
+    "PropellerCap",
+    "RainCloud",
+    "Sparkles",
+    "SweatDrops",
+    "Thermometer",
+    "ThoughtBubble"
+  ],
+  "clips": [
+    "bicycle_crunch",
+    "Big_Wave_Hello",
+    "FunnyDancing_02",
+    "FunnyDancing_03",
+    "Greetings",
+    "Groan_Holding_Stomach_in_Sleep",
+    "Mood_happy",
+    "Mood_hungry",
+    "Mood_neutral",
+    "Mood_sad",
+    "Mood_sick",
+    "Mood_silly",
+    "Mood_smart",
+    "restpose",
+    "Run_and_Jump",
+    "Running",
+    "Stand_Up5",
+    "Thoughtful_Walk",
+    "Walking"
+  ]
+}

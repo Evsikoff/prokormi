@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "roomId": "monster-kid-room",
+  "concept": "/room/concept/monster-kid-room-concept.png",
+  "roomDimensionsMeters": [5.0, 4.0, 3.0],
+  "palette": {"violet": "#8f50e8", "teal": "#2dc4c2", "orange": "#ff9e3f", "cream": "#f3e4c7", "mint": "#b8d2c0", "birch": "#d9a968"},
+  "status": "reference-ready-pending-human-approval",
+  "props": [
+    {"id": "monster-nest-bed", "reference": "/room/props/prop-monster-nest-bed.png", "dimensionsMeters": [1.65, 1.25, 1.35], "targetTriangles": 42000, "mount": "floor"},
+    {"id": "feeding-bowl", "reference": "/room/props/prop-feeding-bowl.png", "dimensionsMeters": [0.55, 0.55, 0.22], "targetTriangles": 14000, "mount": "floor"},
+    {"id": "toy-chest-bench", "reference": "/room/props/prop-toy-chest-bench.png", "dimensionsMeters": [1.35, 0.48, 0.58], "targetTriangles": 26000, "mount": "floor"},
+    {"id": "creative-desk", "reference": "/room/props/prop-creative-desk.png", "dimensionsMeters": [1.25, 0.62, 1.15], "targetTriangles": 32000, "mount": "floor"},
+    {"id": "soft-stool", "reference": "/room/props/prop-stool.png", "dimensionsMeters": [0.48, 0.48, 0.42], "targetTriangles": 12000, "mount": "floor"},
+    {"id": "rounded-wardrobe", "reference": "/room/props/prop-wardrobe.png", "dimensionsMeters": [1.25, 0.62, 1.85], "targetTriangles": 30000, "mount": "floor"},
+    {"id": "climbing-tower", "reference": "/room/props/prop-climbing-tower.png", "dimensionsMeters": [0.85, 0.75, 2.35], "targetTriangles": 38000, "mount": "floor-and-wall"},
+    {"id": "cloud-ceiling-lamp", "reference": "/room/props/prop-cloud-lamp.png", "dimensionsMeters": [1.05, 0.62, 0.78], "targetTriangles": 26000, "mount": "ceiling"},
+    {"id": "paw-rug", "reference": "/room/props/prop-paw-rug.png", "dimensionsMeters": [2.15, 2.15, 0.035], "targetTriangles": 8000, "mount": "floor"}
+  ],
+  "textures": {
+    "wall": {"baseColor": "/room/textures/wall-mint-plaster-basecolor.png", "colorSpace": "sRGB", "repeatMeters": [2.0, 2.0], "roughness": 0.88},
+    "floor": {"baseColor": "/room/textures/floor-birch-planks-basecolor.png", "colorSpace": "sRGB", "repeatMeters": [3.0, 3.0], "roughness": 0.62},
+    "ceiling": {"baseColor": "/room/textures/ceiling-warm-cream-plaster-basecolor.png", "colorSpace": "sRGB", "repeatMeters": [2.0, 2.0], "roughness": 0.9}
+  }
+}

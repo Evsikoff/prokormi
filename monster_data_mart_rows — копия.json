@@ -1,0 +1,110 @@
+[
+ {
+  "id": "1",
+  "created_at": "2026-09-16 14:25:28.377946+00",
+  "object_type": "Briefing step on pet care",
+  "queue": "2",
+  "text": "Чудикам требуется особый корм. Всегда внимательно проверяй состав — в нём должно присутствовать не менее 5% натуральных мышиных хвостиков и минимум 2% колбасного сока.",
+  "audio": "brif2.wav",
+  "image": "brif2.png",
+  "audio_folder": "publicaudio",
+  "image_folder": "publicimages"
+ },
+ {
+  "id": "2",
+  "created_at": "2026-09-16 14:33:04.549559+00",
+  "object_type": "Briefing step on pet care",
+  "queue": "3",
+  "text": "Питомцу нужен уход. Для начала потребуется прибор для удаления носовых козявок. Учти, что он может сломаться совершенно неожиданно.",
+  "audio": "brif3.wav",
+  "image": "brif3.png",
+  "audio_folder": "publicaudio",
+  "image_folder": "publicimages"
+ },
+ {
+  "id": "3",
+  "created_at": "2026-09-16 14:35:33.753614+00",
+  "object_type": "Briefing step on pet care",
+  "queue": "4",
+  "text": "Миску для еды покупать не нужно — мы отдадим её в подарок вместе с питомцем.",
+  "audio": "brif4.wav",
+  "image": "brif4.png",
+  "audio_folder": "publicaudio",
+  "image_folder": "publicimages"
+ },
+ {
+  "id": "4",
+  "created_at": "2026-09-16 14:39:14.912595+00",
+  "object_type": "Briefing step on pet care",
+  "queue": "5",
+  "text": "Разнообразные украшения, лакомства и игрушки подарят питомцу много приятных эмоций, но первостепенной необходимости в них нет — без них вполне можно обойтись.",
+  "audio": "brif5.wav",
+  "image": "brif5.png",
+ "audio_folder": "publicaudio",
+ "image_folder": "publicimages"
+ },
+ {
+  "id": 5,
+  "created_at": "2026-09-16 18:00:00+00",
+  "object_type": "First budget tutorial",
+  "queue": "1",
+  "text": "Мэрия начислила тебе дотацию за то, что ты взял питомца из приюта. Распредели полученные средства и позаботься о монстрике!",
+  "audio": "b1t1.wav",
+  "image": "",
+  "audio_folder": "public/audio/budget_tutorial",
+  "image_folder": "",
+  "screen_area": {
+   "target": "budget-summary",
+   "description": "Карточка с общей суммой фонда к распределению",
+   "message_placement": "bottom"
+  }
+ },
+ {
+  "id": 6,
+  "created_at": "2026-09-16 18:01:00+00",
+  "object_type": "First budget tutorial",
+  "queue": "2",
+  "text": "Ты составляешь план на три дня. Для ориентира рядом с обязательными расходами указана средняя стоимость корма для монстрика в день.",
+  "audio": "b1t2.wav",
+  "image": "",
+  "audio_folder": "public/audio/budget_tutorial",
+  "image_folder": "",
+  "screen_area": {
+   "target": "budget-period",
+   "description": "Плашка трёхдневного периода бюджета",
+   "message_placement": "bottom"
+  }
+ },
+ {
+  "id": 7,
+  "created_at": "2026-09-16 18:02:00+00",
+  "object_type": "First budget tutorial",
+  "queue": "3",
+  "text": "Передвигай ползунки, чтобы разделить фонд между обязательными расходами, весельем и накоплениями на большую покупку.",
+  "audio": "b1t3.wav",
+  "image": "",
+  "audio_folder": "public/audio/budget_tutorial",
+  "image_folder": "",
+  "screen_area": {
+   "target": "budget-categories",
+   "description": "Три карточки статей бюджета с ползунками распределения",
+   "message_placement": "top"
+  }
+ },
+ {
+  "id": 8,
+  "created_at": "2026-09-16 18:03:00+00",
+  "object_type": "First budget tutorial",
+  "queue": "4",
+  "text": "Следи за остатком. Когда распределишь всю сумму, кнопка «Утвердить бюджет» станет доступна.",
+  "audio": "b1t4.wav",
+  "image": "",
+  "audio_folder": "public/audio/budget_tutorial",
+  "image_folder": "",
+  "screen_area": {
+   "target": "budget-submit",
+   "description": "Кнопка подтверждения составленного бюджета",
+   "message_placement": "top"
+  }
+ }
+]

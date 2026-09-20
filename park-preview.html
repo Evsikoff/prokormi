@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Парк сверху</title>
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #bce9f5; font-family: system-ui, sans-serif; }
+    #stage { position: fixed; inset: 0; }
+    #labels { position: fixed; inset: 0; pointer-events: none; }
+    .pin {
+      position: absolute; transform: translate(-50%, -100%); white-space: nowrap;
+      padding: 3px 8px; border-radius: 999px; font: 600 13px/1.2 system-ui, sans-serif;
+      background: rgba(34, 30, 60, .82); color: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.25);
+    }
+    .pin b { color: #ffd269; margin-right: 5px; }
+    .pin.small { font-size: 11px; padding: 2px 6px; background: rgba(34, 30, 60, .62); }
+    .pin.spot { background: rgba(214, 60, 110, .88); }
+    .pin.path { background: rgba(160, 110, 40, .78); }
+    #bar { position: fixed; left: 12px; top: 12px; display: flex; gap: 6px; flex-wrap: wrap; }
+    #bar button {
+      border: 0; border-radius: 10px; padding: 8px 12px; font: 600 14px system-ui, sans-serif;
+      background: #fff; color: #2a2550; box-shadow: 0 2px 6px rgba(0,0,0,.18); cursor: pointer;
+    }
+    #bar button.on { background: #7156c8; color: #fff; }
+    #hint { position: fixed; left: 12px; bottom: 10px; font: 13px system-ui, sans-serif; color: #2a2550; opacity: .75; }
+    #loading { position: fixed; inset: 0; display: grid; place-items: center; font: 600 18px system-ui, sans-serif; color: #2a2550; }
+  </style>
+</head>
+<body>
+  <div id="stage"></div>
+  <div id="labels"></div>
+  <div id="bar">
+    <button data-view="top" class="on">Сверху</button>
+    <button data-view="bird">С высоты (как в начале полёта)</button>
+    <button data-view="south">С юга</button>
+    <button id="toggle-labels" class="on">Подписи</button>
+    <button id="toggle-grid">Сетка 1 м</button>
+  </div>
+  <div id="hint">Мышь: левая кнопка — вращать, колесо — приближать, правая — двигать</div>
+  <div id="loading">Собираем парк…</div>
+  <script type="module">
+    import * as THREE from 'three';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { MonsterPark } from './park.js';
+
+    // Positions copied from park.js, only for the pins.
+    const LABELS = [
+      { text: 'Теннисный корт', id: '1', p: [4.3, 1.8, -5.8] },
+      { text: 'Ларёк с мороженым', id: '2', p: [-4.8, 5.2, -2.7] },
+      { text: 'Лия (мороженое)', id: '3', p: [-5.0, 2.4, -0.7] },
+      { text: 'Спортивный магазин', id: '4', p: [4.9, 3.9, 3.7] },
+      { text: 'Макс (спорттовары)', id: '5', p: [2.8, 2.2, 4.8] },
+      { text: 'Доска с афишей', id: '6', p: [-0.5, 3.2, 2.05] },
+      { text: 'Монстрик (старт у корта)', id: '7', p: [1.9, 2.3, -0.95] },
+      { text: 'Сюда бежит к ларьку', id: '8', p: [-4.35, 0.1, 0.95], kind: 'spot' },
+      { text: 'Главная дорожка', id: '', p: [-0.5, 0.1, -12], kind: 'path' },
+      { text: 'Поперечная дорожка', id: '', p: [6.2, 0.1, 0.5], kind: 'path' },
+      ...[[-8,-8],[-8,5],[-6.8,10],[8,9],[8.5,-3],[0,-12],[-9.2,-1]].map(([x, z], i) => ({ text: 'дерево', id: `Д${i + 1}`, p: [x, 4.2, z], kind: 'small' })),
+      ...[[-4.6,5.8],[1.25,7.4],[-6,-8]].map(([x, z], i) => ({ text: 'скамейка', id: `С${i + 1}`, p: [x, 1.4, z], kind: 'small' })),
+      ...[[-3.25,8],[2.2,5],[-3.25,5.2],[2.2,-2.5],[-3.25,-7.5]].map(([x, z], i) => ({ text: 'фонарь', id: `Ф${i + 1}`, p: [x, 3, z], kind: 'small' })),
+    ];
+
+    const VIEWS = {
+      top: { position: [0.01, 46, 0.6], target: [0, 0, 0.5] },
+      bird: { position: [-18, 25, -18], target: [0, 0, -2] },
+      south: { position: [0, 16, 24], target: [0, 0, -1] },
+    };
+
+    const stage = document.getElementById('stage');
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    stage.appendChild(renderer.domElement);
+
+    const gltf = await new GLTFLoader().loadAsync('/model/monster.glb');
+    const model = gltf.scene;
+    const mixer = new THREE.AnimationMixer(model);
+    const park = new MonsterPark({ monster: model, mixer, animations: gltf.animations });
+    await park.initialize();
+    park.enter('Монстрик');
+    park.scene.fog = null;
+
+    const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 200);
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+
+    const spot = new THREE.Mesh(
+      new THREE.RingGeometry(0.35, 0.5, 32),
+      new THREE.MeshBasicMaterial({ color: 0xd63c6e, side: THREE.DoubleSide }),
+    );
+    spot.rotation.x = -Math.PI / 2;
+    spot.position.set(-4.35, 0.06, 0.95);
+    park.scene.add(spot);
+
+    const grid = new THREE.GridHelper(40, 40, 0x2a2550, 0x2a2550);
+    grid.material.transparent = true;
+    grid.material.opacity = 0.22;
+    grid.position.y = 0.05;
+    grid.visible = false;
+    park.scene.add(grid);
+
+    const labelLayer = document.getElementById('labels');
+    const pins = LABELS.map((label) => {
+      const element = document.createElement('div');
+      element.className = `pin ${label.kind || ''}`;
+      element.innerHTML = label.id ? `<b>${label.id}</b>${label.text}` : label.text;
+      labelLayer.appendChild(element);
+      return { element, point: new THREE.Vector3(...label.p) };
+    });
+
+    function setView(name) {
+      const view = VIEWS[name];
+      camera.position.set(...view.position);
+      controls.target.set(...view.target);
+      controls.update();
+      document.querySelectorAll('[data-view]').forEach((button) => button.classList.toggle('on', button.dataset.view === name));
+    }
+    document.querySelectorAll('[data-view]').forEach((button) => button.addEventListener('click', () => setView(button.dataset.view)));
+    document.getElementById('toggle-labels').addEventListener('click', (event) => {
+      labelLayer.hidden = !labelLayer.hidden;
+      event.currentTarget.classList.toggle('on', !labelLayer.hidden);
+    });
+    document.getElementById('toggle-grid').addEventListener('click', (event) => {
+      grid.visible = !grid.visible;
+      event.currentTarget.classList.toggle('on', grid.visible);
+    });
+
+    function resize() {
+      const width = stage.clientWidth;
+      const height = stage.clientHeight;
+      renderer.setSize(width, height);
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+    }
+    window.addEventListener('resize', resize);
+    resize();
+    setView('top');
+    document.getElementById('loading').remove();
+
+    const projected = new THREE.Vector3();
+    const clock = new THREE.Clock();
+    renderer.setAnimationLoop(() => {
+      mixer.update(clock.getDelta());
+      controls.update();
+      renderer.render(park.scene, camera);
+      if (labelLayer.hidden) return;
+      const width = stage.clientWidth;
+      const height = stage.clientHeight;
+      for (const pin of pins) {
+        projected.copy(pin.point).project(camera);
+        const visible = projected.z < 1 && Math.abs(projected.x) < 1.1 && Math.abs(projected.y) < 1.1;
+        pin.element.style.display = visible ? '' : 'none';
+        if (!visible) continue;
+        pin.element.style.left = `${(projected.x + 1) / 2 * width}px`;
+        pin.element.style.top = `${(1 - projected.y) / 2 * height}px`;
+      }
+    });
+    window.parkPreview = { THREE, park, camera, controls, setView };
+  </script>
+</body>
+</html>
