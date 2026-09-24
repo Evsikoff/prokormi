@@ -11,7 +11,7 @@ import {
   NEW_DAY_EVENT,
   STAT_LABELS,
 } from './room-state.js';
-import { GAME_TRIGGERS } from './game-triggers.js';
+import { hasGameTrigger, isGameTriggerActive } from './game-triggers.js';
 
 export const END_OF_DAY_OBJECT_TYPE = 'End-of-game-day trigger';
 // Shown at the start of the day named in its `game_day`, steps in `queue` order.
@@ -23,28 +23,42 @@ export const DAY_MUSIC_OBJECT_TYPE = 'Music of the New Day';
 // Development drops and the monster gets dirty at the start of days 3, 6, 9…
 export const HARD_DAY_PERIOD = 3;
 
-// Keys are the values of the data mart's `trigger` column; each check gets the room state.
-// `hint` answers the moon icon while the day is not over yet.
-export const END_OF_DAY_TRIGGERS = {
-  'The monster is full': { check: GAME_TRIGGERS['The monster is full'], hint: 'Сначала покорми монстрика' },
-};
+// What the moon icon answers while the day is not over yet, looked up by the `trigger` of the
+// day's row: a plain trigger by its name, a trigger that names a data mart row by its pattern.
+const END_OF_DAY_HINTS = [
+  ['The monster is full', 'Сначала покорми монстрика'],
+  ['A pure monster', 'Сначала почисти монстрику уши от козявок'],
+  [
+    /^Acceptance or rejection of a Savings goal with id = \d+$/,
+    'Сходи с монстриком в парк и реши, копите ли вы на мероприятие',
+  ],
+  [/^End of the economic episode id = \d+$/, 'Сначала закончи сегодняшний экономический эпизод'],
+  ['End of the additional tasks tutorial', 'Сначала закончи сегодняшний экономический эпизод'],
+  ['A successful purchase at the toy store', 'Сначала купи монстрику игрушку в магазине игрушек'],
+];
+const DAY_IS_NOT_OVER_HINT = 'Этот день ещё не закончился';
+
+function endOfDayHint(trigger) {
+  const hint = END_OF_DAY_HINTS.find(([key]) => (typeof key === 'string' ? key === trigger : key.test(trigger)));
+  return hint?.[1] ?? DAY_IS_NOT_OVER_HINT;
+}
 
 const endOfDayRows = dataMartRows.filter((row) => row?.object_type === END_OF_DAY_OBJECT_TYPE);
 
 endOfDayRows
-  .filter((row) => !END_OF_DAY_TRIGGERS[row.trigger])
+  .filter((row) => !hasGameTrigger(row.trigger))
   .forEach((row) => console.warn(`Триггер конца дня ${row.id}: неизвестный триггер «${row.trigger}», он не сработает.`));
 
 // The day can be finished once any of its end-of-day triggers has fired.
 export function canFinishDay(state) {
   return state.day > 0 && endOfDayRows.some(
-    (row) => Number(row.game_day) === state.day && END_OF_DAY_TRIGGERS[row.trigger]?.check(state),
+    (row) => Number(row.game_day) === state.day && isGameTriggerActive(row.trigger, state),
   );
 }
 
 export function finishDayHint(state) {
-  const row = endOfDayRows.find((item) => Number(item.game_day) === state.day && END_OF_DAY_TRIGGERS[item.trigger]);
-  return row ? END_OF_DAY_TRIGGERS[row.trigger].hint : 'Этот день ещё не закончился';
+  const row = endOfDayRows.find((item) => Number(item.game_day) === state.day && hasGameTrigger(item.trigger));
+  return row ? endOfDayHint(row.trigger) : DAY_IS_NOT_OVER_HINT;
 }
 
 // The records that start the day after `state.day`, in the order they are written:
@@ -57,7 +71,7 @@ export function newDayRecords(state, profileId) {
 
   const lowerStat = (key, reason) => {
     const before = stats[key];
-    const after = clampStat(before - 1);
+    const after = clampStat(before - 1, key);
     if (after === before) return;
     stats[key] = after;
     records.push({
@@ -81,6 +95,7 @@ export function newDayRecords(state, profileId) {
   });
 
   if (state.hungry) lowerStat('health', 'Прошлый день монстрик закончил голодным');
+  if (state.dirty) lowerStat('health', 'Прошлый день монстрик закончил грязным');
   lowerStat('mood', 'Каждый новый день настроение падает');
   if (hardDay) lowerStat('development', `Каждый ${HARD_DAY_PERIOD}-й день развитие падает`);
   // A new day makes the monster hungry again (see deriveRoomState); the log only needs the change.
@@ -89,11 +104,17 @@ export function newDayRecords(state, profileId) {
   return records;
 }
 
-// The music row of the day, or null when the day keeps the usual room track.
+// The music row of the day, or null when the day keeps the usual room track. A row with
+// `game_day` belongs to that day only; a row with `day_is_it_available` instead plays on every
+// day from that one on (the room loops it), unless the day has its own row. Of several such rows
+// the one that starts latest wins.
 export function dayMusic(day) {
-  return dataMartRows.find(
-    (row) => row?.object_type === DAY_MUSIC_OBJECT_TYPE && Number(row.game_day) === day && row.audio,
-  ) ?? null;
+  const tracks = dataMartRows.filter((row) => row?.object_type === DAY_MUSIC_OBJECT_TYPE && row.audio);
+  const own = tracks.find((row) => Number(row.game_day) === day);
+  if (own) return own;
+  return tracks
+    .filter((row) => row.game_day == null && Number(row.day_is_it_available) <= day)
+    .sort((left, right) => Number(right.day_is_it_available) - Number(left.day_is_it_available))[0] ?? null;
 }
 
 export function newDayTutorialSteps(day) {

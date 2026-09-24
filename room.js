@@ -1,8 +1,21 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { bowlInterior, Kibble } from './kibble.js';
+import { createTalkingMouth } from './talking-mouth.js';
 
 const FLOOR_Y = 0;
+const FATHER_HEIGHT = 1.78;
+// He stands just in front of the stool instead of intersecting it; positive Z is closer to camera.
+const FATHER_SPOT = [1.05, 0, 0.72];
+const FATHER_RACKET_LENGTH = 0.92;
+const FATHER_RACKET_GRIP = 0.14;
+// Point the racket away from his face while keeping the grip aligned with the raised right hand.
+const FATHER_RACKET_TILT = new THREE.Euler(0.18, -0.08, 0.48);
+// How fast he gestures while talking, by the mood of his line.
+const FATHER_TALK_SPEED = { angry: 1.16, worried: 1.08, happy: 0.92, grateful: 0.9 };
+// His mouth is only painted on the texture, so while he talks an open mouth is drawn over it
+// (see talking-mouth.js): the place between his lips in the model's own coordinates.
+const FATHER_MOUTH = { x: 0.0, y: 1.503, rx: 0.02, ry: 0.011, frontZ: 0.07 };
 
 const ASSETS = [
   {
@@ -152,6 +165,7 @@ const BOWL_KIBBLE_SIZE = 0.034;
 const BOWL_KIBBLE_CAPACITY = 80;
 const MEAL_LEAN = 0.16;
 const MEAL_CHEW = { amplitude: 0.07, speed: 9 };
+const CONDITION_TASK_ID = 'condition-mood';
 
 const WANDER_POINTS = [
   [-0.62, 0.35],
@@ -189,6 +203,26 @@ function shortestAngle(from, to) {
   return Math.atan2(Math.sin(to - from), Math.cos(to - from));
 }
 
+// The racket asset lies diagonally in its box. Stand it on the end of its handle and make that
+// point the pivot, so it can follow the father's right hand without modifying his skeleton.
+function uprightFatherRacket(model) {
+  model.updateMatrixWorld(true);
+  const box = new THREE.Box3().setFromObject(model);
+  const axis = new THREE.Vector2(box.max.x - box.min.x, box.max.y - box.min.y);
+  const length = Math.max(0.001, axis.length());
+  model.position.x -= box.min.x;
+  model.position.y -= box.min.y;
+  model.position.z -= (box.min.z + box.max.z) / 2;
+  const turn = new THREE.Group();
+  turn.rotation.z = Math.atan2(axis.x, axis.y);
+  turn.add(model);
+  const pivot = new THREE.Group();
+  pivot.add(turn);
+  turn.position.y = -FATHER_RACKET_GRIP * length;
+  pivot.scale.setScalar(FATHER_RACKET_LENGTH / length);
+  return pivot;
+}
+
 export class MonsterRoom {
   constructor({ monster, mixer, animations, onStatus, onLoadProgress }) {
     this.monster = monster;
@@ -200,6 +234,12 @@ export class MonsterRoom {
     this.scene.background = new THREE.Color(0xcff4f2);
     this.scene.fog = new THREE.Fog(0xcff4f2, 10, 20);
     this.camera = new THREE.PerspectiveCamera(46, 9 / 16, 0.1, 40);
+    this.cameraHomePosition = new THREE.Vector3();
+    this.cameraHomeLookAt = new THREE.Vector3(0, 0.78, -0.08);
+    this.cameraTargetPosition = new THREE.Vector3();
+    this.cameraTargetLookAt = this.cameraHomeLookAt.clone();
+    this.cameraLookAt = this.cameraHomeLookAt.clone();
+    this.cameraMode = 'home';
     this.loader = new GLTFLoader();
     this.assets = new Map();
     this.active = false;
@@ -208,6 +248,7 @@ export class MonsterRoom {
     this.name = 'Монстрик';
     this.currentAction = null;
     this.currentTask = null;
+    this.conditionMood = null;
     this.previousTaskId = null;
     this.phase = 'waiting';
     this.phaseTime = 0;
@@ -222,6 +263,17 @@ export class MonsterRoom {
     this.lampLight = null;
     this.bowlKibble = null;
     this.meal = null;
+    this.fatherLoading = null;
+    this.fatherGroup = null;
+    this.fatherMixer = null;
+    this.fatherAnimations = [];
+    this.fatherAction = null;
+    this.fatherMouth = createTalkingMouth(FATHER_MOUTH);
+    this.fatherTalking = false;
+    this.fatherHand = null;
+    this.fatherRacket = null;
+    this.fatherRacketQuaternion = new THREE.Quaternion();
+    this.fatherRacketOffset = new THREE.Vector3();
   }
 
   initialize() {
@@ -433,6 +485,159 @@ export class MonsterRoom {
     return wrapper;
   }
 
+  initializeFather() {
+    if (this.fatherLoading) return this.fatherLoading;
+    this.fatherLoading = this.loadFather();
+    return this.fatherLoading;
+  }
+
+  async loadFather() {
+    const [fatherGltf, racketGltf] = await Promise.all([
+      this.loader.loadAsync('/room/models/phather.glb'),
+      this.loader.loadAsync('/park/models/tennis_racket.glb'),
+    ]);
+    const father = fatherGltf.scene;
+    father.updateMatrixWorld(true);
+    const firstBox = new THREE.Box3().setFromObject(father);
+    father.scale.multiplyScalar(FATHER_HEIGHT / Math.max(0.001, firstBox.max.y - firstBox.min.y));
+    father.updateMatrixWorld(true);
+    const box = new THREE.Box3().setFromObject(father);
+    const center = box.getCenter(new THREE.Vector3());
+    father.position.set(-center.x, -box.min.y, -center.z);
+    father.traverse((child) => {
+      if (!child.isMesh) return;
+      child.castShadow = true;
+      child.receiveShadow = true;
+      const materials = Array.isArray(child.material) ? child.material : [child.material];
+      for (const material of materials) {
+        if (material?.map) material.map.colorSpace = THREE.SRGBColorSpace;
+      }
+    });
+
+    this.fatherGroup = new THREE.Group();
+    this.fatherGroup.name = 'room-father';
+    this.fatherGroup.position.fromArray(FATHER_SPOT);
+    this.fatherGroup.rotation.y = -0.08;
+    this.fatherGroup.visible = false;
+    this.fatherGroup.add(father);
+    this.scene.add(this.fatherGroup);
+    this.fatherAnimations = fatherGltf.animations || [];
+    this.fatherMixer = new THREE.AnimationMixer(father);
+    father.traverse((child) => {
+      if (child.isSkinnedMesh) this.fatherMouth.paint(child.material);
+    });
+    this.fatherHand = father.getObjectByName('mixamorigRightHand');
+
+    const racketModel = racketGltf.scene;
+    racketModel.traverse((child) => {
+      if (!child.isMesh) return;
+      child.castShadow = true;
+      child.receiveShadow = true;
+      const materials = Array.isArray(child.material) ? child.material : [child.material];
+      for (const material of materials) {
+        if (material?.map) material.map.colorSpace = THREE.SRGBColorSpace;
+      }
+    });
+    this.fatherRacket = uprightFatherRacket(racketModel);
+    this.fatherRacket.name = 'father-tennis-racket';
+    this.fatherRacket.visible = false;
+    this.scene.add(this.fatherRacket);
+    return this.fatherGroup;
+  }
+
+  playFatherMood(mood = 'angry') {
+    if (!this.fatherMixer) return;
+    const preferred = mood === 'idle' ? ['Idle_4', 'restpose'] : ['Talk_Passionately', 'Idle_4'];
+    const clip = preferred.map((name) => this.fatherAnimations.find((item) => item.name === name)).find(Boolean)
+      || this.fatherAnimations[0];
+    if (!clip) return;
+    const next = this.fatherMixer.clipAction(clip);
+    next.reset();
+    next.enabled = true;
+    next.setEffectiveWeight(1);
+    next.setEffectiveTimeScale(FATHER_TALK_SPEED[mood] ?? 1);
+    next.setLoop(THREE.LoopRepeat, Infinity);
+    next.play();
+    if (this.fatherAction && this.fatherAction !== next) this.fatherAction.crossFadeTo(next, 0.24, false);
+    this.fatherAction = next;
+  }
+
+  // `racket`: he comes in with the tennis racket from the park; other visits leave it out.
+  async showFather(mood = 'angry', { racket = true } = {}) {
+    if (!this.active) return false;
+    await this.initializeFather();
+    if (!this.active || !this.fatherGroup) return false;
+    this.fatherGroup.visible = true;
+    if (this.fatherRacket) this.fatherRacket.visible = racket;
+    this.playFatherMood(mood);
+    this.updateFatherRacket();
+    return true;
+  }
+
+  setFatherMood(mood) {
+    if (!this.fatherGroup?.visible) return;
+    this.playFatherMood(mood);
+  }
+
+  setFatherTalking(talking) {
+    this.fatherTalking = Boolean(talking && this.fatherGroup?.visible);
+  }
+
+  updateFatherTalk(delta) {
+    this.fatherMouth.update(delta, this.fatherTalking);
+  }
+
+  hideFather() {
+    this.setFatherTalking(false);
+    this.fatherMouth.reset();
+    this.fatherMixer?.stopAllAction();
+    this.fatherAction = null;
+    if (this.fatherGroup) this.fatherGroup.visible = false;
+    if (this.fatherRacket) this.fatherRacket.visible = false;
+    this.restoreCamera();
+  }
+
+  focusFather() {
+    this.cameraMode = 'father';
+    // Head and shoulders, the way a dialogue is shot: close enough to see his mouth move, with his
+    // face between the dimmed HUD and the speech card. With the racket in his hand the shot opens
+    // up to his waist and to his right, so the racket the story is about stays in view.
+    if (this.fatherRacket?.visible) {
+      this.cameraTargetPosition.set(0.66, 1.68, 2.85);
+      this.cameraTargetLookAt.set(0.86, 1.2, 0.7);
+    } else {
+      this.cameraTargetPosition.set(0.9, 1.62, 2.1);
+      this.cameraTargetLookAt.set(1.0, 1.36, 0.75);
+    }
+  }
+
+  restoreCamera({ snap = false } = {}) {
+    this.cameraMode = 'home';
+    this.cameraTargetPosition.copy(this.cameraHomePosition);
+    this.cameraTargetLookAt.copy(this.cameraHomeLookAt);
+    if (!snap) return;
+    this.camera.position.copy(this.cameraTargetPosition);
+    this.cameraLookAt.copy(this.cameraTargetLookAt);
+    this.camera.lookAt(this.cameraLookAt);
+  }
+
+  updateCamera(delta) {
+    const blend = 1 - Math.exp(-Math.min(delta, 0.05) * 5.2);
+    this.camera.position.lerp(this.cameraTargetPosition, blend);
+    this.cameraLookAt.lerp(this.cameraTargetLookAt, blend);
+    this.camera.lookAt(this.cameraLookAt);
+  }
+
+  updateFatherRacket() {
+    if (!this.fatherRacket?.visible || !this.fatherHand || !this.fatherGroup) return;
+    this.fatherHand.getWorldPosition(this.fatherRacket.position);
+    // Keep the prop a little in front of the animated body so it never disappears into his torso.
+    this.fatherRacketOffset.set(0.02, -0.03, 0.14).applyQuaternion(this.fatherGroup.quaternion);
+    this.fatherRacket.position.add(this.fatherRacketOffset);
+    this.fatherRacketQuaternion.setFromEuler(FATHER_RACKET_TILT);
+    this.fatherRacket.quaternion.copy(this.fatherGroup.quaternion).multiply(this.fatherRacketQuaternion);
+  }
+
   enter(name = 'Монстрик') {
     if (!this.ready || this.active) return;
     this.name = name || 'Монстрик';
@@ -462,6 +667,9 @@ export class MonsterRoom {
     });
     this.active = true;
     this.resize(540, 960);
+    // The mixer is shared with the editor, whose dance would otherwise blend into every room clip.
+    this.mixer.stopAllAction();
+    this.currentAction = null;
     this.pickNextTask(true);
   }
 
@@ -473,6 +681,7 @@ export class MonsterRoom {
     this.phase = 'waiting';
     // A meal left unwatched is finished off-screen.
     this.endMeal();
+    this.hideFather();
     this.mixer.stopAllAction();
     this.monster.removeFromParent();
     this.monster.rotation.order = 'XYZ';
@@ -490,8 +699,16 @@ export class MonsterRoom {
     this.camera.aspect = aspect;
     const halfFov = THREE.MathUtils.degToRad(this.camera.fov * 0.5);
     const distance = Math.max(7.7, 1.95 / (Math.tan(halfFov) * Math.max(aspect, 0.45)));
-    this.camera.position.set(0, 2.98, distance - 0.25);
-    this.camera.lookAt(0, 0.78, -0.08);
+    this.cameraHomePosition.set(0, 2.98, distance - 0.25);
+    if (this.cameraMode === 'father') {
+      this.focusFather();
+    } else {
+      this.cameraTargetPosition.copy(this.cameraHomePosition);
+      this.cameraTargetLookAt.copy(this.cameraHomeLookAt);
+      this.camera.position.copy(this.cameraHomePosition);
+      this.cameraLookAt.copy(this.cameraHomeLookAt);
+      this.camera.lookAt(this.cameraLookAt);
+    }
     this.camera.updateProjectionMatrix();
   }
 
@@ -519,12 +736,71 @@ export class MonsterRoom {
     return clip.duration || 2.4;
   }
 
+  conditionTask() {
+    if (!this.conditionMood) return null;
+    return {
+      id: CONDITION_TASK_ID,
+      clip: this.conditionMood.clip,
+      fallback: 'restpose',
+      duration: Infinity,
+      lookAt: [this.camera.position.x, this.camera.position.z],
+      actionText: this.conditionMood.status,
+    };
+  }
+
+  showConditionMood() {
+    const task = this.conditionTask();
+    if (!this.active || !task) return;
+    this.endMeal();
+    this.resumeAfterWave = null;
+    this.currentTask = task;
+    this.phase = 'acting';
+    this.phaseTime = 0;
+    this.phaseDuration = Infinity;
+    this.monster.rotation.x = 0;
+    const angle = Math.atan2(
+      this.camera.position.x - this.monster.position.x,
+      this.camera.position.z - this.monster.position.z,
+    );
+    this.monster.rotation.y += shortestAngle(this.monster.rotation.y, angle);
+    this.playClip(task.clip, { fallback: task.fallback });
+    this.setStatus(task.actionText);
+  }
+
+  // A condition mood is the monster's persistent state in the room. Activities may interrupt it,
+  // but as soon as they finish the condition becomes visible again.
+  setConditionMood(mood = null) {
+    const next = mood?.clip ? { clip: mood.clip, status: mood.status || 'отдыхает' } : null;
+    const unchanged = this.conditionMood?.clip === next?.clip
+      && this.conditionMood?.status === next?.status;
+    if (unchanged) return;
+    this.conditionMood = next;
+    if (!this.active) return;
+
+    if (!next) {
+      if (this.resumeAfterWave?.task?.id === CONDITION_TASK_ID) this.resumeAfterWave = null;
+      if (this.currentTask?.id === CONDITION_TASK_ID && this.phase !== 'held') this.pickNextTask(true);
+      return;
+    }
+    if (this.phase === 'held') return;
+    if (this.phase === 'waving') {
+      this.resumeAfterWave = { task: this.conditionTask(), phase: 'acting', remaining: Infinity };
+      return;
+    }
+    if (this.currentTask?.id === MEAL_TASK.id) return;
+    this.showConditionMood();
+  }
+
   setStatus(text) {
     this.onStatus(`${this.name} ${text}`);
   }
 
   pickNextTask(initial = false) {
     if (!this.active) return;
+    if (this.conditionMood) {
+      this.showConditionMood();
+      return;
+    }
     const shouldWander = !initial && Math.random() < 0.24;
     if (shouldWander) {
       const point = WANDER_POINTS[Math.floor(Math.random() * WANDER_POINTS.length)];
@@ -594,6 +870,38 @@ export class MonsterRoom {
     this.bowlKibble = null;
   }
 
+  // The ear cleaning: the monster drops whatever it was doing and stands still on the rug, facing
+  // the player, in the given pose until release(). A meal in progress is finished off-screen.
+  hold(clip = 'Mood_neutral', { fallback = 'restpose', spot = [0, 0.35] } = {}) {
+    if (!this.active) return;
+    this.endMeal();
+    this.currentTask = null;
+    this.resumeAfterWave = null;
+    this.phase = 'held';
+    this.phaseTime = 0;
+    this.monster.position.x = spot[0];
+    this.monster.position.z = spot[1];
+    this.monster.rotation.x = 0;
+    this.monster.rotation.y = 0;
+    // Nothing else may keep playing underneath, or the held head would sway and the ears with it.
+    this.mixer.stopAllAction();
+    this.currentAction = null;
+    this.playClip(clip, { fallback });
+    this.setStatus('стоит смирно и ждёт');
+  }
+
+  // Another pose while held, e.g. a happy dance once the ears are clean.
+  holdPose(clip, { fallback = 'restpose', loop = true } = {}) {
+    if (!this.active || this.phase !== 'held') return 0;
+    return this.playClip(clip, { fallback, loop });
+  }
+
+  release() {
+    if (!this.active || this.phase !== 'held') return;
+    this.phase = 'waiting';
+    this.pickNextTask();
+  }
+
   beginAction(task = this.currentTask, remaining = null) {
     if (!task) return this.pickNextTask();
     this.currentTask = task;
@@ -609,7 +917,7 @@ export class MonsterRoom {
   }
 
   wave() {
-    if (!this.active || this.phase === 'waving') return false;
+    if (!this.active || this.phase === 'waving' || this.phase === 'held') return false;
     this.resumeAfterWave = {
       task: this.currentTask,
       phase: this.phase,
@@ -643,9 +951,14 @@ export class MonsterRoom {
   update(delta) {
     if (!this.active) return;
     const dt = Math.min(delta, 0.05);
+    this.fatherMixer?.update(dt);
+    this.updateFatherTalk(dt);
+    this.updateFatherRacket();
+    this.updateCamera(dt);
     this.phaseTime += dt;
     this.glowTime += dt;
     if (this.lampLight) this.lampLight.intensity = 1.72 + Math.sin(this.glowTime * 1.35) * 0.12;
+    if (this.phase === 'held') return;
 
     if (this.phase === 'waving') {
       if (this.phaseTime >= this.waveDuration) this.resumeTask();

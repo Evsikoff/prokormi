@@ -4,16 +4,20 @@
   "notes": [
     "three.js removes ':', '.', '/', '[', ']' from node names and turns spaces into '_' (PropertyBinding.sanitizeNodeName), so 'mixamorig:Head' becomes 'mixamorigHead'.",
     "Colour pipeline, in linear RGB: base colour -> fur hue/saturation/value where furMask is white -> face overlay mixed by its alpha -> mood saturation/value -> multiply by mood tint.",
-    "Overlays and masks use the same UV set as the material's base colour texture; load them with flipY = false."
+    "Overlays and masks use the same UV set as the material's base colour texture; load them with flipY = false.",
+    "Dirt is straight RGBA mud mixed over the fur colour, before the face overlay, by alpha times the mood's dirt amount.",
+    "The children of the Flies node are flies built around their own origins, facing +Z: circle them around the Flies node's vertical axis."
   ],
   "materials": {
     "Body": {
       "uv": 0,
-      "furMask": "textures/fur_mask_body.webp"
+      "furMask": "textures/fur_mask_body.webp",
+      "dirt": "textures/dirt_body.webp"
     },
     "Face": {
       "uv": 1,
       "furMask": "textures/fur_mask_face.webp",
+      "dirt": "textures/dirt_face.webp",
       "overlays": {
         "neutral": "textures/face_neutral.webp",
         "happy": "textures/face_happy.webp",
@@ -21,7 +25,9 @@
         "sick": "textures/face_sick.webp",
         "smart": "textures/face_smart.webp",
         "silly": "textures/face_silly.webp",
-        "hungry": "textures/face_hungry.webp"
+        "hungry": "textures/face_hungry.webp",
+        "dirty": "textures/face_dirty.webp",
+        "dirty_hungry": "textures/face_dirty_hungry.webp"
       }
     }
   },
@@ -117,6 +123,7 @@
       "morphTargets": {
         "Belly_Thin": 0.0
       },
+      "dirt": 0.0,
       "props": []
     },
     "happy": {
@@ -135,6 +142,7 @@
       "morphTargets": {
         "Belly_Thin": 0.0
       },
+      "dirt": 0.0,
       "props": [
         "Sparkles"
       ]
@@ -155,6 +163,7 @@
       "morphTargets": {
         "Belly_Thin": 0.0
       },
+      "dirt": 0.0,
       "props": [
         "RainCloud"
       ]
@@ -175,6 +184,7 @@
       "morphTargets": {
         "Belly_Thin": 0.0
       },
+      "dirt": 0.0,
       "props": [
         "Thermometer",
         "SweatDrops"
@@ -196,6 +206,7 @@
       "morphTargets": {
         "Belly_Thin": 0.0
       },
+      "dirt": 0.0,
       "props": [
         "Glasses"
       ]
@@ -216,6 +227,7 @@
       "morphTargets": {
         "Belly_Thin": 0.0
       },
+      "dirt": 0.0,
       "props": [
         "PropellerCap"
       ]
@@ -236,16 +248,63 @@
       "morphTargets": {
         "Belly_Thin": 1.0
       },
+      "dirt": 0.0,
       "props": [
+        "ThoughtBubble"
+      ]
+    },
+    "dirty": {
+      "label": "Грязный",
+      "clip": "Mood_dirty",
+      "overlay": "dirty",
+      "tint": {
+        "saturation": 0.8,
+        "value": 0.86,
+        "multiply": [
+          0.97,
+          0.94,
+          0.86
+        ]
+      },
+      "morphTargets": {
+        "Belly_Thin": 0.0
+      },
+      "dirt": 1.0,
+      "props": [
+        "Flies",
+        "StinkLines"
+      ]
+    },
+    "dirty_hungry": {
+      "label": "Грязный и голодный",
+      "clip": "Mood_dirty_hungry",
+      "overlay": "dirty_hungry",
+      "tint": {
+        "saturation": 0.74,
+        "value": 0.84,
+        "multiply": [
+          0.97,
+          0.94,
+          0.86
+        ]
+      },
+      "morphTargets": {
+        "Belly_Thin": 1.0
+      },
+      "dirt": 1.0,
+      "props": [
+        "Flies",
         "ThoughtBubble"
       ]
     }
   },
   "props": [
+    "Flies",
     "Glasses",
     "PropellerCap",
     "RainCloud",
     "Sparkles",
+    "StinkLines",
     "SweatDrops",
     "Thermometer",
     "ThoughtBubble"
@@ -257,6 +316,8 @@
     "FunnyDancing_03",
     "Greetings",
     "Groan_Holding_Stomach_in_Sleep",
+    "Mood_dirty",
+    "Mood_dirty_hungry",
     "Mood_happy",
     "Mood_hungry",
     "Mood_neutral",

@@ -17,12 +17,19 @@ export const FEEDING_FAILED_EVENT = 'Неудачная попытка корм�
 export const MONSTER_STATE_EVENT = 'Изменение состояния монстра';
 export const MONSTER_CREATED_EVENT = 'Создание монстра';
 export const FOOD_PURCHASE_EVENT = 'Покупка еды';
+// Anything bought outside the food shop: 'Идентификатор товара' names the data mart row.
+export const GOODS_PURCHASE_EVENT = 'Покупка техники';
 export const POCKET_SPENDING_EVENT = 'Списание карманных денег';
 export const POCKET_TOPUP_EVENT = 'Пополнение карманных денег';
 export const BUDGET_PLAN_EVENT = 'Сохранение планового бюджета';
 // Actual budget execution, one record per article change, for the analytics log.
 export const BUDGET_FACT_EVENT = 'Учет фактического бюджета';
 export const REQUIRED_ARTICLE = 'Обязательные расходы';
+export const FUN_ARTICLE = 'Веселье';
+export const SAVINGS_ARTICLE = 'Накопления на большую покупку';
+// Money nobody planned for: the father's thanks, a reward for an additional task. It is not an
+// article of the plan, but the fact log keeps it under this name, with where the coins went.
+export const INCOME_ARTICLE = 'Внеплановые доходы';
 // What the player owns, by data mart id: 'Тип инвентаря' is the item id, 'Количество' the signed
 // change in the item's own unit, named in 'Единица измерения'.
 export const INVENTORY_CHANGE_EVENT = 'Изменение инвентаря пользователя';
@@ -39,10 +46,34 @@ const POCKET_EVENTS = {
   [POCKET_SPENDING_EVENT]: -1,
 };
 export const SAVINGS_TOPUP_EVENT = 'Пополнение копилки';
+// Money spent straight out of the piggy bank: in the final part of the game that is how a big goal
+// is paid for ('Покупка цели' is then true).
+export const SAVINGS_SPENDING_EVENT = 'Списание из копилки';
 const SAVINGS_EVENTS = {
   [SAVINGS_TOPUP_EVENT]: 1,
-  'Списание из копилки': -1,
+  [SAVINGS_SPENDING_EVENT]: -1,
 };
+// A big savings goal bought with the piggy bank: 'Идентификатор цели' names its data mart row.
+export const GOAL_PURCHASE_EVENT = 'Покупка крупной финансовой цели';
+// The answer to a big savings goal an episode has offered: 'Идентификатор цели' names the goal
+// row of the data mart, 'Цель принята' holds the answer. Both answers close the question.
+export const SAVINGS_GOAL_DECISION_EVENT = 'Решение по крупной финансовой цели';
+// Written when the player has made an economic episode's decision; 'Идентификатор эпизода' names
+// the episode row of the data mart, and the episode is then over for good.
+export const ECONOMIC_EPISODE_COMPLETED_EVENT = 'Завершение экономического эпизода';
+// Written when the player has finished an additional task; 'Идентификатор задания' names its data mart row.
+export const ADDITIONAL_TASK_COMPLETED_EVENT = 'Выполнение дополнительного задания';
+// The 🤧 icon tapped while the monster is dirty: an attempt to clean it, whatever happens next.
+export const CLEANING_ATTEMPT_EVENT = 'Попытка чистки козявок';
+// A nose cleaner handed in for a warranty repair: 'Прибор' names its data mart row, and one piece of
+// it is away until the morning of 'Вернётся в день'.
+export const DEVICE_REPAIR_EVENT = 'Сдача прибора в ремонт';
+export const REPAIR_RETURN_DAY_FIELD = 'Вернётся в день';
+// A paid checkout in the toy store (toy-shop.js writes it; the surprise-box machine is not a purchase
+// of a toy the player chose).
+export const TOY_PURCHASE_EVENT = 'Покупка игрушек';
+// Closing the tutorial about additional tasks, read through or skipped.
+export const ADDITIONAL_TASK_TUTORIAL_SEEN_EVENT = 'Просмотр туториала дополнительных заданий';
 // A feeding eats one portion of 100 g: that matches the ≈13 coins a day the budget screen
 // quotes (Нормовет 5/2 costs 26 coins for 200 g).
 export const FOOD_PORTION_GRAMS = 100;
@@ -65,6 +96,7 @@ export function inventoryAmount(item, packs) {
 
 export const STAT_MIN = -3;
 export const STAT_MAX = 3;
+export const MOOD_SCALE_MAX = 10;
 
 // A stat changes only through this record: 'Изменение' is added to the stat named in 'Характеристика'.
 export const MONSTER_STAT_EVENT = 'Изменение характеристики монстра';
@@ -79,7 +111,9 @@ export const HYGIENE_STATE = 'Гигиена';
 export const DIRTY = 'Грязный';
 export const CLEAN = 'Чистый';
 
-export function clampStat(value) {
+export function clampStat(value, key = null) {
+  // Mood keeps every earned point, including the +5 from each later toy.
+  if (key === 'mood') return Math.max(STAT_MIN, value);
   return Math.max(STAT_MIN, Math.min(STAT_MAX, value));
 }
 
@@ -133,6 +167,16 @@ export function deriveRoomState(records) {
   let savings = 0;
   let monster = null;
   let hygiene = CLEAN;
+  // Data mart ids of the savings goals the player has answered, accepted as well as put off.
+  const decidedSavingsGoals = new Set();
+  // Data mart ids of the economic episodes the player has finished.
+  const completedEconomicEpisodes = new Set();
+  // Data mart ids of the additional tasks the player has done.
+  const completedAdditionalTasks = new Set();
+  let additionalTaskTutorialSeen = false;
+  let lastCleaningAttemptDay = null;
+  let toyStorePurchased = false;
+  const repairs = [];
   const stats = { health: 0, mood: 0, development: 0 };
   const statKeys = new Map(Object.entries(STAT_LABELS).map(([key, label]) => [label, key]));
   // Data mart item id → amount in the item's unit.
@@ -146,9 +190,16 @@ export function deriveRoomState(records) {
     if (type === MONSTER_STAT_EVENT) {
       const key = statKeys.get(record['Характеристика']);
       const change = Number(record['Изменение']);
-      if (key && Number.isFinite(change)) stats[key] = clampStat(stats[key] + change);
+      if (key && Number.isFinite(change)) stats[key] = clampStat(stats[key] + change, key);
     }
     if (type === MONSTER_STATE_EVENT && record['Состояние'] === HYGIENE_STATE) hygiene = record['Стало'];
+    if (type === SAVINGS_GOAL_DECISION_EVENT) decidedSavingsGoals.add(String(record['Идентификатор цели']));
+    if (type === ECONOMIC_EPISODE_COMPLETED_EVENT) completedEconomicEpisodes.add(String(record['Идентификатор эпизода']));
+    if (type === ADDITIONAL_TASK_COMPLETED_EVENT) completedAdditionalTasks.add(String(record['Идентификатор задания']));
+    if (type === ADDITIONAL_TASK_TUTORIAL_SEEN_EVENT) additionalTaskTutorialSeen = true;
+    if (type === CLEANING_ATTEMPT_EVENT) lastCleaningAttemptDay = day;
+    if (type === TOY_PURCHASE_EVENT) toyStorePurchased = true;
+    if (type === DEVICE_REPAIR_EVENT) repairs.push({ id: record['Прибор'], until: Number(record[REPAIR_RETURN_DAY_FIELD]) || 0 });
     if (type === INVENTORY_CHANGE_EVENT) {
       const id = record['Тип инвентаря'];
       const amount = Number(record['Количество']);
@@ -157,6 +208,16 @@ export function deriveRoomState(records) {
     pocket += eventAmount(record, POCKET_EVENTS);
     savings += eventAmount(record, SAVINGS_EVENTS);
   }
+
+  // Data mart id → { count, until }: pieces still at the service centre and the day they come back.
+  const devicesInRepair = new Map();
+  for (const repair of repairs) {
+    if (repair.until <= day) continue;
+    const entry = devicesInRepair.get(repair.id) ?? { count: 0, until: 0 };
+    devicesInRepair.set(repair.id, { count: entry.count + 1, until: Math.max(entry.until, repair.until) });
+  }
+  // Devices whose repair ended this very morning.
+  const devicesBackToday = repairs.filter((repair) => repair.until === day).map((repair) => repair.id);
 
   let foodGrams = 0;
   let suitableFoodGrams = 0;
@@ -169,7 +230,15 @@ export function deriveRoomState(records) {
     day,
     pocket,
     savings,
+    decidedSavingsGoals,
+    completedEconomicEpisodes,
+    completedAdditionalTasks,
+    additionalTaskTutorialSeen,
     inventory,
+    devicesInRepair,
+    devicesBackToday,
+    cleaningAttemptedToday: day > 0 && lastCleaningAttemptDay === day,
+    toyStorePurchased,
     foodGrams: Math.max(0, foodGrams),
     suitableFoodGrams: Math.max(0, suitableFoodGrams),
     // Fed means fed on the current game day; a new day makes the monster hungry again.

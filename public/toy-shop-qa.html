@@ -1,0 +1,21 @@
+<!doctype html><html lang="ru"><meta charset="utf-8"><title>Toy shop QA</title><body><script>
+const key = 'prokormi-monstra:user-profile-id:v1';
+const qaId = 'temporary-toy-shop-data-mart-qa';
+const recordsKey = `prokormi-monstra:progress:v1:${qaId}`;
+if (location.search.includes('restore')) {
+  const previous = sessionStorage.getItem('toy-shop-qa-original-profile');
+  if (previous === '') localStorage.removeItem(key);
+  else if (previous !== null) localStorage.setItem(key, previous);
+  localStorage.removeItem(recordsKey);
+  sessionStorage.removeItem('toy-shop-qa-original-profile');
+  document.body.textContent = 'Original profile restored.';
+} else {
+  sessionStorage.setItem('toy-shop-qa-original-profile', localStorage.getItem(key) || '');
+  localStorage.setItem(key, qaId);
+  localStorage.setItem(recordsKey, JSON.stringify([
+    { 'Тип события': 'Начало нового дня', 'Профиль пользователя': qaId, 'Порядковый номер дня': 8 },
+    { 'Тип события': 'Пополнение карманных денег', 'Профиль пользователя': qaId, 'Значение': 70, 'Игровой день': 8 },
+  ]));
+  location.replace('/?screen=toy');
+}
+</script></body></html>

@@ -19,9 +19,9 @@
 
         <div id="start-gate" class="start-gate">
           <img class="start-logo" src="./name.png" alt="Прокорми монстра" />
-          <p>Приготовься создать своего монстрика!</p>
+          <p id="start-gate-text">Приготовься создать своего монстрика!</p>
           <button id="start-button" class="primary-button start-button" type="button">
-            <span>Играть</span><span aria-hidden="true">▶</span>
+            <span id="start-button-label">Играть</span><span aria-hidden="true">▶</span>
           </button>
         </div>
 
@@ -167,7 +167,7 @@
         <header class="budget-header">
           <img src="./name.png" alt="Прокорми монстра" />
           <div class="budget-title-copy">
-            <p class="eyebrow">ГОРОДСКАЯ ДОТАЦИЯ</p>
+            <p id="budget-eyebrow" class="eyebrow">ГОРОДСКАЯ ДОТАЦИЯ</p>
             <h1>Распредели бюджет</h1>
           </div>
         </header>
@@ -189,17 +189,22 @@
           <span class="budget-calendar" aria-hidden="true">▦</span>
           <div>
             <strong>План на три дня</strong>
+            <span id="budget-period-days" hidden></span>
           </div>
+          <p id="budget-pocket" class="budget-pocket" hidden>
+            <span><span aria-hidden="true">👛</span> В кармане сейчас</span>
+            <b id="budget-pocket-value">0 🪙</b>
+          </p>
         </div>
 
         <div id="budget-categories" class="budget-categories" data-budget-tutorial-target="budget-categories">
-          <article class="budget-category budget-category-required">
+          <article class="budget-category budget-category-required" data-budget-tutorial-target="budget-required">
             <div class="budget-category-heading">
               <span class="budget-category-icon" aria-hidden="true">🍲</span>
               <div>
                 <h2>Обязательные расходы</h2>
-                <p>Корм: ≈ <strong id="food-daily-cost">13 🪙</strong> в день</p>
-                <p>Прибор от козявок: ≈ <strong id="nose-cleaner-cost">25 🪙</strong> разово</p>
+                <p id="budget-food-hint">Корм: ≈ <strong>13 🪙</strong> в день</p>
+                <p id="budget-extra-hint">Прибор от козявок: ≈ <strong>25 🪙</strong> разово</p>
               </div>
               <output id="budget-required-value" for="budget-required">0 🪙</output>
             </div>
@@ -231,6 +236,16 @@
             </div>
             <input id="budget-savings" class="budget-range" data-budget-key="savings" type="range" min="0" max="100" step="1" value="0" aria-label="Бюджет накоплений на большую покупку" />
             <div class="budget-category-footer"><span>В копилку</span><span id="budget-savings-daily">0 🪙/день</span></div>
+            <p id="budget-promise" class="budget-promise" hidden>
+              <span aria-hidden="true">🤞</span>
+              <span>Ты обещал класть в копилку <b id="budget-promise-value">0 🪙</b> из каждого бюджета</span>
+              <b id="budget-promise-state" class="budget-promise-state"></b>
+            </p>
+            <div id="budget-goals" class="budget-goals" hidden>
+              <p class="budget-goals-head"><span>🎯 Копим на цели</span><span>В копилке будет <strong id="budget-goals-pool">0 🪙</strong></span></p>
+              <ul id="budget-goals-list" class="budget-goals-list"></ul>
+              <p id="budget-goals-all" class="budget-goals-total"><span>На все цели</span><b id="budget-goals-total">ещё 0 🪙</b></p>
+            </div>
           </article>
         </div>
 
@@ -247,6 +262,569 @@
             <div class="tutorial-actions">
               <button id="budget-tutorial-back" class="tutorial-back" type="button">Назад</button>
               <button id="budget-tutorial-next" class="primary-button tutorial-next" type="button">Дальше <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="budget-review-screen" class="screen budget-screen budget-review-screen" aria-label="Итоги бюджета: план и факт" hidden>
+        <header class="budget-header">
+          <img src="./name.png" alt="Прокорми монстра" />
+          <div class="budget-title-copy">
+            <p id="budget-review-eyebrow" class="eyebrow">ИТОГИ ДНЕЙ 1–3</p>
+            <h1>План и факт</h1>
+          </div>
+        </header>
+
+        <div class="budget-overview">
+          <div class="budget-summary-card">
+            <span>Бюджет на три дня</span>
+            <strong id="budget-review-fund">0 🪙</strong>
+            <span id="budget-review-source"></span>
+          </div>
+          <div class="budget-remaining-card">
+            <span>Потрачено</span>
+            <strong id="budget-review-spent">0 🪙</strong>
+            <span id="budget-review-left">Осталось 0 🪙</span>
+          </div>
+        </div>
+
+        <div id="budget-review-articles" class="review-articles"></div>
+
+        <button id="budget-review-mentor" class="primary-button approve-budget" type="button">
+          <span>Что скажет ментор?</span><span aria-hidden="true">→</span>
+        </button>
+      </section>
+
+      <section id="tennis-estimate-screen" class="screen tennis-estimate-screen" aria-label="Смета проверки теннисного таланта" hidden>
+        <header class="estimate-header">
+          <img src="./name.png" alt="Прокорми монстра" />
+          <div>
+            <p class="eyebrow">ЭКОНОМИЧЕСКИЙ ЭПИЗОД</p>
+            <h1>Смета теннисной проверки</h1>
+          </div>
+        </header>
+
+        <div class="estimate-goal" data-estimate-target="goal">
+          <span aria-hidden="true">🎯</span>
+          <div><b>Цель первого этапа</b><p>За одно занятие проверить, есть ли у монстрика талант к теннису.</p></div>
+        </div>
+
+        <div class="estimate-funding" data-estimate-target="funding">
+          <div><span>Папа оплатит</span><strong>90%</strong></div>
+          <div><span>Ты оплатишь</span><strong>10%</strong></div>
+          <p>Проценты считаются от разумной утверждённой сметы.</p>
+        </div>
+
+        <div class="estimate-content">
+          <div class="estimate-catalog-head">
+            <div><span>Выбери расходы</span><small>Нажимай на самые полезные предложения</small></div>
+            <span id="estimate-selected-count">0 выбрано</span>
+          </div>
+          <div id="estimate-items" class="estimate-items" data-estimate-target="items"></div>
+        </div>
+
+        <aside class="estimate-summary" data-estimate-target="summary">
+          <div class="estimate-summary-main">
+            <span>Размер сметы</span>
+            <strong id="estimate-total">0 🪙</strong>
+          </div>
+          <div class="estimate-summary-split">
+            <span>Папа: <b id="estimate-father-share">0 🪙</b></span>
+            <span>С твоего счёта: <b id="estimate-player-share">0 🪙</b></span>
+          </div>
+          <div id="estimate-recurring" class="estimate-recurring" hidden>
+            <span>↻ Регулярные обязательства</span>
+            <b id="estimate-recurring-total">0 🪙</b>
+          </div>
+          <div id="estimate-shortage" class="estimate-recurring" role="status" hidden></div>
+        </aside>
+
+        <button id="estimate-submit" class="primary-button estimate-submit" type="button" data-estimate-target="submit" disabled>
+          Передать смету папе <span aria-hidden="true">→</span>
+        </button>
+
+        <div id="estimate-tutorial-layer" class="tutorial-layer estimate-tutorial-layer is-hidden" aria-live="assertive">
+          <div id="estimate-tutorial-focus" class="tutorial-focus-ring" hidden></div>
+          <div class="tutorial-card estimate-tutorial-card">
+            <button id="estimate-tutorial-skip" class="tutorial-skip" type="button">Пропустить</button>
+            <div class="tutorial-mascot" aria-hidden="true"><span class="mascot-eye"></span></div>
+            <p id="estimate-tutorial-progress" class="tutorial-progress"></p>
+            <p id="estimate-tutorial-text" class="tutorial-text"></p>
+            <div class="tutorial-actions">
+              <button id="estimate-tutorial-back" class="tutorial-back" type="button">Назад</button>
+              <button id="estimate-tutorial-next" class="primary-button tutorial-next" type="button">Дальше <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="route-screen" class="screen route-screen" aria-label="Поездка на тренировку" hidden>
+        <header class="estimate-header route-header">
+          <img src="./name.png" alt="Прокорми монстра" />
+          <div>
+            <p class="eyebrow">ВЫЕЗД В 10:00 · ТРЕНИРОВКА В 11:00</p>
+            <h1 id="route-title">Поездка на тренировку</h1>
+          </div>
+        </header>
+
+        <div class="route-who" role="tablist" aria-label="Чей маршрут строим" data-route-target="who">
+          <button id="route-who-coach" class="route-who-button" type="button" role="tab" data-traveller="coach" aria-selected="true">
+            <span class="route-who-icon" aria-hidden="true">🏋️</span>
+            <span><b>Маршрут Макса</b><small id="route-who-coach-status">не построен</small></span>
+          </button>
+          <button id="route-who-own" class="route-who-button" type="button" role="tab" data-traveller="own" aria-selected="false">
+            <span class="route-who-icon" aria-hidden="true">🏠</span>
+            <span><b>Наш маршрут</b><small id="route-who-own-status">не построен</small></span>
+          </button>
+        </div>
+
+        <div id="route-map" class="route-map" data-route-target="map">
+          <img id="route-map-image" class="route-map-image" src="/images/route/city_map.png" alt="" hidden />
+          <svg id="route-map-svg" class="route-map-svg" viewBox="0 0 360 440" role="img" aria-label="Карта города с маршрутами"></svg>
+          <div class="route-zoom" data-route-target="zoom">
+            <button id="route-zoom-in" class="route-zoom-button" type="button" aria-label="Приблизить карту">+</button>
+            <button id="route-zoom-out" class="route-zoom-button" type="button" aria-label="Отдалить карту" disabled>−</button>
+            <button id="route-zoom-reset" class="route-zoom-button" type="button" aria-label="Показать весь город" disabled>⤢</button>
+          </div>
+        </div>
+        <p id="route-hint" class="route-hint" role="status"></p>
+
+        <div class="route-tools">
+          <button id="route-undo" class="route-tool" type="button"><span aria-hidden="true">↶</span> Шаг назад</button>
+          <button id="route-reset" class="route-tool" type="button"><span aria-hidden="true">✕</span> Сбросить маршрут</button>
+        </div>
+
+        <div id="route-summary" class="route-summary" data-route-target="summary">
+          <div class="route-summary-row" data-traveller="coach">
+            <span class="route-summary-who" aria-hidden="true">🏋️</span>
+            <span id="route-summary-coach-legs" class="route-summary-legs"></span>
+            <span id="route-summary-coach-numbers" class="route-summary-numbers"></span>
+          </div>
+          <div class="route-summary-row" data-traveller="own">
+            <span class="route-summary-who" aria-hidden="true">🏠</span>
+            <span id="route-summary-own-legs" class="route-summary-legs"></span>
+            <span id="route-summary-own-numbers" class="route-summary-numbers"></span>
+          </div>
+          <p id="route-summary-wait" class="route-summary-wait"></p>
+          <p class="route-summary-total">Итого за поездку <b id="route-total">0 🪙</b></p>
+        </div>
+
+        <button id="route-submit" class="primary-button route-submit" type="button" data-route-target="submit" disabled>Утвердить план</button>
+
+        <div id="route-training" class="memo-win route-training" role="dialog" aria-modal="true" aria-labelledby="route-training-title" hidden>
+          <section class="memo-win-card">
+            <span class="memo-win-icon" aria-hidden="true">🎾</span>
+            <h2 id="route-training-title">Тренировка удалась!</h2>
+            <p id="route-training-text"></p>
+            <p id="route-training-mood" class="memo-win-reward"></p>
+            <button id="route-training-close" class="primary-button" type="button">Домой <span aria-hidden="true">🏠</span></button>
+          </section>
+        </div>
+
+        <div id="route-tutorial-layer" class="tutorial-layer estimate-tutorial-layer route-tutorial-layer is-hidden" aria-live="assertive">
+          <div id="route-tutorial-focus" class="tutorial-focus-ring" hidden></div>
+          <div class="tutorial-card estimate-tutorial-card">
+            <button id="route-tutorial-skip" class="tutorial-skip" type="button">Пропустить</button>
+            <div class="tutorial-mascot" aria-hidden="true"><span class="mascot-eye"></span></div>
+            <p id="route-tutorial-progress" class="tutorial-progress"></p>
+            <p id="route-tutorial-text" class="tutorial-text"></p>
+            <div class="tutorial-actions">
+              <button id="route-tutorial-back" class="tutorial-back" type="button">Назад</button>
+              <button id="route-tutorial-next" class="primary-button tutorial-next" type="button">Дальше <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="memo-screen" class="screen memo-screen" aria-label="Валютное мемо" hidden>
+        <header class="estimate-header memo-header">
+          <img src="./name.png" alt="Прокорми монстра" />
+          <div>
+            <p class="eyebrow">ДОПОЛНИТЕЛЬНОЕ ЗАДАНИЕ</p>
+            <h1 id="memo-title">Валютное мемо</h1>
+          </div>
+        </header>
+        <div class="memo-status">
+          <p class="memo-rule">Открой валюту и страну, где ею платят</p>
+          <p class="memo-score"><span>Пары <b id="memo-pairs">0 из 8</b></span><span>Ходы <b id="memo-moves">0</b></span></p>
+        </div>
+        <ol id="memo-board" class="memo-board" aria-label="Карточки"></ol>
+        <button id="memo-exit" class="memo-exit" type="button"><span aria-hidden="true">←</span> В комнату</button>
+
+        <div id="memo-win" class="memo-win" role="dialog" aria-modal="true" aria-labelledby="memo-win-title" hidden>
+          <section class="memo-win-card">
+            <span class="memo-win-icon" aria-hidden="true">🏆</span>
+            <h2 id="memo-win-title">Все пары найдены!</h2>
+            <p id="memo-win-text"></p>
+            <p id="memo-win-reward" class="memo-win-reward"></p>
+            <button id="memo-win-close" class="primary-button" type="button">В комнату <span aria-hidden="true">→</span></button>
+          </section>
+        </div>
+      </section>
+
+      <section id="assets-screen" class="screen memo-screen assets-screen" aria-label="Активы и пассивы" hidden>
+        <header class="estimate-header memo-header">
+          <img src="./name.png" alt="Прокорми монстра" />
+          <div>
+            <p class="eyebrow">ДОПОЛНИТЕЛЬНОЕ ЗАДАНИЕ</p>
+            <h1 id="assets-title">Активы и пассивы</h1>
+          </div>
+        </header>
+        <div class="memo-status" data-assets-target="capital">
+          <p class="memo-rule">Разложи вещи: что приносит пользу или радость, а что только забирает деньги?</p>
+          <p class="memo-score">
+            <span>Разобрано <b id="assets-sorted">0 из 12</b></span>
+            <span>Капитал <b id="assets-capital">100 🪙</b></span>
+            <button id="assets-rules-open" class="assets-rules-open" type="button" data-assets-target="rules">Правила</button>
+          </p>
+        </div>
+        <div class="assets-stage">
+          <article id="assets-card" class="assets-card" aria-live="polite" data-assets-target="card">
+            <span id="assets-card-icon" class="assets-card-icon" aria-hidden="true"></span>
+            <h2 id="assets-card-name" class="assets-card-name"></h2>
+            <p id="assets-card-note" class="assets-card-note"></p>
+            <span class="assets-card-hint" aria-hidden="true">← перетащи в корзину или нажми на неё →</span>
+          </article>
+          <p id="assets-delta" class="assets-delta" aria-hidden="true"></p>
+          <div id="assets-feedback" class="assets-feedback" role="status" hidden>
+            <p id="assets-feedback-title" class="assets-feedback-title"></p>
+            <p id="assets-feedback-text" class="assets-feedback-text"></p>
+            <button id="assets-feedback-next" class="primary-button" type="button">Понятно <span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+        <div class="assets-bins" data-assets-target="bins">
+          <button id="assets-bin-asset" class="assets-bin is-asset" type="button" data-choice="asset">
+            <span class="assets-bin-label">Актив</span>
+            <span class="assets-bin-hint">польза или радость</span>
+            <span id="assets-bin-asset-items" class="assets-bin-items" aria-hidden="true"></span>
+          </button>
+          <button id="assets-bin-liability" class="assets-bin is-liability" type="button" data-choice="liability">
+            <span class="assets-bin-label">Пассив</span>
+            <span class="assets-bin-hint">только тратит деньги</span>
+            <span id="assets-bin-liability-items" class="assets-bin-items" aria-hidden="true"></span>
+          </button>
+        </div>
+        <button id="assets-exit" class="memo-exit" type="button" data-assets-target="exit"><span aria-hidden="true">←</span> В комнату</button>
+
+        <div id="assets-rules" class="memo-win" role="dialog" aria-modal="true" aria-labelledby="assets-rules-title" hidden>
+          <section class="memo-win-card assets-rules-card">
+            <span class="memo-win-icon" aria-hidden="true">⚖️</span>
+            <h2 id="assets-rules-title">Как отличить актив от пассива</h2>
+            <ul class="assets-rules-list">
+              <li><b class="is-asset">Актив</b> — вещь, которая приносит пользу или удовольствие.</li>
+              <li><b class="is-liability">Пассив</b> — вещь, которая только забирает деньги на владение.</li>
+              <li><b class="is-liability">Хлам</b> — тоже пассив: место для хранения стоит денег.</li>
+              <li><b class="is-liability">Лишнее</b> — нужная вещь в неразумном количестве, например пять чайников, тоже пассив.</li>
+            </ul>
+            <p class="assets-rules-capital">Верный выбор пополняет виртуальный капитал, ошибка — уменьшает. Ошибочную вещь придётся разобрать ещё раз.</p>
+            <button id="assets-rules-close" class="primary-button" type="button">Начать <span aria-hidden="true">→</span></button>
+          </section>
+        </div>
+
+        <div id="assets-win" class="memo-win" role="dialog" aria-modal="true" aria-labelledby="assets-win-title" hidden>
+          <section class="memo-win-card">
+            <span class="memo-win-icon" aria-hidden="true">🏆</span>
+            <h2 id="assets-win-title">Всё разложено!</h2>
+            <p id="assets-win-text"></p>
+            <p id="assets-win-reward" class="memo-win-reward"></p>
+            <button id="assets-win-close" class="primary-button" type="button">В комнату <span aria-hidden="true">→</span></button>
+          </section>
+        </div>
+
+        <div id="assets-tutorial-layer" class="tutorial-layer estimate-tutorial-layer assets-tutorial-layer is-hidden" aria-live="assertive">
+          <div id="assets-tutorial-focus" class="tutorial-focus-ring" hidden></div>
+          <div class="tutorial-card estimate-tutorial-card">
+            <button id="assets-tutorial-skip" class="tutorial-skip" type="button">Пропустить</button>
+            <div class="tutorial-mascot" aria-hidden="true"><span class="mascot-eye"></span></div>
+            <p id="assets-tutorial-progress" class="tutorial-progress"></p>
+            <p id="assets-tutorial-text" class="tutorial-text"></p>
+            <div class="tutorial-actions">
+              <button id="assets-tutorial-back" class="tutorial-back" type="button">Назад</button>
+              <button id="assets-tutorial-next" class="primary-button tutorial-next" type="button">Дальше <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="loc-screen" class="screen loc-screen" aria-label="Составление аккредитивов" hidden>
+        <header class="estimate-header loc-header">
+          <img src="./name.png" alt="Прокорми монстра" />
+          <div>
+            <p class="eyebrow">БАНК ПАПЫ</p>
+            <h1>Аккредитивы</h1>
+          </div>
+        </header>
+
+        <div class="loc-client">
+          <span id="loc-case-icon" class="loc-case-icon" aria-hidden="true"></span>
+          <div class="loc-client-copy">
+            <div class="loc-client-line">
+              <ol id="loc-progress" class="loc-progress" aria-label="Клиенты"></ol>
+              <p id="loc-case-number" class="loc-case-number"></p>
+            </div>
+            <h2 id="loc-case-title"></h2>
+          </div>
+          <div class="loc-money" data-loc-target="money">
+            <span>В банке <b id="loc-deposit">0 🪙</b></span>
+            <span>В аккредитиве <b id="loc-allocated">0 🪙</b></span>
+          </div>
+        </div>
+
+        <div id="loc-builder" class="loc-builder">
+          <div id="loc-stages" class="loc-stages"></div>
+          <button id="loc-add-stage" class="loc-add-stage" type="button">
+            <span aria-hidden="true">＋</span> Добавить этап
+          </button>
+        </div>
+
+        <div class="loc-panel" data-loc-target="case palette">
+          <div class="loc-panel-tabs" role="tablist" aria-label="Заявка и карточки">
+            <button id="loc-tab-case" class="loc-panel-tab is-case" type="button" role="tab" aria-selected="true" aria-controls="loc-case-copy">
+              <span aria-hidden="true">📄</span> Заявка
+            </button>
+            <button id="loc-tab-triggers" class="loc-panel-tab is-trigger" type="button" role="tab" aria-selected="false" aria-controls="loc-cards">
+              <span aria-hidden="true">⚡</span> Триггеры <small id="loc-tab-triggers-count"></small>
+            </button>
+            <button id="loc-tab-transactions" class="loc-panel-tab is-transaction" type="button" role="tab" aria-selected="false" aria-controls="loc-cards">
+              <span aria-hidden="true">🪙</span> Транзакции <small id="loc-tab-transactions-count"></small>
+            </button>
+          </div>
+          <div id="loc-case-copy" class="loc-panel-body loc-case-copy" role="tabpanel"><p id="loc-case-text"></p></div>
+          <div id="loc-cards" class="loc-panel-body loc-cards" role="tabpanel" hidden></div>
+        </div>
+
+        <p id="loc-status" class="loc-status" role="status"></p>
+        <button id="loc-submit" class="primary-button estimate-submit loc-submit" type="button" data-loc-target="submit" disabled>
+          Подписать аккредитив <span aria-hidden="true">✓</span>
+        </button>
+
+        <div id="loc-tutorial-layer" class="tutorial-layer estimate-tutorial-layer loc-tutorial-layer is-hidden" aria-live="assertive">
+          <div id="loc-tutorial-focus" class="tutorial-focus-ring" hidden></div>
+          <div class="tutorial-card estimate-tutorial-card">
+            <button id="loc-tutorial-skip" class="tutorial-skip" type="button">Пропустить</button>
+            <div class="tutorial-mascot" aria-hidden="true"><span class="mascot-eye"></span></div>
+            <p id="loc-tutorial-progress" class="tutorial-progress"></p>
+            <p id="loc-tutorial-text" class="tutorial-text"></p>
+            <div class="tutorial-actions">
+              <button id="loc-tutorial-back" class="tutorial-back" type="button">Назад</button>
+              <button id="loc-tutorial-next" class="primary-button tutorial-next" type="button">Дальше <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="loans-screen" class="screen loans-screen" aria-label="Кредиты для бизнеса" hidden>
+        <header class="estimate-header loc-header">
+          <img src="./name.png" alt="Прокорми монстра" />
+          <div>
+            <p class="eyebrow">БАНК ПАПЫ</p>
+            <h1>Кредиты для бизнеса</h1>
+          </div>
+        </header>
+
+        <div class="loans-bar">
+          <ol id="loans-progress" class="loc-progress" aria-label="Заявки"></ol>
+          <p id="loans-counter" class="loans-counter"></p>
+          <button id="loans-memo-open" class="assets-rules-open loans-memo-open" type="button" data-loans-target="memo">Памятка</button>
+        </div>
+
+        <article id="loans-application" class="loans-application" data-loans-target="application">
+          <div class="loans-applicant">
+            <span id="loans-icon" class="loans-icon" aria-hidden="true"></span>
+            <div class="loans-applicant-copy">
+              <p id="loans-applicant" class="loans-applicant-name"></p>
+              <h2 id="loans-idea"></h2>
+            </div>
+            <span id="loans-tag" class="loans-tag"></span>
+          </div>
+          <p id="loans-text" class="loans-text"></p>
+          <ul id="loans-facts" class="loans-facts"></ul>
+          <p class="loans-request">Просит <b id="loans-price"></b> на <b id="loans-term"></b></p>
+          <section class="loans-plan" data-loans-target="plan" aria-labelledby="loans-plan-title">
+            <header class="loans-plan-head">
+              <b id="loans-plan-title">ПЛАН РАСХОДОВ</b>
+              <small id="loans-plan-hint"></small>
+            </header>
+            <ol id="loans-plan-list" class="loans-plan-list"></ol>
+          </section>
+        </article>
+
+        <div class="loans-decision" role="radiogroup" aria-label="Решение по заявке" data-loans-target="decision">
+          <button class="loans-decision-option is-refuse" type="button" role="radio" aria-checked="false" data-decision="refuse">
+            <span aria-hidden="true">✋</span> Отказать
+          </button>
+          <button class="loans-decision-option is-tranche" type="button" role="radio" aria-checked="false" data-decision="tranche">
+            <span aria-hidden="true">🧪</span> Первый транш
+          </button>
+          <button class="loans-decision-option is-full" type="button" role="radio" aria-checked="false" data-decision="full">
+            <span aria-hidden="true">✅</span> Вся сумма
+          </button>
+        </div>
+
+        <section id="loans-terms" class="loans-terms" data-loans-target="terms" aria-label="Условия кредита">
+          <div class="loans-terms-row">
+            <span class="loans-terms-label">Ставка <small>ключевая <b id="loans-key-rate">14%</b></small></span>
+            <div class="loans-stepper">
+              <button id="loans-rate-down" type="button" aria-label="Уменьшить ставку">−</button>
+              <output id="loans-rate" aria-live="polite">14%</output>
+              <button id="loans-rate-up" type="button" aria-label="Увеличить ставку">+</button>
+            </div>
+          </div>
+          <div class="loans-terms-row">
+            <span class="loans-terms-label">Отсрочка <small>первого платежа</small></span>
+            <div id="loans-grace" class="loans-grace" role="radiogroup" aria-label="Отсрочка первого платежа"></div>
+          </div>
+          <p id="loans-income" class="loans-income"></p>
+        </section>
+
+        <p id="loans-status" class="loc-status" role="status"></p>
+        <button id="loans-submit" class="primary-button estimate-submit loans-submit" type="button" data-loans-target="submit" disabled>
+          Подписать решение <span aria-hidden="true">✓</span>
+        </button>
+
+        <div id="loans-memo" class="memo-win" role="dialog" aria-modal="true" aria-labelledby="loans-memo-title" hidden>
+          <section class="memo-win-card assets-rules-card loans-memo-card">
+            <span class="memo-win-icon" aria-hidden="true">📒</span>
+            <h2 id="loans-memo-title">Памятка ментора</h2>
+            <ul class="assets-rules-list loans-memo-list">
+              <li><b>❌ Провальная идея</b> — отказ. Даже пробный транш сгорит.</li>
+              <li><b>🧪 Спорная идея</b> — первый транш: деньги до этапа, где станет понятно, работает ли идея.</li>
+              <li><b>🏢 Корпорация с большими активами</b> — вся сумма без отсрочки. Ставка выше ключевой, но не больше 18%.</li>
+              <li><b>🥐 Хороший малый бизнес</b> — вся сумма с отсрочкой первого платежа. Ставка выше ключевой, но не больше 20%.</li>
+            </ul>
+            <p class="assets-rules-capital">Ключевая ставка — 14%: по ней банк сам берёт деньги. Ставка кредита ниже или равная ей — убыток.</p>
+            <button id="loans-memo-close" class="primary-button" type="button">Понятно <span aria-hidden="true">✓</span></button>
+          </section>
+        </div>
+
+        <div id="loans-verdict" class="memo-win" role="dialog" aria-modal="true" aria-labelledby="loans-verdict-title" hidden>
+          <section class="memo-win-card">
+            <span id="loans-verdict-icon" class="memo-win-icon" aria-hidden="true">✅</span>
+            <h2 id="loans-verdict-title">Решение принято</h2>
+            <p id="loans-verdict-summary" class="memo-win-reward"></p>
+            <p id="loans-verdict-text"></p>
+            <button id="loans-verdict-next" class="primary-button" type="button">Следующая заявка <span aria-hidden="true">→</span></button>
+          </section>
+        </div>
+
+        <div id="loans-tutorial-layer" class="tutorial-layer estimate-tutorial-layer loans-tutorial-layer is-hidden" aria-live="assertive">
+          <div id="loans-tutorial-focus" class="tutorial-focus-ring" hidden></div>
+          <div class="tutorial-card estimate-tutorial-card">
+            <button id="loans-tutorial-skip" class="tutorial-skip" type="button">Пропустить</button>
+            <div class="tutorial-mascot" aria-hidden="true"><span class="mascot-eye"></span></div>
+            <p id="loans-tutorial-progress" class="tutorial-progress"></p>
+            <p id="loans-tutorial-text" class="tutorial-text"></p>
+            <div class="tutorial-actions">
+              <button id="loans-tutorial-back" class="tutorial-back" type="button">Назад</button>
+              <button id="loans-tutorial-next" class="primary-button tutorial-next" type="button">Дальше <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="repair-screen" class="screen repair-screen" aria-label="Поломка удалителя козявок" data-stage="broken" hidden>
+        <header class="estimate-header repair-header">
+          <img src="./name.png" alt="Прокорми монстра" />
+          <div>
+            <p id="repair-eyebrow" class="eyebrow">СЕРВИСНЫЙ ЦЕНТР</p>
+            <h1 id="repair-title">Ковырялка сломалась</h1>
+          </div>
+        </header>
+
+        <div class="repair-bar">
+          <ol id="repair-progress" class="repair-progress" aria-label="Шаги эпизода">
+            <li data-stage="broken"><span>1</span> Поломка</li>
+            <li data-stage="forecast"><span>2</span> Прогноз</li>
+            <li data-stage="spare"><span>3</span> Запаска</li>
+          </ol>
+          <button id="repair-leave" class="assets-rules-open repair-leave" type="button">В комнату</button>
+        </div>
+
+        <div id="repair-broken" class="repair-body" data-stage="broken">
+          <article class="repair-card repair-device-card" data-repair-target="device">
+            <figure class="repair-device">
+              <img id="repair-device-image" alt="" />
+              <span class="repair-spark" aria-hidden="true">⚡</span>
+            </figure>
+            <div class="repair-device-copy">
+              <p class="repair-label">НЕ РАБОТАЕТ</p>
+              <h2 id="repair-device-name"></h2>
+              <p id="repair-device-problem" class="repair-device-problem"></p>
+            </div>
+          </article>
+          <article class="repair-card repair-warranty" data-repair-target="warranty">
+            <header class="repair-card-head"><b>🧾 ГАРАНТИЙНЫЙ ТАЛОН</b><small class="repair-stamp">гарантия действует</small></header>
+            <dl id="repair-warranty-list" class="repair-warranty-list"></dl>
+          </article>
+          <p class="repair-alert" data-repair-target="today">
+            <span aria-hidden="true">🤧</span>
+            <span>Но монстрик испачкался <b>сегодня</b>, и ждать три дня с козявками в ушах он не может!</span>
+          </p>
+        </div>
+
+        <div id="repair-forecast" class="repair-body" data-stage="forecast" hidden>
+          <section class="repair-card" data-repair-target="goals">
+            <header class="repair-card-head"><b>🎯 НА ЧТО КОПИМ</b><small id="repair-goals-note"></small></header>
+            <ul id="repair-goals" class="repair-rows"></ul>
+          </section>
+          <section class="repair-card" data-repair-target="history">
+            <header class="repair-card-head"><b>🐷 КОПИЛКА</b><small id="repair-history-note"></small></header>
+            <ul id="repair-history" class="repair-rows"></ul>
+          </section>
+          <section class="repair-card repair-promise" data-repair-target="promise">
+            <header class="repair-card-head"><b>🤞 ОБЕЩАНИЕ</b><small>можно ускорить победу</small></header>
+            <div class="repair-promise-modes" role="radiogroup" aria-label="Как копим дальше">
+              <button class="repair-promise-mode" type="button" role="radio" aria-checked="true" data-promise-mode="history">Копить как раньше</button>
+              <button class="repair-promise-mode" type="button" role="radio" aria-checked="false" data-promise-mode="promise">Обещаю больше</button>
+            </div>
+            <div class="repair-promise-row">
+              <span class="repair-promise-label">Каждый бюджет кладу в копилку</span>
+              <div class="loans-stepper repair-stepper">
+                <button id="repair-promise-down" type="button" aria-label="Меньше">−</button>
+                <output id="repair-promise-value" aria-live="polite"></output>
+                <button id="repair-promise-up" type="button" aria-label="Больше">+</button>
+              </div>
+            </div>
+            <input id="repair-promise-range" class="repair-promise-range" type="range" min="0" max="100" step="1" aria-label="Сколько класть в копилку из каждого бюджета" />
+          </section>
+          <section class="repair-card repair-forecast-card" data-repair-target="forecast">
+            <p id="repair-forecast-line" class="repair-forecast-line"></p>
+            <p class="repair-victory">
+              <span class="repair-victory-icon" aria-hidden="true">🏆</span>
+              <span class="repair-victory-copy"><small>ПОБЕДА</small><b id="repair-victory-day"></b></span>
+              <span id="repair-victory-days" class="repair-victory-days"></span>
+            </p>
+          </section>
+        </div>
+
+        <div id="repair-spare" class="repair-body" data-stage="spare" hidden>
+          <section class="repair-card repair-risk" data-repair-target="risk">
+            <p class="repair-risk-main"><b>20%</b> <span>чисток кончаются поломкой — это <b>1 из 5</b>. Ремонт по гарантии бесплатный, но длится 3 дня — как раз до следующей чистки. Значит, каждая поломка — это одна чистка запаской.</span></p>
+            <p id="repair-risk-horizon" class="repair-risk-horizon"></p>
+          </section>
+          <section class="repair-card repair-calc" data-repair-target="calc">
+            <header class="repair-card-head"><b>🧮 СЧИТАЕМ ВМЕСТЕ С МЕНТОРОМ</b></header>
+            <ol id="repair-calc-steps" class="repair-calc-steps"></ol>
+          </section>
+          <section id="repair-spares" class="repair-spares" role="radiogroup" aria-label="Запасная ковырялка" data-repair-target="spares"></section>
+        </div>
+
+        <p id="repair-status" class="loc-status repair-status" role="status"></p>
+        <button id="repair-next" class="primary-button estimate-submit repair-next" type="button" data-repair-target="submit">
+          Сдать в ремонт <span aria-hidden="true">🔧</span>
+        </button>
+
+        <div id="repair-tutorial-layer" class="tutorial-layer estimate-tutorial-layer repair-tutorial-layer is-hidden" aria-live="assertive">
+          <div id="repair-tutorial-focus" class="tutorial-focus-ring" hidden></div>
+          <div class="tutorial-card estimate-tutorial-card">
+            <button id="repair-tutorial-skip" class="tutorial-skip" type="button">Пропустить</button>
+            <div class="tutorial-mascot" aria-hidden="true"><span class="mascot-eye"></span></div>
+            <p id="repair-tutorial-progress" class="tutorial-progress"></p>
+            <p id="repair-tutorial-text" class="tutorial-text"></p>
+            <div class="tutorial-actions">
+              <button id="repair-tutorial-back" class="tutorial-back" type="button">Назад</button>
+              <button id="repair-tutorial-next" class="primary-button tutorial-next" type="button">Дальше <span aria-hidden="true">→</span></button>
             </div>
           </div>
         </div>
@@ -289,7 +867,7 @@
               </div>
               <div class="room-stat" data-stat="mood" data-room-target="mood">
                 <span class="room-stat-label"><span aria-hidden="true">😊</span>Настроение<b>0</b></span>
-                <span class="room-stat-scale" role="meter" aria-label="Настроение" aria-valuemin="-3" aria-valuemax="3" aria-valuenow="0"></span>
+                <span class="room-stat-scale" aria-hidden="true"></span>
               </div>
               <div class="room-stat" data-stat="development" data-room-target="development">
                 <span class="room-stat-label"><span aria-hidden="true">🧠</span>Развитие<b>0</b></span>
@@ -307,17 +885,39 @@
           <p id="room-action-message" class="room-action-message" role="status" hidden></p>
           <div id="room-action-confirm" class="room-action-confirm" hidden></div>
           <nav id="room-actions" class="room-actions" aria-label="Действия в комнате">
-            <button class="room-action room-action-help" type="button" data-room-action="briefing" aria-label="Повторить брифинг" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true">?</span></button>
             <button class="room-action" type="button" data-room-action="shop" aria-label="Магазин" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true">🛒</span></button>
-            <button class="room-action" type="button" data-room-action="tasks" aria-label="Задания" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true">📋</span></button>
+            <button class="room-action" type="button" data-room-action="tasks" aria-label="Задания" aria-haspopup="dialog"><span aria-hidden="true">📋</span><b id="room-tasks-badge" class="room-action-badge" aria-hidden="true" hidden>0</b></button>
             <button class="room-action" type="button" data-room-action="feed" aria-label="Кормление" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true">🍲</span></button>
             <button class="room-action" type="button" data-room-action="clean" aria-label="Чистка козявок" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true">🤧</span></button>
-            <button class="room-action" type="button" data-room-action="next" aria-label="Следующий день" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true">🌙</span></button>
-            <button class="room-action" type="button" data-room-action="profiles" aria-label="Профили" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true">👥</span></button>
+            <button class="room-action" type="button" data-room-action="profiles" aria-label="Профили" aria-haspopup="dialog"><span aria-hidden="true">👥</span></button>
             <button class="room-action" type="button" data-room-action="messages" aria-label="Сообщения" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true">💬</span><b id="room-messages-badge" class="room-action-badge" aria-hidden="true" hidden>0</b></button>
           </nav>
           <button id="room-economic-episode" class="room-economic-episode" type="button" data-room-target="economic-episode" hidden></button>
           <button id="room-next-day" class="room-next-day" type="button" data-room-target="next-day" hidden><span aria-hidden="true">🌙</span> Следующий день</button>
+
+          <!-- Финальная часть игры: дни идут сами, панель показывает цель и запускает пересчёт -->
+          <ol id="final-ticker" class="final-ticker" aria-live="polite" hidden></ol>
+          <div id="final-bar" class="final-bar" hidden>
+            <div class="final-goal" data-room-target="final-goal">
+              <span class="final-goal-icon" aria-hidden="true">🎯</span>
+              <span class="final-goal-copy">
+                <small id="final-goal-label">Копим на цель</small>
+                <strong id="final-goal-name"></strong>
+              </span>
+              <b id="final-goal-left" class="final-goal-left"></b>
+              <span class="final-goal-track" aria-hidden="true"><i id="final-goal-fill"></i></span>
+            </div>
+            <div id="final-purchased" class="final-purchased" hidden>
+              <span class="final-purchased-label"><span aria-hidden="true">✓</span> Уже куплено</span>
+              <div id="final-purchased-list" class="final-purchased-list" aria-label="Купленные цели — пересмотреть сцену"></div>
+            </div>
+            <div class="final-controls">
+              <button id="final-buy" class="final-buy" type="button" hidden><span aria-hidden="true">🎁</span> <span id="final-buy-label">Купить цель</span></button>
+              <button id="final-run" class="room-next-day final-run" type="button"><span aria-hidden="true">▶</span> Запустить дни</button>
+            </div>
+            <p id="final-over" class="final-over" hidden></p>
+            <button id="final-retry" class="room-next-day final-run" type="button" hidden>↺ Начать финал заново</button>
+          </div>
         </div>
 
         <div id="day-tutorial-layer" class="tutorial-layer shop-tutorial-layer is-hidden" aria-live="assertive">
@@ -343,6 +943,72 @@
             </header>
             <ol id="room-inbox-list" class="room-inbox-list"></ol>
             <p id="room-inbox-empty" class="room-inbox-empty" hidden>Пока сообщений нет</p>
+          </section>
+        </div>
+
+        <div id="room-tasks-layer" class="room-inbox-layer room-tasks-layer" role="dialog" aria-modal="true" aria-labelledby="room-tasks-title" hidden>
+          <section class="room-inbox room-tasks" data-room-target="task-list">
+            <header class="room-inbox-header">
+              <span class="room-inbox-icon" aria-hidden="true">📋</span>
+              <h2 id="room-tasks-title">Дополнительные задания</h2>
+              <button id="room-tasks-close" class="room-inbox-close" type="button" aria-label="Закрыть задания">×</button>
+            </header>
+            <ol id="room-tasks-list" class="room-inbox-list room-tasks-list"></ol>
+            <p id="room-tasks-empty" class="room-inbox-empty" hidden>Пока заданий нет — загляни позже</p>
+          </section>
+        </div>
+
+        <div id="room-profiles-layer" class="room-inbox-layer room-profiles-layer" role="dialog" aria-modal="true" aria-labelledby="room-profiles-title" hidden>
+          <section class="room-inbox room-profiles">
+            <header class="room-inbox-header">
+              <span class="room-inbox-icon" aria-hidden="true">👥</span>
+              <h2 id="room-profiles-title">Профили</h2>
+              <button id="room-profiles-close" class="room-inbox-close" type="button" aria-label="Закрыть профили">×</button>
+            </header>
+            <ol id="room-profiles-list" class="room-inbox-list room-profiles-list"></ol>
+            <p id="room-profiles-empty" class="room-inbox-empty" hidden>В этом браузере пока нет монстриков</p>
+            <footer class="room-profiles-footer">
+              <button id="room-profiles-new" class="primary-button room-profiles-new" type="button">Начать игру заново с новым профилем</button>
+            </footer>
+          </section>
+        </div>
+
+        <div id="parent-log-layer" class="room-inbox-layer parent-log-layer" role="dialog" aria-modal="true" aria-labelledby="parent-log-title" hidden>
+          <section class="room-inbox parent-log">
+            <header class="room-inbox-header">
+              <button id="parent-log-back" class="room-inbox-close parent-log-back" type="button" aria-label="Назад к профилям">‹</button>
+              <div class="parent-log-heading">
+                <h2 id="parent-log-title">Родительский контроль</h2>
+                <p id="parent-log-subtitle"></p>
+              </div>
+              <button id="parent-log-close" class="room-inbox-close" type="button" aria-label="Закрыть родительский контроль">×</button>
+            </header>
+            <div class="parent-log-filter" role="radiogroup" aria-label="Какие записи показать">
+              <label><input type="radio" name="parent-log-filter" value="all" checked /><span>Все записи</span></label>
+              <label><input type="radio" name="parent-log-filter" value="economic" /><span>Экономические события</span></label>
+            </div>
+            <div id="parent-log-days" class="parent-log-days"></div>
+            <p id="parent-log-empty" class="room-inbox-empty" hidden>Записей пока нет</p>
+          </section>
+        </div>
+
+        <!-- Панель жюри: открывается трёхсекундным удержанием 👥 -->
+        <div id="jury-layer" class="room-inbox-layer jury-layer" role="dialog" aria-modal="true" aria-labelledby="jury-title" hidden>
+          <section class="room-inbox jury-panel">
+            <header class="room-inbox-header">
+              <span class="room-inbox-icon" aria-hidden="true">🏅</span>
+              <div class="parent-log-heading">
+                <h2 id="jury-title">Панель жюри</h2>
+                <p id="jury-subtitle"></p>
+              </div>
+              <button id="jury-close" class="room-inbox-close" type="button" aria-label="Закрыть панель жюри">×</button>
+            </header>
+            <div id="jury-groups" class="jury-groups"></div>
+            <audio id="jury-voice-audio" preload="auto"></audio>
+            <footer class="room-profiles-footer jury-footer">
+              <p class="jury-note">Эпизоды и задания запускаются в песочнице жюри — прогресс игрока не меняется.</p>
+              <button id="jury-return" class="primary-button room-profiles-new" type="button" hidden>Вернуться к своему монстрику</button>
+            </footer>
           </section>
         </div>
 
@@ -395,6 +1061,20 @@
           </div>
         </div>
 
+        <div id="task-tutorial-layer" class="tutorial-layer shop-tutorial-layer is-hidden" aria-live="assertive">
+          <div id="task-tutorial-focus" class="tutorial-focus-ring" hidden></div>
+          <div class="tutorial-card">
+            <button id="task-tutorial-skip" class="tutorial-skip" type="button">Пропустить</button>
+            <div class="tutorial-mascot" aria-hidden="true"><span class="mascot-eye"></span></div>
+            <p id="task-tutorial-progress" class="tutorial-progress"></p>
+            <p id="task-tutorial-text" class="tutorial-text"></p>
+            <div class="tutorial-actions">
+              <button id="task-tutorial-back" class="tutorial-back" type="button">Назад</button>
+              <button id="task-tutorial-next" class="primary-button tutorial-next" type="button">Дальше <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </div>
+
         <div id="room-message-layer" class="room-message-layer" data-placement="center" role="dialog" aria-modal="true" aria-labelledby="room-message-title" aria-describedby="room-message-text" hidden>
           <div id="room-message-focus" class="tutorial-focus-ring room-message-focus" hidden></div>
           <article class="room-message-card">
@@ -410,8 +1090,119 @@
           </article>
         </div>
 
+        <article id="father-speech" class="father-speech" data-mood="angry" aria-labelledby="father-speech-name" aria-describedby="father-speech-text" hidden>
+          <p id="father-speech-name" class="father-speech-name">ПАПА</p>
+          <p id="father-speech-mood" class="father-speech-mood">СЕРДИТСЯ</p>
+          <div class="father-speech-copy"><p id="father-speech-text"></p></div>
+          <p id="father-speech-reward" class="father-speech-reward" hidden></p>
+          <button id="father-speech-next" class="primary-button father-speech-next" type="button">Дальше <span aria-hidden="true">→</span></button>
+        </article>
+
+        <div id="trainer-call-layer" class="trainer-call-layer" role="dialog" aria-modal="true" aria-labelledby="trainer-call-name" hidden>
+          <section id="trainer-call" class="trainer-call" data-state="ringing">
+            <header class="trainer-call-bar">
+              <span class="trainer-call-dot" aria-hidden="true"></span>
+              <strong id="trainer-call-name">Тренер Макс</strong>
+              <span id="trainer-call-timer" class="trainer-call-timer">видеозвонок</span>
+            </header>
+            <div id="trainer-call-video" class="trainer-call-video">
+              <img id="trainer-call-backdrop" class="trainer-call-backdrop" src="/images/trainer/call_background.png" alt="" hidden />
+              <div class="trainer-call-ringing" aria-live="polite">
+                <span class="trainer-call-avatar" aria-hidden="true">🏋️</span>
+                <p>Тренер Макс звонит…</p>
+              </div>
+            </div>
+            <article id="trainer-call-speech" class="trainer-call-speech" data-mood="cheerful" hidden>
+              <p id="trainer-call-mood" class="trainer-call-mood"></p>
+              <div class="trainer-call-copy"><p id="trainer-call-text"></p></div>
+              <button id="trainer-call-next" class="primary-button trainer-call-next" type="button">Дальше <span aria-hidden="true">→</span></button>
+            </article>
+            <button id="trainer-call-answer" class="trainer-call-answer" type="button"><span aria-hidden="true">📞</span> Ответить</button>
+          </section>
+        </div>
+
+        <section id="final-stop" class="tech-goal-sheet final-sheet" role="dialog" aria-modal="true" aria-labelledby="final-stop-title" hidden>
+          <div class="tech-goal-card final-card">
+            <p class="tech-goal-kicker"><span aria-hidden="true">⏸</span> Пересчёт дней остановлен</p>
+            <div class="final-stop-head">
+              <span id="final-stop-icon" class="final-stop-icon" aria-hidden="true"></span>
+              <h2 id="final-stop-title"></h2>
+            </div>
+            <p id="final-stop-text" class="tech-goal-note"></p>
+            <div class="tech-goal-actions">
+              <button id="final-stop-secondary" class="tutorial-back tech-goal-decline" type="button"></button>
+              <button id="final-stop-primary" class="primary-button" type="button"></button>
+            </div>
+          </div>
+        </section>
+
+        <section id="final-buy-goal" class="tech-goal-sheet final-sheet" role="dialog" aria-modal="true" aria-labelledby="final-buy-goal-title" hidden>
+          <div class="tech-goal-card final-card">
+            <p class="tech-goal-kicker"><span aria-hidden="true">🎉</span> В копилке накопилось!</p>
+            <h2 id="final-buy-goal-title">Мечта по карману</h2>
+            <div class="tech-goal-product">
+              <img id="final-buy-goal-image" class="tech-goal-image" src="" alt="" hidden>
+              <div class="tech-goal-body">
+                <strong id="final-buy-goal-name"></strong>
+                <p id="final-buy-goal-text" class="tech-goal-text"></p>
+                <p class="tech-goal-price"><span aria-hidden="true">🏷️</span> Цена — <b id="final-buy-goal-price">0 🪙</b></p>
+              </div>
+            </div>
+            <p class="tech-goal-note">Цели покупают только на деньги из копилки. Купить сейчас? Если нет — купить можно будет позже, кнопкой «Купить цель».</p>
+            <p class="tech-goal-wallet"><span aria-hidden="true">🐷</span> В копилке <b id="final-buy-goal-savings">0 🪙</b></p>
+            <div class="tech-goal-actions">
+              <button id="final-buy-goal-decline" class="tutorial-back tech-goal-decline" type="button">Пока нет</button>
+              <button id="final-buy-goal-accept" class="primary-button" type="button">Купить! <span aria-hidden="true">🎁</span></button>
+            </div>
+          </div>
+        </section>
+
+        <section id="final-pick" class="tech-goal-sheet final-sheet" role="dialog" aria-modal="true" aria-labelledby="final-pick-title" hidden>
+          <div class="tech-goal-card final-card">
+            <p class="tech-goal-kicker"><span aria-hidden="true">🐷</span> Покупка из копилки</p>
+            <h2 id="final-pick-title">На что хватает копилки</h2>
+            <ul id="final-pick-list" class="final-pick-list"></ul>
+            <p class="tech-goal-wallet"><span aria-hidden="true">🐷</span> В копилке <b id="final-pick-savings">0 🪙</b></p>
+            <button id="final-pick-close" class="tutorial-back tech-goal-decline" type="button">Пока ничего не покупаю</button>
+          </div>
+        </section>
+
         <button id="restart-button" type="button" hidden>Начать сначала</button>
       </section>
+
+      <!-- Заглушки 3D-сцен финала: покупка цели, полная победа, поражение -->
+      <section id="final-scene-screen" class="screen final-scene-screen" aria-labelledby="final-scene-title" hidden>
+        <div class="final-scene-stage">
+          <p id="final-scene-kicker" class="eyebrow final-scene-kicker"></p>
+          <div id="final-scene-art" class="final-scene-art">
+            <img id="final-scene-image" src="" alt="" hidden>
+            <span id="final-scene-icon" aria-hidden="true"></span>
+          </div>
+          <h1 id="final-scene-title"></h1>
+          <p id="final-scene-text" class="final-scene-text"></p>
+          <p class="final-scene-stub"><span aria-hidden="true">🎬</span> <span id="final-scene-stub"></span></p>
+        </div>
+        <div id="final-keep" class="final-keep" hidden>
+          <h2>На что копим дальше?</h2>
+          <p class="final-keep-hint">Выбери новые цели. Если не выбрать ни одной, можно копить до 1500 монет. Или заверши игру с победой сейчас.</p>
+          <ul id="final-keep-list" class="final-keep-list"></ul>
+        </div>
+        <div class="final-scene-actions">
+          <button id="final-keep-finish" class="final-keep-finish" type="button">Больше не копить — завершить игру</button>
+          <button id="final-scene-next" class="primary-button final-scene-next" type="button"></button>
+        </div>
+      </section>
+
+      <div id="final-scene-loading" class="final-scene-loading" aria-busy="true" hidden>
+        <div class="final-loading-glow" aria-hidden="true"><span>✦</span></div>
+        <p class="eyebrow final-loading-kicker">ПРАЗДНИК ОГНЕЙ</p>
+        <h2>Зажигаем огни…</h2>
+        <p id="final-loading-status" class="final-loading-status" role="status" aria-live="polite">Загружаем декорации…</p>
+        <div id="final-loading-progress" class="final-loading-progress" role="progressbar" aria-label="Подготовка праздничной сцены" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0">
+          <span id="final-loading-fill"></span>
+        </div>
+        <p id="final-loading-count" class="final-loading-count">Готово 0 из 7</p>
+      </div>
 
       <section id="park-screen" class="screen park-screen" aria-label="Парк" hidden>
         <div id="park-stage" class="park-stage" aria-label="Трёхмерная сцена парка"></div>
@@ -511,6 +1302,8 @@
           <span>Раскладываем корм по полкам…</span>
         </div>
 
+        <ol id="shop-toasts" class="park-toasts shop-toasts" aria-live="polite"></ol>
+
         <div id="shop-bottom-bar" class="shop-bottom-bar">
           <div id="shop-browse-bar" class="shop-bar-row">
             <button id="shop-back" class="shop-back" type="button" data-shop-target="shop-back"><span aria-hidden="true">←</span> В комнату</button>
@@ -554,6 +1347,246 @@
             </div>
           </div>
         </div>
+      </section>
+
+      <section id="tech-shop-screen" class="screen tech-shop-screen" aria-label="Магазин техники" hidden>
+        <header class="room-hud tech-shop-hud">
+          <div class="room-top-row">
+            <div class="room-panel room-day" data-tech-target="tech-day">
+              <span class="room-panel-label">День</span>
+              <strong id="tech-shop-day">0</strong>
+            </div>
+            <div class="room-panel room-wallet">
+              <div class="room-money" data-tech-target="tech-pocket">
+                <span class="room-money-icon" aria-hidden="true">👛</span>
+                <span class="room-panel-label">В кармане</span>
+                <strong id="tech-shop-pocket">0 🪙</strong>
+              </div>
+              <div class="room-money" data-tech-target="tech-savings">
+                <span class="room-money-icon" aria-hidden="true">🐷</span>
+                <span class="room-panel-label">В копилке</span>
+                <strong id="tech-shop-savings">0 🪙</strong>
+              </div>
+            </div>
+          </div>
+          <div class="room-panel shop-payday" data-tech-target="tech-payday">
+            <span class="room-money-icon" aria-hidden="true">🗓️</span>
+            <span class="shop-payday-text">
+              <span class="room-panel-label">Новые деньги</span>
+              <strong id="tech-shop-payday">через 3 дня</strong>
+            </span>
+          </div>
+        </header>
+
+        <div class="tech-shop-browser">
+          <div class="tech-shop-chrome" aria-hidden="true">
+            <span class="tech-shop-dots"><i></i><i></i><i></i></span>
+            <span class="tech-shop-url">🔒 tehnika.monstr</span>
+          </div>
+          <p class="tech-shop-search" aria-hidden="true"><span>🔎</span> удалители козявок</p>
+          <ul id="tech-shop-catalog" class="tech-shop-catalog" data-tech-target="tech-catalog"></ul>
+        </div>
+
+        <div class="tech-shop-bottom-bar">
+          <button id="tech-shop-back" class="shop-back" type="button" data-tech-target="tech-back"><span aria-hidden="true">←</span> В комнату</button>
+          <button id="tech-shop-compare" class="tech-shop-compare" type="button" data-tech-target="tech-compare"><span aria-hidden="true">⚖️</span> Сравнить товары</button>
+        </div>
+
+        <section id="tech-shop-product" class="tech-shop-product" aria-labelledby="tech-product-title" hidden>
+          <div class="tech-product-scroll">
+            <button id="tech-product-close" class="tech-product-close" type="button"><span aria-hidden="true">←</span> К товарам</button>
+            <figure class="tech-product-photo">
+              <img id="tech-product-image" alt="" hidden>
+            </figure>
+            <h2 id="tech-product-title" class="tech-product-title"></h2>
+            <p id="tech-product-price" class="tech-product-price"></p>
+            <div id="tech-product-text" class="tech-product-text"></div>
+            <section class="tech-product-block">
+              <h3>Характеристики</h3>
+              <dl id="tech-product-specs" class="tech-product-specs"></dl>
+            </section>
+            <section id="tech-product-also" class="tech-product-block" hidden>
+              <h3>С этим товаром покупают</h3>
+              <ul id="tech-product-also-list" class="tech-product-also-list"></ul>
+            </section>
+          </div>
+          <div class="tech-product-footer">
+            <div class="tech-product-controls">
+              <div id="tech-quantity-group" class="shop-quantity" role="group" aria-label="Количество">
+                <button id="tech-quantity-minus" type="button" aria-label="На один меньше">−</button>
+                <output id="tech-quantity" aria-live="polite">1</output>
+                <button id="tech-quantity-plus" type="button" aria-label="На один больше">+</button>
+              </div>
+              <button id="tech-buy" class="primary-button shop-buy" type="button">Купить</button>
+            </div>
+            <p id="tech-product-note" class="shop-purchase-note" aria-live="polite"></p>
+            <div id="tech-savings-offer" class="shop-savings-offer" hidden>
+              <p>Вместе с копилкой денег хватит. Возьми их дома!</p>
+              <button id="tech-go-home" class="shop-go-home" type="button"><span aria-hidden="true">🏠</span> Домой</button>
+            </div>
+            <div id="tech-task-offer" class="tech-task-offer" hidden>
+              <p><strong>Не хватает даже вместе с копилкой.</strong> Это не тупик: возьми дополнительное задание, заработай монеты и возвращайся за покупкой.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="tech-compare-sheet" class="tech-compare-sheet" aria-labelledby="tech-compare-title" hidden>
+          <div class="tech-compare-card">
+            <div class="tech-compare-heading">
+              <h2 id="tech-compare-title">Сравнение приборов</h2>
+              <button id="tech-compare-close" class="tech-compare-close" type="button" aria-label="Закрыть сравнение">✕</button>
+            </div>
+            <div class="tech-compare-scroll">
+              <table id="tech-compare-table" class="tech-compare-table"></table>
+            </div>
+            <p id="tech-compare-hint" class="tech-compare-hint"></p>
+          </div>
+        </section>
+
+        <section id="tech-goal" class="tech-goal-sheet" aria-labelledby="tech-goal-title" hidden>
+          <div class="tech-goal-card">
+            <p class="tech-goal-kicker"><span aria-hidden="true">✨</span> Рекомендация магазина</p>
+            <h2 id="tech-goal-title">С этим товаром мечтают</h2>
+            <div class="tech-goal-product">
+              <img id="tech-goal-image" class="tech-goal-image" src="" alt="" hidden>
+              <div class="tech-goal-body">
+                <strong id="tech-goal-name"></strong>
+                <p id="tech-goal-text" class="tech-goal-text"></p>
+                <p class="tech-goal-price"><span aria-hidden="true">🏷️</span> Цена — <b id="tech-goal-price">0 🪙</b></p>
+              </div>
+            </div>
+            <p class="tech-goal-note">Такое не покупают с одной получки — на это копят понемногу. Добавить в цели для накоплений?</p>
+            <p class="tech-goal-wallet"><span aria-hidden="true">🐷</span> В копилке <b id="tech-goal-savings">0 🪙</b></p>
+            <div class="tech-goal-actions">
+              <button id="tech-goal-decline" class="tutorial-back tech-goal-decline" type="button">Не сейчас</button>
+              <button id="tech-goal-accept" class="primary-button" type="button">Копим! <span aria-hidden="true">🐷</span></button>
+            </div>
+          </div>
+        </section>
+
+        <ol id="tech-toasts" class="park-toasts tech-toasts" aria-live="polite"></ol>
+
+        <div id="tech-tutorial-layer" class="tutorial-layer tech-tutorial-layer is-hidden" aria-live="assertive">
+          <div id="tech-tutorial-focus" class="tutorial-focus-ring" hidden></div>
+          <div class="tutorial-card">
+            <button id="tech-tutorial-skip" class="tutorial-skip" type="button">Пропустить</button>
+            <div class="tutorial-mascot" aria-hidden="true"><span class="mascot-eye"></span></div>
+            <p id="tech-tutorial-progress" class="tutorial-progress"></p>
+            <p id="tech-tutorial-text" class="tutorial-text"></p>
+            <div class="tutorial-actions">
+              <button id="tech-tutorial-back" class="tutorial-back" type="button">Назад</button>
+              <button id="tech-tutorial-next" class="primary-button tutorial-next" type="button">Дальше <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="toy-shop-screen" class="screen toy-shop-screen" aria-label="Магазин игрушек" hidden>
+        <header class="toy-shop-hud">
+          <div class="toy-shop-brand"><span>✦</span> Монстроландия <span>✦</span></div>
+          <div class="toy-shop-stats">
+            <span>День <b id="toy-shop-day">8</b></span>
+            <span>🙂 <b id="toy-shop-mood">0</b></span>
+            <span>🧠 <b id="toy-shop-development">0</b></span>
+            <span data-toy-target="pocket">Карман: <b id="toy-shop-pocket">0 🪙</b></span>
+          </div>
+        </header>
+        <div class="toy-shop-direction" aria-hidden="true">← Листай проход или нажимай стрелки →</div>
+        <div id="toy-aisle" class="toy-aisle" data-toy-target="aisle" tabindex="0" aria-label="Проход магазина. Листай горизонтально">
+          <div class="toy-aisle-track">
+            <section class="toy-stop toy-entrance" aria-label="Вход и ростомер">
+              <div class="toy-stop-header"><span class="toy-stop-number">01</span><h2>Добро пожаловать!</h2></div>
+              <div class="toy-height-board" data-toy-target="height"><span>Ростомер</span><i>12 лет</i><i>8 лет</i><i class="is-monster-age">5 лет ◀</i><i>3 года</i></div>
+              <p class="toy-stop-caption">Монстрик дорос до отметки «5 лет». Выбирай игрушки для его возраста.</p>
+            </section>
+            <section class="toy-stop" aria-label="Умные игрушки">
+              <div class="toy-stop-header"><span class="toy-stop-number">02</span><h2>Умные игрушки</h2></div>
+              <div class="toy-shelf" data-zone="learning" data-toy-target="toys"></div>
+            </section>
+            <section class="toy-stop" aria-label="Двор и игрушки по возрастам">
+              <div class="toy-stop-header"><span class="toy-stop-number">03</span><h2>Двор и мячи</h2></div>
+              <div class="toy-shelf" data-zone="outdoor"></div>
+              <div class="toy-stop-header toy-stop-subhead"><h2>Сравни возраст</h2></div>
+              <div class="toy-shelf" data-zone="ages"></div>
+            </section>
+            <section class="toy-stop" aria-label="Коллекции и автомат">
+              <div class="toy-stop-header"><span class="toy-stop-number">04</span><h2>Коллекции</h2></div>
+              <div class="toy-shelf" data-zone="collections"></div>
+              <button id="toy-machine" class="toy-machine" type="button" data-toy-target="machine"><img src="/images/toy-shop/machine.png" alt="Автомат сюрприз-боксов"><span>Мини-монстры • 7 🪙</span><small>Собери всех 6!</small></button>
+            </section>
+            <section class="toy-stop toy-robot-stop" aria-label="Хит сезона">
+              <div class="toy-stop-header"><span class="toy-stop-number">05</span><h2>ХИТ СЕЗОНА!</h2></div>
+              <div class="toy-shelf" data-zone="robot" data-toy-target="robot"></div>
+              <p class="toy-ad-price"><del>60</del> <b>45 🪙</b></p>
+            </section>
+            <section class="toy-stop toy-stop-new" data-unlocks-day="11" aria-label="Новые игрушки для открытий" hidden>
+              <div class="toy-stop-header"><span class="toy-stop-number">06</span><h2>Открытия</h2></div>
+              <div class="toy-shelf" data-zone="discovery"></div>
+            </section>
+            <section class="toy-stop toy-stop-new" data-unlocks-day="11" aria-label="Новые игрушки для активных игр" hidden>
+              <div class="toy-stop-header"><span class="toy-stop-number">07</span><h2>Активные игры</h2></div>
+              <div class="toy-shelf" data-zone="active"></div>
+            </section>
+            <section class="toy-stop toy-stop-new" data-unlocks-day="11" aria-label="Новые игрушки для творчества" hidden>
+              <div class="toy-stop-header"><span class="toy-stop-number">08</span><h2>Творчество</h2></div>
+              <div class="toy-shelf" data-zone="creative"></div>
+            </section>
+            <section class="toy-stop toy-stop-new" data-unlocks-day="11" aria-label="Игрушки в мастерской" hidden>
+              <div class="toy-stop-header"><span class="toy-stop-number">09</span><h2>Мастерская</h2></div>
+              <div class="toy-shelf" data-zone="builders"></div>
+            </section>
+            <section class="toy-stop toy-stop-new" data-unlocks-day="11" aria-label="Музыкальные игрушки" hidden>
+              <div class="toy-stop-header"><span class="toy-stop-number">10</span><h2>Музыка</h2></div>
+              <div class="toy-shelf" data-zone="music"></div>
+            </section>
+            <section class="toy-stop toy-stop-new" data-unlocks-day="11" aria-label="Игрушки для исследований" hidden>
+              <div class="toy-stop-header"><span class="toy-stop-number">11</span><h2>Исследования</h2></div>
+              <div class="toy-shelf" data-zone="explorers"></div>
+            </section>
+            <section class="toy-stop toy-stop-new" data-unlocks-day="11" aria-label="Игрушки для сказочных историй" hidden>
+              <div class="toy-stop-header"><span class="toy-stop-number">12</span><h2>Сказки</h2></div>
+              <div class="toy-shelf" data-zone="stories"></div>
+            </section>
+          </div>
+        </div>
+        <div id="toy-companion" class="toy-companion" aria-hidden="true"></div>
+        <div id="toy-speech" class="toy-speech" hidden></div>
+        <div class="toy-aisle-controls"><button id="toy-left" type="button" aria-label="Назад по проходу">←</button><span id="toy-location">Вход</span><button id="toy-right" type="button" aria-label="Вперёд по проходу">→</button></div>
+        <div class="toy-shop-bottom" data-toy-target="cart"><div class="toy-cart-rail"><span class="toy-cart-handle" aria-hidden="true"></span><strong>🛒 Тележка</strong><span id="toy-cart-items" class="toy-cart-items">Пока пуста</span><b id="toy-cart-total">0 🪙</b><span class="toy-cart-front" aria-hidden="true"></span></div><div class="toy-bottom-actions"><button id="toy-shop-back" class="shop-back" type="button">← В комнату</button><button id="toy-checkout-open" class="primary-button" type="button" data-toy-target="checkout">К кассе →</button></div></div>
+
+        <section id="toy-tag-sheet" class="toy-sheet" role="dialog" aria-modal="true" aria-labelledby="toy-tag-title" hidden><div class="toy-tag-card"><button id="toy-tag-close" class="toy-sheet-close" type="button" aria-label="Закрыть">✕</button><img id="toy-tag-image" alt=""><button id="toy-tag" class="toy-paper-tag" type="button" data-toy-target="tag"><span class="toy-tag-side toy-tag-front"><strong id="toy-tag-title"></strong><span id="toy-tag-age"></span><b id="toy-tag-price"></b><span id="toy-tag-effect" class="toy-tag-effect" hidden></span><em id="toy-tag-slogan"></em><small>Нажми на бирку, чтобы перевернуть ↻</small></span><span class="toy-tag-side toy-tag-back"><strong>Что на самом деле?</strong><span id="toy-tag-fact"></span><small id="toy-tag-fine"></small><em>Нажми, чтобы вернуть бирку ↻</em></span></button><div class="toy-tag-actions"><button id="toy-tag-return" class="tutorial-back" type="button">На полку</button><button id="toy-tag-cart" class="primary-button" type="button">В тележку</button></div></div></section>
+
+        <section id="toy-capsule-sheet" class="toy-sheet" role="dialog" aria-modal="true" aria-labelledby="toy-capsule-title" hidden><div class="toy-capsule-card"><button id="toy-capsule-close" class="toy-sheet-close" type="button" aria-label="Закрыть">✕</button><h2 id="toy-capsule-title">Автомат «Мини-монстры»</h2><p>Монета уйдёт сразу. Какая фигурка выпадет — неизвестно.</p><div class="toy-capsule-art"><img id="toy-capsule-image" src="/images/toy-shop/capsule.png" alt="Капсула с игрушкой"><span id="toy-crank" aria-hidden="true">✦</span></div><p id="toy-capsule-result" aria-live="polite">Фигурки серии: теннисист, художник, Соня и другие.</p><div id="toy-collection-lineup" class="toy-collection-lineup" aria-label="Шесть фигурок серии"></div><button id="toy-capsule-spin" class="primary-button" type="button">Бросить 7 🪙 и повернуть</button></div></section>
+
+        <section id="toy-checkout-sheet" class="toy-checkout-sheet" role="dialog" aria-modal="true" aria-labelledby="toy-checkout-title" hidden><div class="toy-checkout-card"><div class="toy-checkout-heading"><button id="toy-checkout-close" class="shop-back" type="button">← В проход</button><h2 id="toy-checkout-title">Касса Монстроландии</h2></div><p class="toy-checkout-lead">Проверь игрушки на ленте и сумму к оплате.</p><div id="toy-checkout-belt" class="toy-checkout-belt" data-toy-target="belt"></div><div class="toy-checkout-slime" data-toy-target="slime"><img src="/images/toy-shop/slime.png" alt="Лизун у кассы"><div><strong>Лизун у кассы — 5 🪙</strong><p id="toy-slime-line">Монстрик: «Можно?»</p><p id="toy-slime-effect" class="toy-slime-effect" hidden></p><button id="toy-slime-choice" class="tutorial-back" type="button">Взять лизуна</button></div></div><p id="toy-checkout-loss" class="toy-checkout-loss" hidden></p><div class="toy-checkout-footer"><span>К оплате: <b id="toy-checkout-total">0 🪙</b></span><button id="toy-pay" class="primary-button" type="button">Оплатить</button></div><p id="toy-checkout-note" class="toy-checkout-note" aria-live="polite"></p></div></section>
+
+        <section id="toy-play-sheet" class="toy-sheet toy-play-sheet" role="dialog" aria-modal="true" aria-labelledby="toy-play-title" hidden><div class="toy-play-card"><h2 id="toy-play-title">Пора играть!</h2><div class="toy-play-scene"><div id="toy-play-pictures" class="toy-play-pictures"></div><div id="toy-play-monster" class="toy-play-monster" aria-label="Монстрик играет"></div></div><p id="toy-play-text"></p><p id="toy-play-stats"></p><button id="toy-play-close" class="primary-button" type="button">Продолжить прогулку</button></div></section>
+
+        <!-- the same recommendation card as in the tech shop (tech-goal-* classes), in the toy shop's colours -->
+        <section id="toy-goal" class="tech-goal-sheet toy-goal-sheet" aria-labelledby="toy-goal-title" hidden>
+          <div class="tech-goal-card">
+            <p class="tech-goal-kicker"><span aria-hidden="true">✨</span> Рекомендация магазина</p>
+            <h2 id="toy-goal-title">Об этом мечтают все монстрики</h2>
+            <div class="tech-goal-product">
+              <img id="toy-goal-image" class="tech-goal-image" src="" alt="" hidden>
+              <div class="tech-goal-body">
+                <strong id="toy-goal-name"></strong>
+                <p id="toy-goal-text" class="tech-goal-text"></p>
+                <p class="tech-goal-price"><span aria-hidden="true">🏷️</span> Цена — <b id="toy-goal-price">0 🪙</b></p>
+              </div>
+            </div>
+            <p class="tech-goal-note">Такое не покупают с одной получки — на это копят понемногу. Добавить в цели для накоплений?</p>
+            <p class="tech-goal-wallet"><span aria-hidden="true">🐷</span> В копилке <b id="toy-goal-savings">0 🪙</b></p>
+            <div class="tech-goal-actions">
+              <button id="toy-goal-decline" class="tutorial-back tech-goal-decline" type="button">Не сейчас</button>
+              <button id="toy-goal-accept" class="primary-button" type="button">Копим! <span aria-hidden="true">🐷</span></button>
+            </div>
+          </div>
+        </section>
+
+        <ol id="toy-toasts" class="park-toasts tech-toasts" aria-live="polite"></ol>
+
+        <div id="toy-tutorial-layer" class="tutorial-layer shop-tutorial-layer is-hidden" aria-live="assertive"><div id="toy-tutorial-focus" class="tutorial-focus-ring" hidden></div><div class="tutorial-card"><button id="toy-tutorial-skip" class="tutorial-skip" type="button">Пропустить</button><div class="tutorial-mascot" aria-hidden="true"><span class="mascot-eye"></span></div><p id="toy-tutorial-progress" class="tutorial-progress"></p><p id="toy-tutorial-text" class="tutorial-text"></p><div class="tutorial-actions"><button id="toy-tutorial-back" class="tutorial-back" type="button">Назад</button><button id="toy-tutorial-next" class="primary-button tutorial-next" type="button">Дальше <span aria-hidden="true">→</span></button></div></div></div>
       </section>
 
       <section id="feeding-screen" class="screen shop-screen feeding-screen" data-mode="pantry" aria-label="Кормление" hidden>
@@ -634,6 +1667,61 @@
         </div>
       </section>
 
+      <section id="cleaning-screen" class="screen park-screen cleaning-screen" data-mode="idle" aria-label="Чистка козявок" hidden>
+        <div id="cleaning-stage" class="park-stage cleaning-stage" aria-label="Ухо монстрика и ковырялка"></div>
+        <div id="cleaning-target" class="cleaning-target" aria-hidden="true" hidden></div>
+        <svg id="cleaning-figure" class="cleaning-figure" aria-hidden="true" hidden>
+          <path id="cleaning-figure-guide" class="cleaning-figure-guide"></path>
+          <path id="cleaning-figure-done" class="cleaning-figure-done"></path>
+          <g id="cleaning-figure-arrows" class="cleaning-figure-arrows"></g>
+          <circle id="cleaning-figure-end" class="cleaning-figure-end" r="19"></circle>
+          <circle id="cleaning-figure-start" class="cleaning-figure-start" r="15"></circle>
+          <circle id="cleaning-figure-head" class="cleaning-figure-head" r="11"></circle>
+        </svg>
+
+        <header class="park-hud cleaning-hud">
+          <div class="park-title-card cleaning-title-card">
+            <span>ЧИСТКА КОЗЯВОК</span>
+            <strong id="cleaning-title">Первое ухо</strong>
+            <ol id="cleaning-steps" class="cleaning-steps" data-cleaning-target="figures" aria-label="Фигуры для этого уха"></ol>
+          </div>
+          <button id="cleaning-back" class="park-back" type="button"><span aria-hidden="true">←</span> В комнату</button>
+        </header>
+        <p id="cleaning-status" class="visually-hidden" role="status" aria-live="polite"></p>
+        <ol id="cleaning-toasts" class="park-toasts cleaning-toasts" aria-live="polite"></ol>
+        <p id="cleaning-hint" class="cleaning-hint" aria-live="polite" hidden></p>
+
+        <article id="cleaning-speech" class="park-speech cleaning-speech" aria-labelledby="cleaning-speech-name" hidden>
+          <p id="cleaning-speech-name" class="park-speech-name">Монстрик</p>
+          <div class="park-speech-text-box">
+            <p id="cleaning-speech-text" class="park-speech-text"></p>
+          </div>
+          <div class="park-speech-actions">
+            <button id="cleaning-speech-repeat" class="tutorial-back park-speech-repeat" type="button"><span aria-hidden="true">↻</span> Повторить</button>
+            <button id="cleaning-speech-next" class="primary-button park-speech-next" type="button">Дальше <span aria-hidden="true">→</span></button>
+          </div>
+        </article>
+
+        <div id="cleaning-tutorial-layer" class="tutorial-layer shop-tutorial-layer is-hidden" aria-live="assertive">
+          <div id="cleaning-tutorial-focus" class="tutorial-focus-ring" hidden></div>
+          <div class="tutorial-card">
+            <button id="cleaning-tutorial-skip" class="tutorial-skip" type="button">Пропустить</button>
+            <div class="tutorial-mascot" aria-hidden="true"><span class="mascot-eye"></span></div>
+            <p id="cleaning-tutorial-progress" class="tutorial-progress"></p>
+            <p id="cleaning-tutorial-text" class="tutorial-text"></p>
+            <div class="tutorial-actions">
+              <button id="cleaning-tutorial-back" class="tutorial-back" type="button">Назад</button>
+              <button id="cleaning-tutorial-next" class="primary-button tutorial-next" type="button">Дальше <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </div>
+
+        <div id="cleaning-loading" class="room-loading" role="status">
+          <span class="loading-eye" aria-hidden="true"></span>
+          <span>Достаём ковырялку…</span>
+        </div>
+      </section>
+
       <div id="mentor-layer" class="mentor-layer" role="dialog" aria-modal="true" aria-labelledby="mentor-eyebrow" aria-describedby="mentor-text" hidden>
         <article class="mentor-card">
           <div class="mentor-portrait">
@@ -645,7 +1733,10 @@
             <p id="mentor-text" class="mentor-text"></p>
           </div>
           <p id="mentor-extra" class="mentor-extra" hidden></p>
-          <button id="mentor-close" class="primary-button mentor-close" type="button">Понятно <span aria-hidden="true">✓</span></button>
+          <div class="mentor-actions">
+            <button id="mentor-alternative" class="mentor-alternative" type="button" hidden></button>
+            <button id="mentor-close" class="primary-button mentor-close" type="button">Понятно <span aria-hidden="true">✓</span></button>
+          </div>
         </article>
       </div>
 
@@ -664,13 +1755,25 @@
       <audio id="tutorial-audio" preload="auto"></audio>
       <audio id="briefing-audio" preload="auto"></audio>
       <audio id="budget-tutorial-audio" preload="auto"></audio>
+      <audio id="estimate-tutorial-audio" preload="auto"></audio>
+      <audio id="loc-tutorial-audio" preload="auto"></audio>
       <audio id="message-audio" preload="auto"></audio>
       <audio id="shop-tutorial-audio" preload="auto"></audio>
       <audio id="mentor-audio" preload="auto"></audio>
+      <audio id="toy-monster-audio" preload="auto"></audio>
       <audio id="feeding-tutorial-audio" preload="auto"></audio>
       <audio id="day-tutorial-audio" preload="auto"></audio>
       <audio id="park-voice-audio" preload="auto"></audio>
+      <audio id="father-voice-audio" preload="auto"></audio>
       <audio id="piggy-tutorial-audio" preload="auto"></audio>
+      <audio id="cleaning-voice-audio" preload="auto"></audio>
+      <audio id="cleaning-tutorial-audio" preload="auto"></audio>
+      <audio id="task-tutorial-audio" preload="auto"></audio>
+      <audio id="trainer-voice-audio" preload="auto"></audio>
+      <audio id="route-tutorial-audio" preload="auto"></audio>
+      <audio id="assets-tutorial-audio" preload="auto"></audio>
+      <audio id="loans-tutorial-audio" preload="auto"></audio>
+      <audio id="repair-tutorial-audio" preload="auto"></audio>
     </main>
 
     <script type="module" src="/main.js"></script>

@@ -1,10 +1,9 @@
-import { deriveRoomState } from './room-state.js';
+import { deriveRoomState, ECONOMIC_EPISODE_COMPLETED_EVENT } from './room-state.js';
 import { hasGameTrigger, isGameTriggerActive } from './game-triggers.js';
 
+export { ECONOMIC_EPISODE_COMPLETED_EVENT };
 export const ECONOMIC_EPISODE_OBJECT_TYPE = 'Economic episode';
 export const ECONOMIC_EPISODE_OPENED_EVENT = 'Открытие экономического эпизода';
-// Written when the player has made the episode's decision; the episode is then over for good.
-export const ECONOMIC_EPISODE_COMPLETED_EVENT = 'Завершение экономического эпизода';
 
 export function economicEpisodes(rows) {
   return (Array.isArray(rows) ? rows : [])

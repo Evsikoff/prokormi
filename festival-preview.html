@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Просмотр праздника огней</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; display: grid; place-items: center; min-height: 100dvh; background: #16132b; font: 16px system-ui; }
+  #frame { position: relative; width: min(100vw, 430px); height: min(100dvh, 760px); overflow: hidden; background: #172342; }
+  canvas { width: 100%; height: 100%; display: block; }
+  #controls { position: absolute; inset: auto 12px 12px; display: flex; gap: 8px; }
+  button { padding: 10px 14px; border: 0; border-radius: 12px; background: #fff2cc; color: #2e2043; font-weight: 700; }
+  #status { position: absolute; inset: 12px 12px auto; color: white; text-shadow: 0 2px 4px #000; }
+</style>
+<div id="frame"><div id="status">Загрузка сцены…</div><div id="controls"><button id="dance">Танец</button><button id="farewell">Прощание</button></div></div>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { FestivalLights } from './festival-lights.js';
+const frame = document.getElementById('frame');
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+frame.prepend(renderer.domElement);
+const monster = (await new GLTFLoader().loadAsync('/model/monster.glb')).scene;
+const festival = new FestivalLights(monster);
+await festival.load();
+festival.enter();
+document.getElementById('status').textContent = 'Праздник огней';
+document.getElementById('dance').onclick = () => { festival.phase = 'dance'; festival.time = 0; };
+document.getElementById('farewell').onclick = () => festival.farewell();
+let last = performance.now();
+function draw(now) {
+  const delta = Math.min((now - last) / 1000, .05);
+  last = now;
+  renderer.setSize(frame.clientWidth, frame.clientHeight, false);
+  festival.resize(frame.clientWidth, frame.clientHeight);
+  festival.update(delta);
+  renderer.render(festival.scene, festival.camera);
+  requestAnimationFrame(draw);
+}
+requestAnimationFrame(draw);
+</script>
+</html>

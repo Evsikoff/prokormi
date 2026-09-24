@@ -66,6 +66,13 @@ const RUNS = {
     arrived: 'рассматривает афишу',
   },
 };
+// Where the walk starts: the whole walk begins at the court, a walk the player comes back to
+// begins at the spot it stopped at, with the camera already in that shot.
+const STAGES = {
+  court: { spot: COURT_SPOT, shot: SHOTS.court, fly: true, status: 'пришёл на прогулку в парк' },
+  kiosk: { spot: KIOSK_SPOT, shot: SHOTS.kiosk, status: 'ждёт тебя у лотка с мороженым' },
+  board: { spot: BOARD_SPOT, shot: SHOTS.board, status: 'рассматривает афишу' },
+};
 // Bird's-eye flight: high over the far corner of the park, round its west side
 // and down onto the crossing, ending in the court shot.
 const FLIGHT = {
@@ -576,7 +583,7 @@ export class MonsterPark {
   }
 
   // `stage` is where the walk starts: 'court' for the whole walk with the flight,
-  // 'kiosk' to come back straight to the decision.
+  // 'kiosk' to come back straight to the decision, 'board' to the poster on the event board.
   enter(name = 'Монстрик', { stage = 'court' } = {}) {
     if (this.active) return;
     this.active = true;
@@ -599,24 +606,26 @@ export class MonsterPark {
     this.monster.position.y -= grounded.min.y;
     this.hand = this.monster.getObjectByName('mixamorigRightHand');
 
-    const atKiosk = stage === 'kiosk';
-    const spot = atKiosk ? KIOSK_SPOT : COURT_SPOT;
-    const shot = atKiosk ? SHOTS.kiosk : SHOTS.court;
+    // Only the whole walk opens with the bird's-eye flight; a resumed one starts in its own shot.
+    const { spot, shot, fly, status } = STAGES[stage] ?? STAGES.court;
     this.monster.position.x = spot.x;
     this.monster.position.z = spot.z;
     this.monster.rotation.y = Math.atan2(shot.position.x - spot.x, shot.position.z - spot.z);
-    if (atKiosk) {
-      this.view.position.copy(shot.position);
-      this.view.target.copy(shot.target);
-    } else {
+    if (fly) {
       this.view.position.fromArray(FLIGHT.positions[0]);
       this.view.target.fromArray(FLIGHT.targets[0]);
+    } else {
+      this.view.position.copy(shot.position);
+      this.view.target.copy(shot.target);
     }
     this.insets = { top: 0, bottom: 0 };
     this.appliedInsets = { top: 0, bottom: 0 };
     this.holdProp(null);
+    // The mixer is shared with the editor, whose dance would otherwise blend into every park clip.
+    this.currentAction = null;
+    this.mixer?.stopAllAction();
     this.playClip('restpose');
-    this.setStatus(atKiosk ? 'ждёт тебя у лотка с мороженым' : 'пришёл на прогулку в парк');
+    this.setStatus(status);
     this.applyView();
   }
 

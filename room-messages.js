@@ -1,5 +1,7 @@
 import { deriveRoomState } from './room-state.js';
 import { GAME_TRIGGERS } from './game-triggers.js';
+import { ownedDevice, techStoreItems } from './tech-shop.js';
+import { isFinalPart } from './final-part.js';
 
 export const MESSAGE_OBJECT_TYPE = 'Message';
 export const MESSAGE_RECEIVED_EVENT = 'Получение сообщения';
@@ -10,7 +12,24 @@ export const MESSAGE_TRIGGERS = {
   'A hungry monster and no food': GAME_TRIGGERS['A hungry monster and no food'],
   // Suitable food is only Нормовет 5/2 and Ориджин Резерв.
   'A hungry monster and enough food': GAME_TRIGGERS['A hungry monster and enough food'],
+  // Lives here and not in GAME_TRIGGERS: tech-shop.js imports game-day.js, which checks the
+  // trigger vocabulary while it loads, so game-triggers.js cannot import tech-shop.js back.
+  'A dirty monster and a cleaner': (state) => state.dirty && Boolean(ownedDevice(state.inventory, techStoreItems())),
+  // The morning a nose cleaner comes back from the warranty repair of episode 352.
+  'A cleaner is back from repair': (state) => state.devicesBackToday.length > 0,
 };
+
+// In the final part the monster eats and gets cleaned by itself, and an empty pantry stops the run
+// with a card of its own, so these reminders would only get in the way.
+const FINAL_PART_SILENT_TRIGGERS = new Set([
+  'A hungry monster and no food',
+  'A hungry monster and enough food',
+  'A dirty monster and a cleaner',
+]);
+
+function isSilenced(trigger, records) {
+  return FINAL_PART_SILENT_TRIGGERS.has(trigger) && isFinalPart(records);
+}
 
 const eventType = (record) => record?.['Тип события'];
 
@@ -48,7 +67,8 @@ export function messagesToReplayOnEntry(records) {
   const state = deriveRoomState(records);
   if (state.day < 1) return [];
   return messageReceipts(records)
-    .filter((receipt) => receipt.first && receipt.day === state.day && MESSAGE_TRIGGERS[receipt.trigger]?.(state))
+    .filter((receipt) => receipt.first && receipt.day === state.day && MESSAGE_TRIGGERS[receipt.trigger]?.(state)
+      && !isSilenced(receipt.trigger, records))
     .reverse();
 }
 
@@ -63,7 +83,7 @@ export function dueMessages(messages, records) {
   const due = new Map();
   for (const message of messages) {
     const check = MESSAGE_TRIGGERS[message.trigger];
-    if (!check || due.has(message.trigger) || receivedToday.has(message.trigger)) continue;
+    if (!check || due.has(message.trigger) || receivedToday.has(message.trigger) || isSilenced(message.trigger, records)) continue;
     if (check(state)) due.set(message.trigger, message);
   }
   return [...due.values()];

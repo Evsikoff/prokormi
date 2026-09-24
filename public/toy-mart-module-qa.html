@@ -1,0 +1,5 @@
+<!doctype html><meta charset="utf-8"><body>Loading...</body><script type="module">
+import rows from '/monster_data_mart_rows.json';
+const items = rows.filter((row) => row?.object_type === 'Item from the toy store');
+document.body.textContent = JSON.stringify({ length: rows.length, items: items.length, sample: items[0] });
+</script>
