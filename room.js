@@ -4,6 +4,8 @@ import { bowlInterior, Kibble } from './kibble.js';
 import { createTalkingMouth } from './talking-mouth.js';
 
 const FLOOR_Y = 0;
+// How tall the child stands in the room; the baby and the teen are the manifest's age height times this.
+const MONSTER_ROOM_HEIGHT = 1.24;
 const FATHER_HEIGHT = 1.78;
 // He stands just in front of the stool instead of intersecting it; positive Z is closer to camera.
 const FATHER_SPOT = [1.05, 0, 0.72];
@@ -227,6 +229,12 @@ export class MonsterRoom {
   constructor({ monster, mixer, animations, onStatus, onLoadProgress }) {
     this.monster = monster;
     this.mixer = mixer;
+    this.ageHeight = 1;
+    // The monster arrives in its rest pose; the room measures it in that pose, whatever clip is on.
+    this.restPose = [];
+    monster.traverse((object) => {
+      if (object.isBone) this.restPose.push([object, object.position.clone(), object.quaternion.clone()]);
+    });
     this.animations = animations || [];
     this.onStatus = onStatus || (() => {});
     this.onLoadProgress = onLoadProgress || (() => {});
@@ -653,15 +661,7 @@ export class MonsterRoom {
     this.monster.quaternion.identity();
     // Heading first, then the lean: the monster bends towards the bowl whichever way it faces.
     this.monster.rotation.order = 'YXZ';
-    this.monster.scale.copy(this.savedTransform.scale);
-    this.monster.updateMatrixWorld(true);
-    const originalBounds = new THREE.Box3().setFromObject(this.monster);
-    const originalSize = originalBounds.getSize(new THREE.Vector3());
-    const scaleFactor = 1.24 / Math.max(originalSize.y, 0.01);
-    this.monster.scale.multiplyScalar(scaleFactor);
-    this.monster.updateMatrixWorld(true);
-    const fittedBounds = new THREE.Box3().setFromObject(this.monster);
-    this.monster.position.y -= fittedBounds.min.y - FLOOR_Y;
+    this.fitMonster();
     this.monster.traverse((child) => {
       if (child.isMesh) child.castShadow = true;
     });
@@ -671,6 +671,41 @@ export class MonsterRoom {
     this.mixer.stopAllAction();
     this.currentAction = null;
     this.pickNextTask(true);
+  }
+
+  // The monster grows up on a new day while standing in the room.
+  setAgeHeight(height) {
+    if (this.ageHeight === height) return;
+    this.ageHeight = height;
+    if (this.active) this.fitMonster();
+  }
+
+  fitMonster() {
+    const quaternion = this.monster.quaternion.clone();
+    this.monster.quaternion.identity();
+    this.monster.scale.copy(this.savedTransform.scale);
+    this.monster.position.y = 0;
+    const pose = this.restPose.map(([bone]) => [bone.position.clone(), bone.quaternion.clone()]);
+    this.restPose.forEach(([bone, position, rest]) => {
+      bone.position.copy(position);
+      bone.quaternion.copy(rest);
+    });
+    const measure = () => {
+      this.monster.updateMatrixWorld(true);
+      this.monster.traverse((object) => {
+        if (object.isSkinnedMesh) object.boundingBox = null;
+      });
+      return new THREE.Box3().setFromObject(this.monster);
+    };
+    const size = measure().getSize(new THREE.Vector3());
+    this.monster.scale.multiplyScalar(MONSTER_ROOM_HEIGHT * this.ageHeight / Math.max(size.y, 0.01));
+    this.monster.position.y -= measure().min.y - FLOOR_Y;
+    this.restPose.forEach(([bone], index) => {
+      bone.position.copy(pose[index][0]);
+      bone.quaternion.copy(pose[index][1]);
+    });
+    this.monster.quaternion.copy(quaternion);
+    this.monster.updateMatrixWorld(true);
   }
 
   exit() {

@@ -33,7 +33,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Шаг инструктажа по уходу за питомцем"
+    "object_type_ru": "Шаг инструктажа по уходу за питомцем",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": true
   },
   {
     "id": 2,
@@ -69,7 +72,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Шаг инструктажа по уходу за питомцем"
+    "object_type_ru": "Шаг инструктажа по уходу за питомцем",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 3,
@@ -105,7 +111,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Шаг инструктажа по уходу за питомцем"
+    "object_type_ru": "Шаг инструктажа по уходу за питомцем",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 4,
@@ -141,7 +150,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Шаг инструктажа по уходу за питомцем"
+    "object_type_ru": "Шаг инструктажа по уходу за питомцем",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 5,
@@ -181,7 +193,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение первому бюджету"
+    "object_type_ru": "Обучение первому бюджету",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": true
   },
   {
     "id": 6,
@@ -221,7 +236,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение первому бюджету"
+    "object_type_ru": "Обучение первому бюджету",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 7,
@@ -261,7 +279,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение первому бюджету"
+    "object_type_ru": "Обучение первому бюджету",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 8,
@@ -301,7 +322,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение первому бюджету"
+    "object_type_ru": "Обучение первому бюджету",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 9,
@@ -341,7 +365,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Сообщение"
+    "object_type_ru": "Сообщение",
+    "trigger_ru": "Монстрик голоден, а корма нет",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 10,
@@ -377,7 +404,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Товар из магазина продуктов"
+    "object_type_ru": "Товар из магазина продуктов",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 11,
@@ -413,7 +443,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Товар из магазина продуктов"
+    "object_type_ru": "Товар из магазина продуктов",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 12,
@@ -449,7 +482,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Товар из магазина продуктов"
+    "object_type_ru": "Товар из магазина продуктов",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 13,
@@ -485,7 +521,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Товар из магазина продуктов"
+    "object_type_ru": "Товар из магазина продуктов",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 14,
@@ -521,7 +560,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Магазин"
+    "object_type_ru": "Магазин",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 15,
@@ -561,7 +603,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": true
   },
   {
     "id": 16,
@@ -601,7 +646,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 17,
@@ -641,7 +689,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 18,
@@ -681,7 +732,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 19,
@@ -721,7 +775,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 20,
@@ -761,7 +818,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 21,
@@ -801,7 +861,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 22,
@@ -841,7 +904,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 23,
@@ -881,7 +947,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 24,
@@ -917,7 +986,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Куплен правильный корм",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 25,
@@ -953,7 +1025,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Правильный корм, но больше двух пачек",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 26,
@@ -989,7 +1064,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Корм с плохим составом",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 27,
@@ -1025,7 +1103,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Переплата за слишком хороший корм",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 28,
@@ -1061,7 +1142,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Корм без указанного состава",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 29,
@@ -1097,7 +1181,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Мало на обязательные расходы",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 30,
@@ -1133,7 +1220,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Мало на веселье",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 31,
@@ -1169,7 +1259,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Мало в копилку",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 32,
@@ -1205,7 +1298,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Бюджет утверждён",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 33,
@@ -1245,7 +1341,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Ошибка"
+    "object_type_ru": "Ошибка",
+    "trigger_ru": "Кормление без подходящего корма",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 34,
@@ -1285,7 +1384,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение кормлению"
+    "object_type_ru": "Обучение кормлению",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": true
   },
   {
     "id": 35,
@@ -1325,7 +1427,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение кормлению"
+    "object_type_ru": "Обучение кормлению",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 36,
@@ -1365,7 +1470,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение кормлению"
+    "object_type_ru": "Обучение кормлению",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 37,
@@ -1405,7 +1513,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение кормлению"
+    "object_type_ru": "Обучение кормлению",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 38,
@@ -1445,7 +1556,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение кормлению"
+    "object_type_ru": "Обучение кормлению",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": true
   },
   {
     "id": 39,
@@ -1485,7 +1599,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение кормлению"
+    "object_type_ru": "Обучение кормлению",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 40,
@@ -1525,7 +1642,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение кормлению"
+    "object_type_ru": "Обучение кормлению",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 41,
@@ -1565,7 +1685,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение кормлению"
+    "object_type_ru": "Обучение кормлению",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 42,
@@ -1605,7 +1728,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение кормлению"
+    "object_type_ru": "Обучение кормлению",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 43,
@@ -1641,7 +1767,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Насыпано в норму",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 44,
@@ -1677,7 +1806,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Насыпано слишком мало",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 45,
@@ -1713,7 +1845,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Насыпано слишком много",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 46,
@@ -1753,7 +1888,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Ошибка"
+    "object_type_ru": "Ошибка",
+    "trigger_ru": "Кормление сытого монстрика",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 47,
@@ -1793,7 +1931,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Сообщение"
+    "object_type_ru": "Сообщение",
+    "trigger_ru": "Монстрик голоден, а корма хватает",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 48,
@@ -1829,7 +1970,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Триггер окончания игрового дня"
+    "object_type_ru": "Триггер окончания игрового дня",
+    "trigger_ru": "Монстрик сыт",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 49,
@@ -1865,7 +2009,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Цель накоплений"
+    "object_type_ru": "Цель накоплений",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 50,
@@ -1905,7 +2052,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение новому дню"
+    "object_type_ru": "Обучение новому дню",
+    "trigger_ru": null,
+    "main_screen_tutorial": true,
+    "first_line_tutorial": true
   },
   {
     "id": 51,
@@ -1945,7 +2095,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение новому дню"
+    "object_type_ru": "Обучение новому дню",
+    "trigger_ru": null,
+    "main_screen_tutorial": true,
+    "first_line_tutorial": false
   },
   {
     "id": 52,
@@ -1985,7 +2138,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение новому дню"
+    "object_type_ru": "Обучение новому дню",
+    "trigger_ru": null,
+    "main_screen_tutorial": true,
+    "first_line_tutorial": false
   },
   {
     "id": 53,
@@ -2025,7 +2181,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение новому дню"
+    "object_type_ru": "Обучение новому дню",
+    "trigger_ru": null,
+    "main_screen_tutorial": true,
+    "first_line_tutorial": false
   },
   {
     "id": 54,
@@ -2065,7 +2224,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение новому дню"
+    "object_type_ru": "Обучение новому дню",
+    "trigger_ru": null,
+    "main_screen_tutorial": true,
+    "first_line_tutorial": false
   },
   {
     "id": 55,
@@ -2105,7 +2267,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение новому дню"
+    "object_type_ru": "Обучение новому дню",
+    "trigger_ru": null,
+    "main_screen_tutorial": true,
+    "first_line_tutorial": false
   },
   {
     "id": 56,
@@ -2141,7 +2306,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Музыка нового дня"
+    "object_type_ru": "Музыка нового дня",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 57,
@@ -2177,7 +2345,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Экономический эпизод"
+    "object_type_ru": "Экономический эпизод",
+    "trigger_ru": "Монстрик сыт",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 58,
@@ -2213,7 +2384,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика монстра"
+    "object_type_ru": "Реплика монстра",
+    "trigger_ru": "Монстрик у теннисного корта",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 59,
@@ -2249,7 +2423,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика монстра"
+    "object_type_ru": "Реплика монстра",
+    "trigger_ru": "Монстрик у киоска с мороженым",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 60,
@@ -2285,7 +2462,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "В парке ничего не куплено",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 61,
@@ -2321,7 +2501,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Куплено только мороженое",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 62,
@@ -2357,7 +2540,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Куплены мороженое и аттракцион",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 63,
@@ -2393,7 +2579,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Куплена ракетка",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 64,
@@ -2433,7 +2622,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение копилке"
+    "object_type_ru": "Обучение копилке",
+    "trigger_ru": null,
+    "main_screen_tutorial": true,
+    "first_line_tutorial": true
   },
   {
     "id": 65,
@@ -2473,7 +2665,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение копилке"
+    "object_type_ru": "Обучение копилке",
+    "trigger_ru": null,
+    "main_screen_tutorial": true,
+    "first_line_tutorial": false
   },
   {
     "id": 66,
@@ -2513,7 +2708,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение копилке"
+    "object_type_ru": "Обучение копилке",
+    "trigger_ru": null,
+    "main_screen_tutorial": true,
+    "first_line_tutorial": false
   },
   {
     "id": 67,
@@ -2553,7 +2751,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение копилке"
+    "object_type_ru": "Обучение копилке",
+    "trigger_ru": null,
+    "main_screen_tutorial": true,
+    "first_line_tutorial": false
   },
   {
     "id": 68,
@@ -2593,7 +2794,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение копилке"
+    "object_type_ru": "Обучение копилке",
+    "trigger_ru": null,
+    "main_screen_tutorial": true,
+    "first_line_tutorial": false
   },
   {
     "id": 69,
@@ -2629,7 +2833,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика монстра"
+    "object_type_ru": "Реплика монстра",
+    "trigger_ru": "Монстрик у афиши",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 70,
@@ -2665,7 +2872,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Триггер окончания игрового дня"
+    "object_type_ru": "Триггер окончания игрового дня",
+    "trigger_ru": "Принята или отложена цель накоплений «Праздник огней»",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 71,
@@ -2705,7 +2915,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение новому дню"
+    "object_type_ru": "Обучение новому дню",
+    "trigger_ru": null,
+    "main_screen_tutorial": true,
+    "first_line_tutorial": true
   },
   {
     "id": 72,
@@ -2745,7 +2958,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение новому дню"
+    "object_type_ru": "Обучение новому дню",
+    "trigger_ru": null,
+    "main_screen_tutorial": true,
+    "first_line_tutorial": false
   },
   {
     "id": 73,
@@ -2781,7 +2997,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Музыка нового дня"
+    "object_type_ru": "Музыка нового дня",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 74,
@@ -2817,7 +3036,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Магазин"
+    "object_type_ru": "Магазин",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 75,
@@ -2853,7 +3075,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Товар из магазина техники"
+    "object_type_ru": "Товар из магазина техники",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 76,
@@ -2889,7 +3114,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Товар из магазина техники"
+    "object_type_ru": "Товар из магазина техники",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 77,
@@ -2925,7 +3153,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Товар из магазина техники"
+    "object_type_ru": "Товар из магазина техники",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 78,
@@ -2961,7 +3192,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Товар из магазина техники"
+    "object_type_ru": "Товар из магазина техники",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 79,
@@ -2997,7 +3231,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Товар из магазина техники"
+    "object_type_ru": "Товар из магазина техники",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 80,
@@ -3037,7 +3274,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": true
   },
   {
     "id": 81,
@@ -3077,7 +3317,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 82,
@@ -3117,7 +3360,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 83,
@@ -3157,7 +3403,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 84,
@@ -3197,7 +3446,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 85,
@@ -3237,7 +3489,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 86,
@@ -3277,7 +3532,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 87,
@@ -3317,7 +3575,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 88,
@@ -3357,7 +3618,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 89,
@@ -3397,7 +3661,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 90,
@@ -3433,7 +3700,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Куплен выгодный прибор для козявок",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 91,
@@ -3469,7 +3739,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Куплен дешёвый прибор с дорогими картриджами",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 92,
@@ -3505,7 +3778,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Переплата за такой же прибор",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 93,
@@ -3541,7 +3817,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Картридж без прибора",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 94,
@@ -3577,7 +3856,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Второй прибор, когда первый уже есть",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 95,
@@ -3617,7 +3899,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение новому дню"
+    "object_type_ru": "Обучение новому дню",
+    "trigger_ru": null,
+    "main_screen_tutorial": true,
+    "first_line_tutorial": false
   },
   {
     "id": 96,
@@ -3653,7 +3938,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Цель накоплений"
+    "object_type_ru": "Цель накоплений",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 97,
@@ -3693,7 +3981,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Сообщение"
+    "object_type_ru": "Сообщение",
+    "trigger_ru": "Монстрик грязный, а прибор для козявок есть",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 98,
@@ -3733,7 +4024,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Ошибка"
+    "object_type_ru": "Ошибка",
+    "trigger_ru": "Чистка чистого монстрика",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 99,
@@ -3773,7 +4067,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Ошибка"
+    "object_type_ru": "Ошибка",
+    "trigger_ru": "Чистка без прибора для козявок",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 100,
@@ -3809,7 +4106,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика монстра"
+    "object_type_ru": "Реплика монстра",
+    "trigger_ru": "Начало чистки ушей",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 101,
@@ -3845,7 +4145,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика монстра"
+    "object_type_ru": "Реплика монстра",
+    "trigger_ru": "Уши почищены",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 102,
@@ -3885,7 +4188,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение чистке"
+    "object_type_ru": "Обучение чистке",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": true
   },
   {
     "id": 103,
@@ -3925,7 +4231,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение чистке"
+    "object_type_ru": "Обучение чистке",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 104,
@@ -3965,7 +4274,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение чистке"
+    "object_type_ru": "Обучение чистке",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": true
   },
   {
     "id": 105,
@@ -4005,7 +4317,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение чистке"
+    "object_type_ru": "Обучение чистке",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 106,
@@ -4045,7 +4360,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение чистке"
+    "object_type_ru": "Обучение чистке",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": true
   },
   {
     "id": 107,
@@ -4085,7 +4403,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение чистке"
+    "object_type_ru": "Обучение чистке",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": true
   },
   {
     "id": 108,
@@ -4121,7 +4442,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Триггер окончания игрового дня"
+    "object_type_ru": "Триггер окончания игрового дня",
+    "trigger_ru": "Монстрик чистый",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 109,
@@ -4157,7 +4481,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Итоги: корм продаётся целыми пачками",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 110,
@@ -4193,7 +4520,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Итоги: корма не хватило",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 111,
@@ -4229,7 +4559,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Итоги: день закончен с голодным монстриком",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 112,
@@ -4265,7 +4598,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Мало на обязательные расходы",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 113,
@@ -4301,7 +4637,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Мало на веселье",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 114,
@@ -4337,7 +4676,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Мало в копилку",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 115,
@@ -4373,7 +4715,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Бюджет утверждён",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 116,
@@ -4413,7 +4758,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение второму бюджету"
+    "object_type_ru": "Обучение второму бюджету",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": true
   },
   {
     "id": 117,
@@ -4453,7 +4801,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение второму бюджету"
+    "object_type_ru": "Обучение второму бюджету",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 118,
@@ -4493,7 +4844,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение второму бюджету"
+    "object_type_ru": "Обучение второму бюджету",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 119,
@@ -4529,7 +4883,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Экономический эпизод"
+    "object_type_ru": "Экономический эпизод",
+    "trigger_ru": "Начало игрового дня",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 120,
@@ -4567,7 +4924,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика папы"
+    "object_type_ru": "Реплика папы",
+    "trigger_ru": "Папа сердится",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 121,
@@ -4605,7 +4965,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика папы"
+    "object_type_ru": "Реплика папы",
+    "trigger_ru": "Папа предлагает",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 122,
@@ -4648,7 +5011,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Статья сметы на теннис"
+    "object_type_ru": "Статья сметы на теннис",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 123,
@@ -4691,7 +5057,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Статья сметы на теннис"
+    "object_type_ru": "Статья сметы на теннис",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 124,
@@ -4734,7 +5103,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Статья сметы на теннис"
+    "object_type_ru": "Статья сметы на теннис",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 125,
@@ -4778,7 +5150,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Статья сметы на теннис"
+    "object_type_ru": "Статья сметы на теннис",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 126,
@@ -4822,7 +5197,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Статья сметы на теннис"
+    "object_type_ru": "Статья сметы на теннис",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 127,
@@ -4864,7 +5242,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Статья сметы на теннис"
+    "object_type_ru": "Статья сметы на теннис",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 128,
@@ -4906,7 +5287,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Статья сметы на теннис"
+    "object_type_ru": "Статья сметы на теннис",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 129,
@@ -4951,7 +5335,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Статья сметы на теннис"
+    "object_type_ru": "Статья сметы на теннис",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 130,
@@ -4990,7 +5377,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение смете на теннис"
+    "object_type_ru": "Обучение смете на теннис",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": true
   },
   {
     "id": 131,
@@ -5029,7 +5419,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение смете на теннис"
+    "object_type_ru": "Обучение смете на теннис",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 132,
@@ -5068,7 +5461,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение смете на теннис"
+    "object_type_ru": "Обучение смете на теннис",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 133,
@@ -5107,7 +5503,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение смете на теннис"
+    "object_type_ru": "Обучение смете на теннис",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 134,
@@ -5143,7 +5542,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "В смете нет пробного занятия или корта",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 135,
@@ -5179,7 +5581,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Абонементы и подписки раньше проверки",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 136,
@@ -5215,7 +5620,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Дорогие покупки раньше проверки",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 137,
@@ -5251,7 +5659,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Смета утверждена",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 138,
@@ -5287,7 +5698,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Триггер окончания игрового дня"
+    "object_type_ru": "Триггер окончания игрового дня",
+    "trigger_ru": "Завершён экономический эпизод «Смета проверки гипотезы таланта питомца к теннису»",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 139,
@@ -5323,7 +5737,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Музыка нового дня"
+    "object_type_ru": "Музыка нового дня",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 140,
@@ -5359,7 +5776,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Экономический эпизод"
+    "object_type_ru": "Экономический эпизод",
+    "trigger_ru": "Начало игрового дня",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 141,
@@ -5397,7 +5817,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика папы"
+    "object_type_ru": "Реплика папы",
+    "trigger_ru": "Папа встревожен",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 142,
@@ -5435,7 +5858,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика папы"
+    "object_type_ru": "Реплика папы",
+    "trigger_ru": "Папа просит о помощи",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 143,
@@ -5473,7 +5899,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика папы"
+    "object_type_ru": "Реплика папы",
+    "trigger_ru": "Папа благодарит",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 144,
@@ -5534,7 +5963,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Сделка с аккредитивом"
+    "object_type_ru": "Сделка с аккредитивом",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 145,
@@ -5595,7 +6027,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Сделка с аккредитивом"
+    "object_type_ru": "Сделка с аккредитивом",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 146,
@@ -5667,7 +6102,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Сделка с аккредитивом"
+    "object_type_ru": "Сделка с аккредитивом",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 147,
@@ -5707,7 +6145,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 148,
@@ -5747,7 +6188,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 149,
@@ -5787,7 +6231,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 150,
@@ -5828,7 +6275,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 151,
@@ -5868,7 +6318,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 152,
@@ -5908,7 +6361,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 153,
@@ -5948,7 +6404,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 154,
@@ -5988,7 +6447,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 155,
@@ -6028,7 +6490,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 156,
@@ -6068,7 +6533,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 157,
@@ -6108,7 +6576,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 158,
@@ -6149,7 +6620,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 159,
@@ -6189,7 +6663,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 160,
@@ -6229,7 +6706,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 161,
@@ -6270,7 +6750,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 162,
@@ -6310,7 +6793,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 163,
@@ -6350,7 +6836,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 164,
@@ -6390,7 +6879,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 165,
@@ -6430,7 +6922,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 166,
@@ -6470,7 +6965,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 167,
@@ -6510,7 +7008,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 168,
@@ -6550,7 +7051,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 169,
@@ -6590,7 +7094,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 170,
@@ -6631,7 +7138,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 171,
@@ -6671,7 +7181,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 172,
@@ -6712,7 +7225,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 173,
@@ -6752,7 +7268,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Карточка аккредитива"
+    "object_type_ru": "Карточка аккредитива",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 174,
@@ -6791,7 +7310,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение аккредитивам"
+    "object_type_ru": "Обучение аккредитивам",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": true
   },
   {
     "id": 175,
@@ -6830,7 +7352,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение аккредитивам"
+    "object_type_ru": "Обучение аккредитивам",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 176,
@@ -6869,7 +7394,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение аккредитивам"
+    "object_type_ru": "Обучение аккредитивам",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 177,
@@ -6908,7 +7436,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение аккредитивам"
+    "object_type_ru": "Обучение аккредитивам",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 178,
@@ -6947,7 +7478,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение аккредитивам"
+    "object_type_ru": "Обучение аккредитивам",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 179,
@@ -6986,7 +7520,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение аккредитивам"
+    "object_type_ru": "Обучение аккредитивам",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 180,
@@ -7022,7 +7559,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Что такое аккредитив",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 181,
@@ -7058,7 +7598,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Как собирать аккредитив",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 182,
@@ -7094,7 +7637,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "В аккредитиве лишнее условие",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 183,
@@ -7130,7 +7676,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "В аккредитиве не хватает условия",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 184,
@@ -7166,7 +7715,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Этапы аккредитива в неверном порядке",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 185,
@@ -7202,7 +7754,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Неверная связка «И» / «ИЛИ»",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 186,
@@ -7238,7 +7793,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Аккредитив собран верно",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 187,
@@ -7274,7 +7832,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "В аккредитиве лишнее условие",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 188,
@@ -7310,7 +7871,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "В аккредитиве не хватает условия",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 189,
@@ -7346,7 +7910,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Этапы аккредитива в неверном порядке",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 190,
@@ -7382,7 +7949,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Неверная связка «И» / «ИЛИ»",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 191,
@@ -7418,7 +7988,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Аккредитив собран верно",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 192,
@@ -7454,7 +8027,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "В аккредитиве лишнее условие",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 193,
@@ -7490,7 +8066,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "В аккредитиве не хватает условия",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 194,
@@ -7526,7 +8105,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Этапы аккредитива в неверном порядке",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 195,
@@ -7562,7 +8144,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Неверная связка «И» / «ИЛИ»",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 196,
@@ -7598,7 +8183,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Аккредитив собран верно",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 197,
@@ -7634,7 +8222,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Триггер окончания игрового дня"
+    "object_type_ru": "Триггер окончания игрового дня",
+    "trigger_ru": "Пройден туториал дополнительных заданий",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 198,
@@ -7670,7 +8261,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Музыка нового дня"
+    "object_type_ru": "Музыка нового дня",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 199,
@@ -7706,7 +8300,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Дополнительное задание"
+    "object_type_ru": "Дополнительное задание",
+    "trigger_ru": "Завершён экономический эпизод «Аккредитивы»",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 200,
@@ -7746,7 +8343,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение дополнительным заданиям"
+    "object_type_ru": "Обучение дополнительным заданиям",
+    "trigger_ru": null,
+    "main_screen_tutorial": true,
+    "first_line_tutorial": true
   },
   {
     "id": 201,
@@ -7786,7 +8386,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение дополнительным заданиям"
+    "object_type_ru": "Обучение дополнительным заданиям",
+    "trigger_ru": null,
+    "main_screen_tutorial": true,
+    "first_line_tutorial": false
   },
   {
     "id": 202,
@@ -7826,7 +8429,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение дополнительным заданиям"
+    "object_type_ru": "Обучение дополнительным заданиям",
+    "trigger_ru": null,
+    "main_screen_tutorial": true,
+    "first_line_tutorial": false
   },
   {
     "id": 203,
@@ -7866,7 +8472,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение дополнительным заданиям"
+    "object_type_ru": "Обучение дополнительным заданиям",
+    "trigger_ru": null,
+    "main_screen_tutorial": true,
+    "first_line_tutorial": false
   },
   {
     "id": 204,
@@ -7902,7 +8511,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Экономический эпизод"
+    "object_type_ru": "Экономический эпизод",
+    "trigger_ru": "Монстрик чистый и сытый",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 205,
@@ -7945,7 +8557,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Точка на карте маршрутов"
+    "object_type_ru": "Точка на карте маршрутов",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 206,
@@ -7988,7 +8603,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Точка на карте маршрутов"
+    "object_type_ru": "Точка на карте маршрутов",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 207,
@@ -8031,7 +8649,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Точка на карте маршрутов"
+    "object_type_ru": "Точка на карте маршрутов",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 208,
@@ -8074,7 +8695,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Точка на карте маршрутов"
+    "object_type_ru": "Точка на карте маршрутов",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 209,
@@ -8117,7 +8741,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Точка на карте маршрутов"
+    "object_type_ru": "Точка на карте маршрутов",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 210,
@@ -8160,7 +8787,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Точка на карте маршрутов"
+    "object_type_ru": "Точка на карте маршрутов",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 211,
@@ -8203,7 +8833,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Точка на карте маршрутов"
+    "object_type_ru": "Точка на карте маршрутов",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 212,
@@ -8246,7 +8879,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Точка на карте маршрутов"
+    "object_type_ru": "Точка на карте маршрутов",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 213,
@@ -8287,7 +8923,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Участок маршрута"
+    "object_type_ru": "Участок маршрута",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 214,
@@ -8330,7 +8969,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Участок маршрута"
+    "object_type_ru": "Участок маршрута",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 215,
@@ -8373,7 +9015,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Участок маршрута"
+    "object_type_ru": "Участок маршрута",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 216,
@@ -8414,7 +9059,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Участок маршрута"
+    "object_type_ru": "Участок маршрута",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 217,
@@ -8455,7 +9103,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Участок маршрута"
+    "object_type_ru": "Участок маршрута",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 218,
@@ -8496,7 +9147,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Участок маршрута"
+    "object_type_ru": "Участок маршрута",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 219,
@@ -8537,7 +9191,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Участок маршрута"
+    "object_type_ru": "Участок маршрута",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 220,
@@ -8578,7 +9235,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Участок маршрута"
+    "object_type_ru": "Участок маршрута",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 221,
@@ -8619,7 +9279,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Участок маршрута"
+    "object_type_ru": "Участок маршрута",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 222,
@@ -8660,7 +9323,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Участок маршрута"
+    "object_type_ru": "Участок маршрута",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 223,
@@ -8701,7 +9367,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Участок маршрута"
+    "object_type_ru": "Участок маршрута",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 224,
@@ -8742,7 +9411,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Участок маршрута"
+    "object_type_ru": "Участок маршрута",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 225,
@@ -8784,7 +9456,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Участок маршрута"
+    "object_type_ru": "Участок маршрута",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 226,
@@ -8822,7 +9497,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика тренера"
+    "object_type_ru": "Реплика тренера",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 227,
@@ -8860,7 +9538,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика тренера"
+    "object_type_ru": "Реплика тренера",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 228,
@@ -8898,7 +9579,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика тренера"
+    "object_type_ru": "Реплика тренера",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 229,
@@ -8936,7 +9620,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика тренера"
+    "object_type_ru": "Реплика тренера",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 230,
@@ -8974,7 +9661,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика тренера"
+    "object_type_ru": "Реплика тренера",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 231,
@@ -9013,7 +9703,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение планированию маршрута"
+    "object_type_ru": "Обучение планированию маршрута",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": true
   },
   {
     "id": 232,
@@ -9052,7 +9745,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение планированию маршрута"
+    "object_type_ru": "Обучение планированию маршрута",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 233,
@@ -9091,7 +9787,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение планированию маршрута"
+    "object_type_ru": "Обучение планированию маршрута",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 234,
@@ -9130,7 +9829,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение планированию маршрута"
+    "object_type_ru": "Обучение планированию маршрута",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 235,
@@ -9169,7 +9871,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение планированию маршрута"
+    "object_type_ru": "Обучение планированию маршрута",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 236,
@@ -9205,7 +9910,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Что такое оптимальное решение",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 237,
@@ -9241,7 +9949,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Как искать оптимальный маршрут",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 238,
@@ -9277,7 +9988,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Тренер и игрок едут на разные корты",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 239,
@@ -9313,7 +10027,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Кто-то опаздывает к одиннадцати",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 240,
@@ -9349,7 +10066,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "На маршрут не хватает монет",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 241,
@@ -9385,7 +10105,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "План с лишним такси",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 242,
@@ -9421,7 +10144,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Тренер ждёт за счёт игрока",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 243,
@@ -9457,7 +10183,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Есть план дешевле",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 244,
@@ -9493,7 +10222,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Оптимальный маршрут",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 245,
@@ -9532,7 +10264,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение планированию маршрута"
+    "object_type_ru": "Обучение планированию маршрута",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 246,
@@ -9568,7 +10303,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Повторная попытка: лишнее такси",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 247,
@@ -9604,7 +10342,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Повторная попытка: тренер ждёт",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 248,
@@ -9640,7 +10381,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Повторная попытка: есть план дешевле",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 249,
@@ -9676,7 +10420,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Триггер окончания игрового дня"
+    "object_type_ru": "Триггер окончания игрового дня",
+    "trigger_ru": "Завершён экономический эпизод «Поездка на тренировку»",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 250,
@@ -9712,7 +10459,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Итоги: доходов больше плана",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 251,
@@ -9748,7 +10498,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Итоги: траты больше плана",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 252,
@@ -9784,7 +10537,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Итоги: траты меньше плана",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 253,
@@ -9820,7 +10576,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Итоги: брались монеты из копилки",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 254,
@@ -9856,7 +10615,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Итоги: траты точно по плану",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 255,
@@ -9892,7 +10654,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Итоги: день закончен с голодным монстриком",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 256,
@@ -9928,7 +10693,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Итоги: дальше без ментора",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 257,
@@ -9964,7 +10732,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Дополнительное задание"
+    "object_type_ru": "Дополнительное задание",
+    "trigger_ru": "Начался седьмой день",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 258,
@@ -10000,7 +10771,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Что такое активы и пассивы",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 259,
@@ -10036,7 +10810,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Подсказки про хлам и радость",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 260,
@@ -10072,7 +10849,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Лишние копии вещи отнесены к активам",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 261,
@@ -10108,7 +10888,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Хлам отнесён к активам",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 262,
@@ -10144,7 +10927,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Неиспользуемая дорогая вещь отнесена к активам",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 263,
@@ -10180,7 +10966,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Полезная вещь отнесена к пассивам",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 264,
@@ -10216,7 +11005,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Вещь для радости отнесена к пассивам",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 265,
@@ -10252,7 +11044,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Одна вещь и в активах, и в пассивах",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 266,
@@ -10288,7 +11083,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Всё разложено без ошибок",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 267,
@@ -10324,7 +11122,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Всё разложено, ошибки исправлены",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 268,
@@ -10363,7 +11164,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение активам и пассивам"
+    "object_type_ru": "Обучение активам и пассивам",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": true
   },
   {
     "id": 269,
@@ -10402,7 +11206,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение активам и пассивам"
+    "object_type_ru": "Обучение активам и пассивам",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 270,
@@ -10441,7 +11248,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение активам и пассивам"
+    "object_type_ru": "Обучение активам и пассивам",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 271,
@@ -10480,7 +11290,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение активам и пассивам"
+    "object_type_ru": "Обучение активам и пассивам",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 272,
@@ -10519,7 +11332,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение активам и пассивам"
+    "object_type_ru": "Обучение активам и пассивам",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 273,
@@ -10555,7 +11371,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Экономический эпизод"
+    "object_type_ru": "Экономический эпизод",
+    "trigger_ru": "Монстрик сыт",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 274,
@@ -10593,7 +11412,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика папы"
+    "object_type_ru": "Реплика папы",
+    "trigger_ru": "Папа встревожен",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 275,
@@ -10631,7 +11453,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика папы"
+    "object_type_ru": "Реплика папы",
+    "trigger_ru": "Папа просит о помощи",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 276,
@@ -10669,7 +11494,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика папы"
+    "object_type_ru": "Реплика папы",
+    "trigger_ru": "Папа благодарит",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 277,
@@ -10730,7 +11558,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Заявка на кредит для бизнеса"
+    "object_type_ru": "Заявка на кредит для бизнеса",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 278,
@@ -10792,7 +11623,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Заявка на кредит для бизнеса"
+    "object_type_ru": "Заявка на кредит для бизнеса",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 279,
@@ -10854,7 +11688,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Заявка на кредит для бизнеса"
+    "object_type_ru": "Заявка на кредит для бизнеса",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 280,
@@ -10916,7 +11753,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Заявка на кредит для бизнеса"
+    "object_type_ru": "Заявка на кредит для бизнеса",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 281,
@@ -10977,7 +11817,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Заявка на кредит для бизнеса"
+    "object_type_ru": "Заявка на кредит для бизнеса",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 282,
@@ -11039,7 +11882,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Заявка на кредит для бизнеса"
+    "object_type_ru": "Заявка на кредит для бизнеса",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 283,
@@ -11101,7 +11947,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Заявка на кредит для бизнеса"
+    "object_type_ru": "Заявка на кредит для бизнеса",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 284,
@@ -11162,7 +12011,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Заявка на кредит для бизнеса"
+    "object_type_ru": "Заявка на кредит для бизнеса",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 285,
@@ -11201,7 +12053,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение кредитам для бизнеса"
+    "object_type_ru": "Обучение кредитам для бизнеса",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": true
   },
   {
     "id": 286,
@@ -11240,7 +12095,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение кредитам для бизнеса"
+    "object_type_ru": "Обучение кредитам для бизнеса",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 287,
@@ -11279,7 +12137,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение кредитам для бизнеса"
+    "object_type_ru": "Обучение кредитам для бизнеса",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 288,
@@ -11318,7 +12179,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение кредитам для бизнеса"
+    "object_type_ru": "Обучение кредитам для бизнеса",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 289,
@@ -11357,7 +12221,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение кредитам для бизнеса"
+    "object_type_ru": "Обучение кредитам для бизнеса",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 290,
@@ -11396,7 +12263,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение кредитам для бизнеса"
+    "object_type_ru": "Обучение кредитам для бизнеса",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 291,
@@ -11432,7 +12302,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Что такое кредит",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 292,
@@ -11468,7 +12341,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Четыре вида заявок",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 293,
@@ -11504,7 +12380,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Деньги выданы провальной идее",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 294,
@@ -11540,7 +12419,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Отказ спорной идее",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 295,
@@ -11576,7 +12458,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Спорной идее выдана вся сумма",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 296,
@@ -11612,7 +12497,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Транш слишком маленький",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 297,
@@ -11648,7 +12536,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Транш слишком большой",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 298,
@@ -11684,7 +12575,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Отказ надёжному заёмщику",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 299,
@@ -11720,7 +12614,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Транш надёжному заёмщику",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 300,
@@ -11756,7 +12653,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Ставка не выше ключевой",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 301,
@@ -11792,7 +12692,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Слишком высокая ставка для корпорации",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 302,
@@ -11828,7 +12731,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Ненужная отсрочка корпорации",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 303,
@@ -11864,7 +12770,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Слишком высокая ставка для малого бизнеса",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 304,
@@ -11900,7 +12809,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Малому бизнесу не дана отсрочка",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 305,
@@ -11936,7 +12848,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Верный отказ провальной идее",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 306,
@@ -11972,7 +12887,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Верный первый транш спорной идее",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 307,
@@ -12008,7 +12926,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Верные условия для корпорации",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 308,
@@ -12044,7 +12965,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Верные условия для малого бизнеса",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 309,
@@ -12080,7 +13004,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Все заявки без ошибок",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 310,
@@ -12116,7 +13043,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Все заявки разобраны, ошибки исправлены",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 311,
@@ -12152,7 +13082,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Триггер окончания игрового дня"
+    "object_type_ru": "Триггер окончания игрового дня",
+    "trigger_ru": "Завершён экономический эпизод «Кредиты для бизнеса»",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 312,
@@ -12188,7 +13121,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Музыка нового дня"
+    "object_type_ru": "Музыка нового дня",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 313,
@@ -12224,7 +13160,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Магазин"
+    "object_type_ru": "Магазин",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 314,
@@ -12260,7 +13199,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 315,
@@ -12296,7 +13238,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 316,
@@ -12332,7 +13277,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 317,
@@ -12368,7 +13316,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 318,
@@ -12404,7 +13355,10 @@
     "unsuitable_reason": "age-rattle",
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 319,
@@ -12440,7 +13394,10 @@
     "unsuitable_reason": "age-puzzle",
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 320,
@@ -12476,7 +13433,10 @@
     "unsuitable_reason": "collection",
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 321,
@@ -12512,7 +13472,10 @@
     "unsuitable_reason": "advertising",
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 322,
@@ -12548,7 +13511,10 @@
     "unsuitable_reason": "impulse",
     "dirty_on_play": true,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 323,
@@ -12584,7 +13550,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": true,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 324,
@@ -12624,7 +13593,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение новому дню"
+    "object_type_ru": "Обучение новому дню",
+    "trigger_ru": null,
+    "main_screen_tutorial": true,
+    "first_line_tutorial": true
   },
   {
     "id": 325,
@@ -12664,7 +13636,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение новому дню"
+    "object_type_ru": "Обучение новому дню",
+    "trigger_ru": null,
+    "main_screen_tutorial": true,
+    "first_line_tutorial": false
   },
   {
     "id": 326,
@@ -12705,7 +13680,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": true
   },
   {
     "id": 327,
@@ -12746,7 +13724,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 328,
@@ -12787,7 +13768,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 329,
@@ -12828,7 +13812,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 330,
@@ -12869,7 +13856,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 331,
@@ -12910,7 +13900,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 332,
@@ -12951,7 +13944,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение в магазине"
+    "object_type_ru": "Обучение в магазине",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 333,
@@ -12987,7 +13983,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Игрушка для малышей",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 334,
@@ -13023,7 +14022,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Игрушка для старшего возраста",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 335,
@@ -13059,7 +14061,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Покупка ради коллекции",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 336,
@@ -13095,7 +14100,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Покупка из-за рекламы",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 337,
@@ -13131,7 +14139,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Импульсивная покупка у кассы",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 338,
@@ -13167,7 +14178,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Прогноз не сходится с биркой",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 339,
@@ -13203,7 +14217,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Не хватает монет на покупки",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 340,
@@ -13239,7 +14256,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Удачная покупка игрушек",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 341,
@@ -13275,7 +14295,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Куплена капсула-сюрприз",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 342,
@@ -13311,7 +14334,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "В капсуле выпал дубль",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 343,
@@ -13347,7 +14373,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика монстра"
+    "object_type_ru": "Реплика монстра",
+    "trigger_ru": "Монстрик просит робота",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 344,
@@ -13383,7 +14412,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика монстра"
+    "object_type_ru": "Реплика монстра",
+    "trigger_ru": "Монстрик просит лизуна",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 345,
@@ -13419,7 +14451,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика монстра"
+    "object_type_ru": "Реплика монстра",
+    "trigger_ru": "Монстрику попался дубль",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 346,
@@ -13455,7 +14490,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика монстра"
+    "object_type_ru": "Реплика монстра",
+    "trigger_ru": "Монстрик рад игрушке",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 347,
@@ -13491,7 +14529,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика монстра"
+    "object_type_ru": "Реплика монстра",
+    "trigger_ru": "Монстрику скучно с игрушкой",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 348,
@@ -13527,7 +14568,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика монстра"
+    "object_type_ru": "Реплика монстра",
+    "trigger_ru": "У монстрика не получается играть",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 349,
@@ -13563,7 +14607,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Цель накоплений"
+    "object_type_ru": "Цель накоплений",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 350,
@@ -13599,7 +14646,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Триггер окончания игрового дня"
+    "object_type_ru": "Триггер окончания игрового дня",
+    "trigger_ru": "Успешная покупка в магазине игрушек",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 351,
@@ -13635,7 +14685,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Музыка нового дня"
+    "object_type_ru": "Музыка нового дня",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 352,
@@ -13671,7 +14724,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Экономический эпизод"
+    "object_type_ru": "Экономический эпизод",
+    "trigger_ru": "Попытка почистить монстрика",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 391,
@@ -13707,7 +14763,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Прибор сломался, но он на гарантии",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 392,
@@ -13743,7 +14802,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Прогноз: копилка не растёт",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 393,
@@ -13779,7 +14841,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Невыполнимое обещание",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 394,
@@ -13815,7 +14880,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Обещание не больше прежнего",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 395,
@@ -13851,7 +14919,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Прогноз: до победы очень долго",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 396,
@@ -13887,7 +14958,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Прогноз по прежнему темпу",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 397,
@@ -13923,7 +14997,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Прогноз с обещанием",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 398,
@@ -13959,7 +15036,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Посчитаны чистки без поломок",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 399,
@@ -13995,7 +15075,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "20% приняты за 20 поломок",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 400,
@@ -14031,7 +15114,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Поломка посчитана в каждой чистке",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 401,
@@ -14067,7 +15153,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Посчитан только прибор",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 402,
@@ -14103,7 +15192,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Посчитаны только картриджи",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 403,
@@ -14139,7 +15231,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Запаска посчитана на каждую чистку",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 404,
@@ -14175,7 +15270,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Дешёвая запаска, когда чисток много",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 405,
@@ -14211,7 +15309,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Надёжная запаска, когда чисток мало",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 406,
@@ -14247,7 +15348,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Переплата за такую же запаску",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 407,
@@ -14283,7 +15387,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Верно: дешёвая запаска",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 408,
@@ -14319,7 +15426,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Верно: надёжная запаска",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 409,
@@ -14358,7 +15468,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение эпизоду с ремонтом"
+    "object_type_ru": "Обучение эпизоду с ремонтом",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": true
   },
   {
     "id": 410,
@@ -14397,7 +15510,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение эпизоду с ремонтом"
+    "object_type_ru": "Обучение эпизоду с ремонтом",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 411,
@@ -14436,7 +15552,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение эпизоду с ремонтом"
+    "object_type_ru": "Обучение эпизоду с ремонтом",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 412,
@@ -14475,7 +15594,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение эпизоду с ремонтом"
+    "object_type_ru": "Обучение эпизоду с ремонтом",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 413,
@@ -14514,7 +15636,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение эпизоду с ремонтом"
+    "object_type_ru": "Обучение эпизоду с ремонтом",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 414,
@@ -14553,7 +15678,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение эпизоду с ремонтом"
+    "object_type_ru": "Обучение эпизоду с ремонтом",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": true
   },
   {
     "id": 415,
@@ -14592,7 +15720,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение эпизоду с ремонтом"
+    "object_type_ru": "Обучение эпизоду с ремонтом",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 416,
@@ -14631,7 +15762,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение эпизоду с ремонтом"
+    "object_type_ru": "Обучение эпизоду с ремонтом",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 417,
@@ -14670,7 +15804,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Обучение эпизоду с ремонтом"
+    "object_type_ru": "Обучение эпизоду с ремонтом",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 418,
@@ -14710,7 +15847,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Сообщение"
+    "object_type_ru": "Сообщение",
+    "trigger_ru": "Прибор для козявок вернулся из ремонта",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 419,
@@ -14746,7 +15886,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Новая поломка, выручила запаска",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 420,
@@ -14782,7 +15925,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика ментора"
+    "object_type_ru": "Реплика ментора",
+    "trigger_ru": "Новая поломка, а картриджей нет",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 421,
@@ -14818,7 +15964,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 422,
@@ -14854,7 +16003,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 423,
@@ -14890,7 +16042,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 424,
@@ -14926,7 +16081,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 425,
@@ -14962,7 +16120,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 426,
@@ -14998,7 +16159,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 427,
@@ -15034,7 +16198,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 428,
@@ -15070,7 +16237,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 429,
@@ -15106,7 +16276,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 430,
@@ -15142,7 +16315,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 431,
@@ -15178,7 +16354,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 432,
@@ -15214,7 +16393,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 433,
@@ -15250,7 +16432,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 434,
@@ -15286,7 +16471,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 435,
@@ -15322,7 +16510,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 436,
@@ -15358,7 +16549,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 437,
@@ -15394,7 +16588,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 438,
@@ -15430,7 +16627,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 439,
@@ -15466,7 +16666,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 440,
@@ -15502,7 +16705,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 441,
@@ -15538,7 +16744,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 442,
@@ -15574,7 +16783,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 443,
@@ -15610,7 +16822,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 444,
@@ -15646,7 +16861,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 445,
@@ -15682,7 +16900,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 446,
@@ -15718,7 +16939,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": false,
     "is_capsule": false,
-    "object_type_ru": "Товар из магазина игрушек"
+    "object_type_ru": "Товар из магазина игрушек",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 447,
@@ -15754,7 +16978,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Музыка нового дня"
+    "object_type_ru": "Музыка нового дня",
+    "trigger_ru": null,
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 448,
@@ -15790,7 +17017,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Триггер окончания игрового дня"
+    "object_type_ru": "Триггер окончания игрового дня",
+    "trigger_ru": "Завершён экономический эпизод «Поломка удалителя козявок»",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 449,
@@ -15826,7 +17056,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Инструктаж к финальной части"
+    "object_type_ru": "Инструктаж к финальной части",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": true
   },
   {
     "id": 450,
@@ -15862,7 +17095,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Инструктаж к финальной части"
+    "object_type_ru": "Инструктаж к финальной части",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 451,
@@ -15898,7 +17134,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Инструктаж к финальной части"
+    "object_type_ru": "Инструктаж к финальной части",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 452,
@@ -15934,7 +17173,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Инструктаж к финальной части"
+    "object_type_ru": "Инструктаж к финальной части",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 453,
@@ -15970,7 +17212,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Инструктаж к финальной части"
+    "object_type_ru": "Инструктаж к финальной части",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 454,
@@ -16006,7 +17251,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Инструктаж к финальной части"
+    "object_type_ru": "Инструктаж к финальной части",
+    "trigger_ru": null,
+    "main_screen_tutorial": false,
+    "first_line_tutorial": false
   },
   {
     "id": 455,
@@ -16042,7 +17290,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика монстра"
+    "object_type_ru": "Реплика монстра",
+    "trigger_ru": "Монстрик на Празднике огней",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 456,
@@ -16078,7 +17329,10 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика монстра"
+    "object_type_ru": "Реплика монстра",
+    "trigger_ru": "Монстрик с игровой приставкой",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   },
   {
     "id": 457,
@@ -16114,6 +17368,9 @@
     "unsuitable_reason": null,
     "dirty_on_play": null,
     "is_capsule": null,
-    "object_type_ru": "Реплика монстра"
+    "object_type_ru": "Реплика монстра",
+    "trigger_ru": "Монстрик с телескопом",
+    "main_screen_tutorial": null,
+    "first_line_tutorial": null
   }
 ]

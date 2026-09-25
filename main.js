@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MonsterRoom } from './room.js';
+import { EDITOR_MONSTER_AGE, applyMonsterAge, monsterAgeForDay, monsterAgeStage } from './monster-age.js';
 import { MonsterPark } from './park.js';
 import { FestivalLights } from './festival-lights.js';
 import { GameConsoleFinal } from './game-console-final.js';
@@ -75,6 +76,7 @@ import {
   finishDayHint,
   HARD_DAY_PERIOD,
   isNewDayTutorialDue,
+  NEW_DAY_TUTORIAL_OBJECT_TYPE,
   NEW_DAY_TUTORIAL_SEEN_EVENT,
   newDayRecords,
   newDayTutorialSteps,
@@ -126,6 +128,7 @@ import {
   isEconomicEpisodeStarted,
   unknownEconomicEpisodeTriggers,
 } from './economic-episodes.js';
+import { activityProgress } from './progress-overview.js';
 import {
   acceptedSavingsGoals,
   approvedBudgetCount,
@@ -215,6 +218,7 @@ import {
   ADDITIONAL_TASK_ABANDONED_EVENT,
   ADDITIONAL_TASK_COMPLETED_EVENT,
   ADDITIONAL_TASK_STARTED_EVENT,
+  ADDITIONAL_TASK_TUTORIAL_OBJECT_TYPE,
   additionalTaskList,
   additionalTaskTutorialSteps,
   unknownAdditionalTaskTriggers,
@@ -243,8 +247,15 @@ import {
   WAITING_BLOCK_PRICE,
 } from './route-planner.js';
 import { TrainerCall } from './trainer-call.js';
+import {
+  GLOSSARY_TERMS,
+  GLOSSARY_TOPICS,
+  glossaryLetterGroups,
+  glossaryTerm,
+  glossaryTerms,
+  glossaryTopic,
+} from './glossary.js';
 import { isMonsterCreatedRecord, JURY_PROFILE_ID, juryGroups, juryPlayKind, juryRowDay, jurySandboxRecords } from './jury.js';
-import { triggerRu } from './trigger-ru.js';
 import {
   EPISODE_EVENT,
   parentLogDays,
@@ -870,8 +881,7 @@ async function startExperience() {
     const row = juryLaunchRow;
     juryLaunchRow = null;
     startJuryLaunch(row);
-  } else if (launchMode === LAUNCH_NEW) enterEditor();
-  else if (launchMode === LAUNCH_RESUME) resumeGame();
+  } else if (launchMode === LAUNCH_RESUME) resumeGame();
   else runIntroSequence();
   launchMode = null;
 }
@@ -923,6 +933,9 @@ let shopController = null;
 let earCleaning = null;
 let monsterReadyPromise = null;
 let profile = { fur: 0, ears: 2, horns: 2 };
+// The editor shows the baby; in the game the age follows the day (monster-age.js).
+let monsterAge = EDITOR_MONSTER_AGE;
+let appliedMonsterAge = null;
 
 const swatchColors = ['#53b9f3', '#ff72b2', '#9b62e8', '#ff8d3a', '#ffd548', '#9b633f'];
 const lengthLabels = ['Самые короткие', 'Короткие', 'Обычные', 'Длинные', 'Самые длинные'];
@@ -1018,16 +1031,16 @@ function appendProfileRecord(record) {
 }
 
 // Switching the profile reloads the page, so no state of the previous profile survives in memory.
-// The mark tells the next load where to go: the saved place of the chosen profile, or the editor
-// of a brand-new one.
+// The mark tells the next load to go straight to the saved place of the chosen profile. A brand-new
+// profile gets no mark: it starts from the very beginning, as on the first launch of the game.
 const LAUNCH_STORAGE_KEY = 'prokormi-monstra:launch:v1';
 const LAUNCH_RESUME = 'resume';
-const LAUNCH_NEW = 'new';
 
-function relaunchWithProfile(profileId, mode) {
+function relaunchWithProfile(profileId, mode = null) {
   try {
     localStorage.setItem(USER_PROFILE_STORAGE_KEY, profileId);
-    sessionStorage.setItem(LAUNCH_STORAGE_KEY, mode);
+    if (mode) sessionStorage.setItem(LAUNCH_STORAGE_KEY, mode);
+    else sessionStorage.removeItem(LAUNCH_STORAGE_KEY);
   } catch (error) {
     console.warn('Не удалось сменить профиль.', error);
     showRoomMessage('Не получилось сменить профиль. Попробуй ещё раз.');
@@ -1040,7 +1053,7 @@ function takeLaunchMode() {
   try {
     const mode = sessionStorage.getItem(LAUNCH_STORAGE_KEY);
     sessionStorage.removeItem(LAUNCH_STORAGE_KEY);
-    return mode === LAUNCH_RESUME || mode === LAUNCH_NEW ? mode : null;
+    return mode === LAUNCH_RESUME ? mode : null;
   } catch {
     return null;
   }
@@ -1071,6 +1084,21 @@ function storedProfileLogs() {
 // The records of one profile: every stored record that names it.
 function profileLogRecords(logs, profileId) {
   return logs.flat().filter((record) => record?.[PROFILE_FIELD] === profileId);
+}
+
+// Showing the first line of a data mart tutorial (`first_line_tutorial`) logs that the tutorial is played.
+// Called once the tutorial layer is visible, so that the room holds its messages back meanwhile.
+const TUTORIAL_EVENT = 'Туториал';
+
+function logTutorialStart(steps) {
+  const row = steps?.[0];
+  if (row?.first_line_tutorial !== true) return;
+  appendProfileRecord({
+    'Тип события': TUTORIAL_EVENT,
+    'Профиль пользователя': getUserProfileId(),
+    'Суть обучения': row.object_type_ru,
+    'Обучение на главном экране': row.main_screen_tutorial,
+  });
 }
 
 function getMonsterModelCharacteristics() {
@@ -1260,6 +1288,17 @@ function formatCoins(value) {
   return `${value.toLocaleString('ru-RU')} 🪙`;
 }
 
+function makeRoomIcon(name) {
+  const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  icon.classList.add('room-icon');
+  icon.setAttribute('viewBox', '0 0 24 24');
+  icon.setAttribute('aria-hidden', 'true');
+  const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+  use.setAttribute('href', `${import.meta.env.BASE_URL}icons/room.svg#${name}`);
+  icon.append(use);
+  return icon;
+}
+
 function renderRoomStat(key, value) {
   const stat = roomStats.querySelector(`[data-stat="${key}"]`);
   if (!stat) return;
@@ -1289,6 +1328,7 @@ function careMoodKey(state) {
 function applyMonsterLook(state, moodKey = careMoodKey(state)) {
   if (!manifest || !model) return;
   const resolvedMoodKey = Number(state.stats?.health) < 0 ? 'sick' : moodKey;
+  setMonsterAge(monsterAgeForDay(state.day));
   const appearance = state.appearance;
   if (appearance) {
     profile = {
@@ -1306,7 +1346,7 @@ function applyMonsterLook(state, moodKey = careMoodKey(state)) {
   if (faceMaterial && faceOverlays[mood.overlay]) {
     faceMaterial.userData.pet.petOverlay.value = faceOverlays[mood.overlay];
   }
-  Object.entries(mood.morphTargets || {}).forEach(([name, value]) => setMorph(name, value));
+  Object.entries(mood.morphTargets || {}).forEach(([name, value]) => setMorph(name, Math.max(value, ageMorph(name))));
   for (const propName of mood.props || []) {
     const prop = model.getObjectByName(propName);
     if (prop) prop.visible = true;
@@ -1321,8 +1361,11 @@ function applyMonsterLook(state, moodKey = careMoodKey(state)) {
 function renderRoomHud(records = readProfileRecords(getUserProfileId())) {
   const state = deriveRoomState(records);
   roomDay.textContent = String(state.day);
-  roomPocket.textContent = formatCoins(state.pocket);
-  roomSavings.textContent = formatCoins(state.savings);
+  const pocketAmount = state.pocket.toLocaleString('ru-RU');
+  const savingsAmount = state.savings.toLocaleString('ru-RU');
+  roomPocket.querySelector('.room-coin-amount').textContent = pocketAmount;
+  roomSavings.querySelector('.room-coin-amount').textContent = savingsAmount;
+  $('#room-wallet').setAttribute('aria-label', `Деньги. В кармане ${pocketAmount} монет, в копилке ${savingsAmount} монет. Нажми, чтобы переложить монеты из копилки в карман`);
   finishName.textContent = state.name;
   roomHunger.textContent = state.hungry ? 'Голодный' : 'Сытый';
   roomHunger.classList.toggle('needs-care', state.hungry);
@@ -1571,7 +1614,7 @@ function renderFinalPurchased(records, outcome) {
     button.setAttribute('aria-label', `Пересмотреть 3D-сцену цели «${goal.title}»`);
     const icon = document.createElement('span');
     icon.setAttribute('aria-hidden', 'true');
-    icon.textContent = '🎬';
+    icon.append(makeRoomIcon('film'));
     const name = document.createElement('span');
     name.textContent = goal.title;
     button.append(icon, name);
@@ -1599,7 +1642,14 @@ function renderFinalBar(records = readProfileRecords(getUserProfileId())) {
     : `Копим на ${pluralRu(target.goals.length, 'цель', 'цели', 'целей')}`;
   finalGoalName.textContent = finalGoalWords(target);
   const left = Math.max(0, target.total - state.savings);
-  finalGoalLeft.textContent = left > 0 ? `ещё ${formatCoins(left)}` : 'хватает ✓';
+  if (left > 0) {
+    const unit = document.createElement('span');
+    unit.className = 'visually-hidden';
+    unit.textContent = ' монет';
+    finalGoalLeft.replaceChildren(document.createTextNode(`ещё ${left.toLocaleString('ru-RU')}`), makeRoomIcon('coin'), unit);
+  } else {
+    finalGoalLeft.textContent = 'хватает ✓';
+  }
   finalGoalFill.style.width = `${Math.min(100, (Math.max(0, state.savings) / Math.max(1, target.total)) * 100)}%`;
 
   const affordable = outcome ? [] : affordableGoals(records);
@@ -1609,9 +1659,10 @@ function renderFinalBar(records = readProfileRecords(getUserProfileId())) {
   finalRunButton.hidden = Boolean(outcome);
   finalRunButton.disabled = finalReplayRunning;
   finalRunButton.classList.toggle('is-running', finalRunning);
-  finalRunButton.innerHTML = finalRunning
-    ? '<span aria-hidden="true">⏸</span> Пауза'
-    : '<span aria-hidden="true">▶</span> Запустить дни';
+  const runIcon = document.createElement('span');
+  runIcon.setAttribute('aria-hidden', 'true');
+  runIcon.append(makeRoomIcon(finalRunning ? 'pause' : 'play'));
+  finalRunButton.replaceChildren(runIcon, document.createTextNode(finalRunning ? ' Пауза' : ' Запустить дни'));
   finalOver.hidden = !outcome;
   finalRetryButton.hidden = outcome !== 'defeat';
   finalOver.textContent = outcome === 'victory'
@@ -1989,7 +2040,7 @@ async function buyFinalGoal(goal, source) {
   const records = readProfileRecords(profileId);
   const state = deriveRoomState(records);
   const price = Number(goal.price) || 0;
-  if (price > state.savings) return;
+  if (price > state.savings || boughtSavingsGoals(records).some((item) => String(item.id) === String(goal.id))) return;
   const wasChosen = acceptedSavingsGoals(records).some((item) => String(item.id) === String(goal.id));
   const purpose = `Покупка цели ${goalName(goal)}`;
   appendProfileRecord({
@@ -2016,6 +2067,11 @@ async function buyFinalGoal(goal, source) {
     'Игровой день': state.day,
   });
   await playPurchasedGoalScene(goal);
+  // A chosen goal can be paid for before the automatic final days begin, too.
+  if (!isFinalPart(readProfileRecords(profileId))) {
+    enterRoom();
+    return;
+  }
   if (maybeFinishFinalGame()) return;
   if (!(await chooseNextGoals())) return;
   enterRoom();
@@ -3130,10 +3186,11 @@ function renderTennisEstimateTutorialStep() {
   playTennisEstimateTutorialVoice(step);
 }
 
-function startTennisEstimateTutorial() {
-  if (!tennisEstimateTutorialSteps.length || estimateTutorialWasSeen()) return false;
+function startTennisEstimateTutorial({ replay = false } = {}) {
+  if (!tennisEstimateTutorialSteps.length || (!replay && estimateTutorialWasSeen())) return false;
   tennisEstimateTutorialIndex = 0;
   setHidden(estimateTutorialLayer, false);
+  logTutorialStart(tennisEstimateTutorialSteps);
   renderTennisEstimateTutorialStep();
   estimateTutorialNext.focus({ preventScroll: true });
   return true;
@@ -4131,10 +4188,11 @@ function renderLocTutorialStep() {
   playLocTutorialVoice(step);
 }
 
-function startLocTutorial() {
-  if (!locTutorialSteps.length || locTutorialWasSeen()) return false;
+function startLocTutorial({ replay = false } = {}) {
+  if (!locTutorialSteps.length || (!replay && locTutorialWasSeen())) return false;
   locTutorialIndex = 0;
   setHidden(locTutorialLayer, false);
+  logTutorialStart(locTutorialSteps);
   renderLocTutorialStep();
   locTutorialNext.focus({ preventScroll: true });
   return true;
@@ -4821,10 +4879,11 @@ function renderLoansTutorialStep() {
   playLoansTutorialVoice(step);
 }
 
-function startLoansTutorial() {
-  if (!loanTutorialSteps.length || loansTutorialWasSeen()) return false;
+function startLoansTutorial({ replay = false } = {}) {
+  if (!loanTutorialSteps.length || (!replay && loansTutorialWasSeen())) return false;
   loanTutorialIndex = 0;
   setHidden(loansTutorialLayer, false);
+  logTutorialStart(loanTutorialSteps);
   renderLoansTutorialStep();
   loansTutorialNext.focus({ preventScroll: true });
   return true;
@@ -4916,15 +4975,17 @@ function openRoomAction(button) {
   hideRoomMessage();
   void roomActionConfirm.offsetWidth; // restart the pop-in animation when switching icons
   selectedRoomAction = button.dataset.roomAction;
-  const { day } = deriveRoomState(readProfileRecords(getUserProfileId()));
-  const entries = selectedRoomAction === 'shop'
-    ? availableStores(day).map((store) => ({ title: store.title, storeId: store.id }))
-    : [{ title: ROOM_ACTION_LABELS[selectedRoomAction] }];
-  roomActionConfirm.replaceChildren(...entries.map(({ title, storeId }) => {
+  const records = readProfileRecords(getUserProfileId());
+  const { day } = deriveRoomState(records);
+  let entries = [{ title: ROOM_ACTION_LABELS[selectedRoomAction] }];
+  if (selectedRoomAction === 'shop') entries = availableStores(day).map((store) => ({ title: store.title, storeId: store.id }));
+  if (selectedRoomAction === 'briefing') entries = tutorialMenuEntries(records, day);
+  roomActionConfirm.replaceChildren(...entries.map(({ title, storeId, tutorial }) => {
     const item = document.createElement('button');
     item.type = 'button';
     item.className = 'room-action-confirm-item';
     if (storeId != null) item.dataset.storeId = String(storeId);
+    if (tutorial != null) item.dataset.tutorial = tutorial;
     const label = document.createElement('span');
     label.textContent = title;
     const arrow = document.createElement('span');
@@ -4948,14 +5009,87 @@ function availableStores(day) {
     .filter((row) => row.object_type === 'Store' && row.day_is_it_available != null && row.day_is_it_available <= day);
 }
 
+// The question mark: the pet care briefing, every room tutorial the log says the player has started
+// (by 'Суть обучения', once each), from day 10 on the briefing of the final part, and always the glossary.
+const FINAL_PART_MENU_DAY = 10;
+const FINAL_PART_MENU_KEY = 'final-part';
+const FINAL_PART_MENU_TITLE = 'Финальная часть игры';
+const GLOSSARY_MENU_KEY = 'glossary';
+const GLOSSARY_MENU_TITLE = 'Термины и определения';
+let replayingRoomTutorial = false;
+
+function startedRoomTutorials(records) {
+  const names = records
+    .filter((record) => record?.['Тип события'] === TUTORIAL_EVENT && record['Обучение на главном экране'] === true)
+    .map((record) => String(record['Суть обучения'] ?? '').trim())
+    .filter(Boolean);
+  return [...new Set(names)];
+}
+
+// The lines of the room tutorial named by its `object_type_ru`. The new-day tutorial has a part per day:
+// the replay runs every part up to the current day.
+function roomTutorialSteps(name, day) {
+  return dataMartRows
+    .filter((row) => row?.main_screen_tutorial === true && row.object_type_ru === name
+      && (row.game_day == null || Number(row.game_day) <= day))
+    .sort((left, right) => (Number(left.game_day) || 0) - (Number(right.game_day) || 0)
+      || Number(left.queue) - Number(right.queue));
+}
+
+function roomTutorialReplay(steps) {
+  return {
+    [NEW_DAY_TUTORIAL_OBJECT_TYPE]: replayDayTutorial,
+    [PIGGY_TUTORIAL_OBJECT_TYPE]: replayPiggyTutorial,
+    [ADDITIONAL_TASK_TUTORIAL_OBJECT_TYPE]: replayTaskTutorial,
+  }[steps[0]?.object_type] ?? null;
+}
+
+function tutorialMenuEntries(records, day) {
+  const tutorials = startedRoomTutorials(records)
+    .filter((name) => roomTutorialReplay(roomTutorialSteps(name, day)))
+    .map((name) => ({ title: name, tutorial: name }));
+  const finalPart = day >= FINAL_PART_MENU_DAY && finalBriefingSteps().length
+    ? [{ title: FINAL_PART_MENU_TITLE, tutorial: FINAL_PART_MENU_KEY }]
+    : [];
+  return [
+    { title: ROOM_ACTION_LABELS.briefing },
+    ...tutorials,
+    ...finalPart,
+    { title: GLOSSARY_MENU_TITLE, tutorial: GLOSSARY_MENU_KEY },
+  ];
+}
+
+function replayRoomTutorial(name) {
+  const { day } = deriveRoomState(readProfileRecords(getUserProfileId()));
+  const steps = roomTutorialSteps(name, day);
+  const replay = roomTutorialReplay(steps);
+  if (!replay || !isRoomInteractive()) return;
+  hideRoomMessage();
+  closeRoomInbox();
+  closeSavingsTransfer();
+  closeTaskList();
+  replayingRoomTutorial = true;
+  replay(steps);
+}
+
+// A replayed tutorial leaves no 'seen' record and starts nothing of the day; messages held back meanwhile arrive now.
+function endRoomTutorialReplay(layer, focus) {
+  replayingRoomTutorial = false;
+  setHidden(layer, true);
+  focus.hidden = true;
+  closeSavingsTransfer();
+  closeTaskList();
+  deliverTriggeredMessages();
+}
+
+function replayFinalBriefingFromRoom() {
+  if (!finalBriefingSteps().length) return;
+  replayingRoomBriefing = true;
+  leaveRoom();
+  showFinalBriefingSteps();
+}
+
 async function replayBriefingFromRoom() {
-  // In the final part the question mark repeats the rules of the final part.
-  if (isFinalPart(readProfileRecords(getUserProfileId())) && finalBriefingSteps().length) {
-    replayingRoomBriefing = true;
-    leaveRoom();
-    showFinalBriefingSteps();
-    return;
-  }
   try {
     briefingSteps = await loadBriefingSteps();
     if (!briefingSteps.length) throw new Error('Пустой брифинг');
@@ -4997,7 +5131,11 @@ roomActionConfirm.addEventListener('click', (event) => {
   if (!action) return;
   closeRoomAction();
   if (action === 'briefing') {
-    replayBriefingFromRoom();
+    const { tutorial } = item.dataset;
+    if (tutorial === GLOSSARY_MENU_KEY) openGlossary();
+    else if (tutorial === FINAL_PART_MENU_KEY) replayFinalBriefingFromRoom();
+    else if (tutorial) replayRoomTutorial(tutorial);
+    else replayBriefingFromRoom();
     return;
   }
   if (action === 'messages') {
@@ -5994,14 +6132,15 @@ function repairTutorialWasSeen(title) {
   ));
 }
 
-function maybeStartRepairTutorial(title) {
+function maybeStartRepairTutorial(title, { replay = false } = {}) {
   const steps = repairTutorialRows(title);
-  if (!steps.length || repairTutorialWasSeen(title)) return false;
+  if (!steps.length || (!replay && repairTutorialWasSeen(title))) return false;
   repairTutorialSteps = steps;
   repairTutorialTitle = title;
   repairTutorialIndex = 0;
   repairScreen.classList.add('is-touring');
   setHidden(repairTutorialLayer, false);
+  logTutorialStart(repairTutorialSteps);
   renderRepairTutorialStep();
   repairTutorialNext.focus({ preventScroll: true });
   return true;
@@ -6731,9 +6870,19 @@ function maybeStartDayTutorial() {
   dayTutorialIndex = 0;
   dayTutorialDay = day;
   setHidden(dayTutorialLayer, false);
+  logTutorialStart(dayTutorialSteps);
   renderDayTutorialStep();
   dayTutorialNext.focus({ preventScroll: true });
   return true;
+}
+
+function replayDayTutorial(steps) {
+  dayTutorialSteps = steps;
+  dayTutorialIndex = 0;
+  setHidden(dayTutorialLayer, false);
+  logTutorialStart(dayTutorialSteps);
+  renderDayTutorialStep();
+  dayTutorialNext.focus({ preventScroll: true });
 }
 
 // Closing the tutorial, read through or skipped, marks it seen for its day and lets the messages in.
@@ -6742,6 +6891,7 @@ function maybeStartDayTutorial() {
 function finishDayTutorial({ skipped = false } = {}) {
   if (dayTutorialLayer.classList.contains('is-hidden')) return;
   stopDayTutorialVoice();
+  if (replayingRoomTutorial) return endRoomTutorialReplay(dayTutorialLayer, dayTutorialFocus);
   appendProfileRecord({
     'Тип события': NEW_DAY_TUTORIAL_SEEN_EVENT,
     'Профиль пользователя': getUserProfileId(),
@@ -6876,9 +7026,18 @@ function maybeStartPiggyTutorial() {
   closeRoomInbox();
   piggyTutorialIndex = 0;
   setHidden(piggyTutorialLayer, false);
+  logTutorialStart(piggyTutorialSteps);
   renderPiggyTutorialStep();
   piggyTutorialNext.focus({ preventScroll: true });
   return true;
+}
+
+function replayPiggyTutorial() {
+  piggyTutorialIndex = 0;
+  setHidden(piggyTutorialLayer, false);
+  logTutorialStart(piggyTutorialSteps);
+  renderPiggyTutorialStep();
+  piggyTutorialNext.focus({ preventScroll: true });
 }
 
 // The player came for the coins, so the piggy bank opens with the missing sum already set.
@@ -6892,6 +7051,7 @@ function openPendingSavingsTransfer() {
 function finishPiggyTutorial({ skipped = false } = {}) {
   if (piggyTutorialLayer.classList.contains('is-hidden')) return;
   stopPiggyTutorialVoice();
+  if (replayingRoomTutorial) return endRoomTutorialReplay(piggyTutorialLayer, piggyTutorialFocus);
   appendProfileRecord({
     'Тип события': PIGGY_TUTORIAL_SEEN_EVENT,
     'Профиль пользователя': getUserProfileId(),
@@ -7044,6 +7204,43 @@ function profileProgress(records) {
   return `День ${day} · 👛 ${formatCoins(pocket)} · 🐷 ${formatCoins(savings)}`;
 }
 
+// The parental log is for adults: it opens only after the button is held for three seconds.
+const PARENT_HOLD_MS = 3000;
+let parentHoldTimer = 0;
+let parentHoldButton = null;
+
+function cancelParentHold() {
+  window.clearTimeout(parentHoldTimer);
+  parentHoldTimer = 0;
+  parentHoldButton?.classList.remove('is-holding');
+  parentHoldButton = null;
+}
+
+function bindParentHold(button) {
+  button.addEventListener('pointerdown', (event) => {
+    if (event.button !== 0) return;
+    cancelParentHold();
+    parentHoldButton = button;
+    button.classList.remove('is-hinted');
+    button.classList.add('is-holding');
+    parentHoldTimer = window.setTimeout(() => {
+      cancelParentHold();
+      const id = button.closest('.room-profile-item')?.dataset.profileId;
+      const profile = profilesFromLogs(storedProfileLogs()).find((item) => item.id === id);
+      if (profile) openParentLog(profile);
+    }, PARENT_HOLD_MS);
+  });
+  ['pointerup', 'pointercancel', 'pointerleave'].forEach((type) => button.addEventListener(type, cancelParentHold));
+  // A short tap only reminds how to open it.
+  button.addEventListener('click', () => {
+    button.classList.remove('is-hinted');
+    void button.offsetWidth;
+    button.classList.add('is-hinted');
+  });
+  // A long touch must not bring up the browser's own menu.
+  button.addEventListener('contextmenu', (event) => event.preventDefault());
+}
+
 function renderProfileItem(profile, records) {
   const current = profile.id === getUserProfileId();
   const item = document.createElement('li');
@@ -7082,7 +7279,13 @@ function renderProfileItem(profile, records) {
   parent.type = 'button';
   parent.className = 'room-profile-parent';
   parent.dataset.profileAction = 'parent';
-  parent.textContent = 'Родительский контроль';
+  const parentLabel = document.createElement('span');
+  parentLabel.textContent = 'Родительский контроль';
+  const parentHint = document.createElement('small');
+  parentHint.className = 'room-profile-parent-hint';
+  parentHint.textContent = 'Удерживайте 3 секунды';
+  parent.append(parentLabel, parentHint);
+  bindParentHold(parent);
   actions.append(enter, parent);
 
   item.append(avatar, about, actions);
@@ -7109,6 +7312,7 @@ function openProfiles() {
 }
 
 function closeProfiles() {
+  cancelParentHold();
   roomProfilesLayer.hidden = true;
 }
 
@@ -7183,13 +7387,10 @@ function closeParentLog() {
 roomProfilesList.addEventListener('click', (event) => {
   const button = event.target.closest('[data-profile-action]');
   const id = button?.closest('.room-profile-item')?.dataset.profileId;
-  if (!id) return;
+  // The parental log opens by a three-second hold (bindParentHold), never by a click.
+  if (!id || button.dataset.profileAction === 'parent') return;
   const profile = profilesFromLogs(storedProfileLogs()).find((item) => item.id === id);
   if (!profile) return;
-  if (button.dataset.profileAction === 'parent') {
-    openParentLog(profile);
-    return;
-  }
   // The player is already with this monster, in the very place the game would load.
   if (id === getUserProfileId()) {
     closeProfiles();
@@ -7197,7 +7398,7 @@ roomProfilesList.addEventListener('click', (event) => {
   }
   relaunchWithProfile(id, LAUNCH_RESUME);
 });
-roomProfilesNew.addEventListener('click', () => relaunchWithProfile(generateUserProfileId(), LAUNCH_NEW));
+roomProfilesNew.addEventListener('click', () => relaunchWithProfile(generateUserProfileId()));
 roomProfilesClose.addEventListener('click', () => {
   closeProfiles();
   roomProfilesButton.focus({ preventScroll: true });
@@ -7218,6 +7419,206 @@ document.addEventListener('keydown', (event) => {
   if (event.key !== 'Escape' || finishScreen.hidden) return;
   if (!parentLogLayer.hidden) openProfiles();
   else if (!roomProfilesLayer.hidden) closeProfiles();
+});
+
+// --- Glossary: «Термины и определения» from the ❓ menu, browsed by taps only (no text input) ---
+// Topic chips filter the list, letter chips scroll it; a term card has «Смотри также» links,
+// the previous and next term of the list, and «Назад» walks back through the terms opened from links.
+
+const glossaryLayer = $('#glossary-layer');
+const roomBriefingButton = $('[data-room-action="briefing"]');
+const glossaryClose = $('#glossary-close');
+const glossaryBrowse = $('#glossary-browse');
+const glossaryTopicsBar = $('#glossary-topics');
+const glossaryLettersBar = $('#glossary-letters');
+const glossaryList = $('#glossary-list');
+const glossaryCard = $('#glossary-card');
+const glossaryCardBody = $('#glossary-card-body');
+const glossaryBack = $('#glossary-back');
+const glossaryCardTopic = $('#glossary-card-topic');
+const glossaryTermTitle = $('#glossary-term');
+const glossaryDefinition = $('#glossary-definition');
+const glossaryExample = $('#glossary-example');
+const glossaryRelatedBlock = $('#glossary-related-block');
+const glossaryRelated = $('#glossary-related');
+const glossaryPrev = $('#glossary-prev');
+const glossaryNext = $('#glossary-next');
+const glossaryPosition = $('#glossary-position');
+let glossaryTopicKey = null;
+// Term ids of the open card and the cards it was reached from by links.
+let glossaryHistory = [];
+
+function glossaryButton(className, text, dataset = {}) {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = className;
+  button.textContent = text;
+  Object.assign(button.dataset, dataset);
+  return button;
+}
+
+function renderGlossaryTopics() {
+  const topics = [{ key: '', icon: '📚', title: 'Все' }, ...GLOSSARY_TOPICS];
+  glossaryTopicsBar.replaceChildren(...topics.map(({ key, icon, title }) => {
+    const button = glossaryButton('glossary-topic', `${icon} ${title}`, { topic: key });
+    button.setAttribute('aria-pressed', String((glossaryTopicKey ?? '') === key));
+    return button;
+  }));
+}
+
+function renderGlossaryList() {
+  const groups = glossaryLetterGroups(glossaryTerms(glossaryTopicKey));
+  glossaryLettersBar.replaceChildren(...groups.map(({ letter }) => glossaryButton('glossary-letter', letter, { letter })));
+  glossaryList.replaceChildren(...groups.map(({ letter, terms }) => {
+    const group = document.createElement('section');
+    group.className = 'glossary-group';
+    group.dataset.letter = letter;
+    const heading = document.createElement('h3');
+    heading.textContent = letter;
+    const items = document.createElement('ul');
+    items.append(...terms.map((term) => {
+      const item = document.createElement('li');
+      const button = glossaryButton('glossary-item', '', { termId: term.id });
+      const name = document.createElement('b');
+      name.textContent = term.term;
+      const hint = document.createElement('span');
+      hint.textContent = term.definition;
+      const arrow = document.createElement('i');
+      arrow.setAttribute('aria-hidden', 'true');
+      arrow.textContent = '›';
+      button.append(name, hint, arrow);
+      item.append(button);
+      return item;
+    }));
+    group.append(heading, items);
+    return group;
+  }));
+}
+
+function setGlossaryTopic(key) {
+  glossaryTopicKey = key || null;
+  renderGlossaryTopics();
+  renderGlossaryList();
+  glossaryList.scrollTop = 0;
+  glossaryTopicsBar.querySelector('[aria-pressed="true"]')?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+}
+
+// Prev/next follow the list the player came from; a term reached by a link from another topic walks the whole dictionary.
+function glossaryNeighbourList(term) {
+  const terms = glossaryTerms(glossaryTopicKey);
+  return terms.includes(term) ? terms : GLOSSARY_TERMS;
+}
+
+function renderGlossaryCard() {
+  const term = glossaryTerm(glossaryHistory.at(-1));
+  if (!term) return;
+  const topic = glossaryTopic(term.topic);
+  glossaryBack.textContent = glossaryHistory.length > 1 ? `‹ ${glossaryTerm(glossaryHistory.at(-2)).term}` : '‹ К списку';
+  glossaryCardTopic.textContent = `${topic.icon} ${topic.title}`;
+  glossaryCardTopic.dataset.topic = topic.key;
+  glossaryTermTitle.textContent = term.term;
+  glossaryDefinition.textContent = term.definition;
+  glossaryExample.textContent = term.example;
+  const related = term.related.map(glossaryTerm).filter(Boolean);
+  glossaryRelated.replaceChildren(...related.map((item) => glossaryButton('glossary-link', item.term, { termId: item.id })));
+  glossaryRelatedBlock.hidden = !related.length;
+  const terms = glossaryNeighbourList(term);
+  const index = terms.indexOf(term);
+  const previous = terms[index - 1];
+  const next = terms[index + 1];
+  glossaryPrev.textContent = previous ? `‹ ${previous.term}` : '';
+  glossaryPrev.dataset.termId = previous?.id ?? '';
+  glossaryPrev.disabled = !previous;
+  glossaryNext.textContent = next ? `${next.term} ›` : '';
+  glossaryNext.dataset.termId = next?.id ?? '';
+  glossaryNext.disabled = !next;
+  glossaryPosition.textContent = `${index + 1} из ${terms.length}`;
+  glossaryCardBody.scrollTop = 0;
+}
+
+function showGlossaryTerm(id, { link = false } = {}) {
+  if (!glossaryTerm(id)) return;
+  if (link) glossaryHistory.push(id);
+  else glossaryHistory = [id];
+  glossaryBrowse.hidden = true;
+  glossaryCard.hidden = false;
+  renderGlossaryCard();
+  glossaryBack.focus({ preventScroll: true });
+}
+
+function showGlossaryList() {
+  const lastTermId = glossaryHistory[0];
+  glossaryHistory = [];
+  glossaryCard.hidden = true;
+  glossaryBrowse.hidden = false;
+  const item = lastTermId && glossaryList.querySelector(`[data-term-id="${lastTermId}"]`);
+  if (item) {
+    item.scrollIntoView({ block: 'nearest' });
+    item.focus({ preventScroll: true });
+  }
+}
+
+function openGlossary() {
+  closeRoomAction();
+  hideRoomMessage();
+  closeRoomInbox();
+  closeTaskList();
+  setGlossaryTopic(glossaryTopicKey);
+  glossaryHistory = [];
+  glossaryCard.hidden = true;
+  glossaryBrowse.hidden = false;
+  glossaryLayer.hidden = false;
+  glossaryClose.focus({ preventScroll: true });
+}
+
+function closeGlossary() {
+  glossaryLayer.hidden = true;
+  roomBriefingButton.focus({ preventScroll: true });
+}
+
+glossaryTopicsBar.addEventListener('click', (event) => {
+  const button = event.target.closest('.glossary-topic');
+  if (button) setGlossaryTopic(button.dataset.topic);
+});
+glossaryLettersBar.addEventListener('click', (event) => {
+  const button = event.target.closest('.glossary-letter');
+  if (!button) return;
+  const group = [...glossaryList.children].find((item) => item.dataset.letter === button.dataset.letter);
+  if (group) glossaryList.scrollTo({ top: group.offsetTop, behavior: 'smooth' });
+});
+glossaryList.addEventListener('click', (event) => {
+  const button = event.target.closest('.glossary-item');
+  if (button) showGlossaryTerm(button.dataset.termId);
+});
+glossaryRelated.addEventListener('click', (event) => {
+  const button = event.target.closest('.glossary-link');
+  if (button) showGlossaryTerm(button.dataset.termId, { link: true });
+});
+glossaryBack.addEventListener('click', () => {
+  if (glossaryHistory.length < 2) {
+    showGlossaryList();
+    return;
+  }
+  glossaryHistory.pop();
+  renderGlossaryCard();
+});
+glossaryCardTopic.addEventListener('click', () => {
+  setGlossaryTopic(glossaryCardTopic.dataset.topic);
+  showGlossaryList();
+});
+[glossaryPrev, glossaryNext].forEach((button) => button.addEventListener('click', () => {
+  if (button.dataset.termId) showGlossaryTerm(button.dataset.termId);
+}));
+glossaryClose.addEventListener('click', closeGlossary);
+glossaryLayer.addEventListener('click', (event) => {
+  if (event.target === glossaryLayer) closeGlossary();
+});
+document.addEventListener('keydown', (event) => {
+  if (glossaryLayer.hidden || finishScreen.hidden) return;
+  if (event.key === 'Escape') closeGlossary();
+  if (glossaryCard.hidden) return;
+  if (event.key === 'ArrowLeft' && !glossaryPrev.disabled) glossaryPrev.click();
+  if (event.key === 'ArrowRight' && !glossaryNext.disabled) glossaryNext.click();
 });
 
 // --- Jury panel: every data mart object by type, opened by holding 👥 for three seconds ---
@@ -7261,6 +7662,11 @@ roomProfilesButton.addEventListener('pointerdown', (event) => {
 // A long touch must not bring up the browser's own menu.
 roomProfilesButton.addEventListener('contextmenu', (event) => event.preventDefault());
 
+// The Russian name of a row's trigger comes from the data mart (`trigger_ru`); the English key when it is empty.
+function juryTriggerName(row) {
+  return String(row.trigger_ru || row.trigger).trim();
+}
+
 function juryChip(text, className = '') {
   const chip = document.createElement('span');
   chip.className = `jury-chip ${className}`.trim();
@@ -7288,13 +7694,13 @@ function renderJuryRow(row) {
   const name = (voice ? row.text : row.title) || row.text || row.title;
   if (row.trigger && name) {
     // The jury reads the Russian wording; the key the game matches stays in the tooltip.
-    const trigger = juryChip(`Триггер: ${triggerRu(row, dataMartRows)}`, 'is-trigger');
+    const trigger = juryChip(`Триггер: ${juryTriggerName(row)}`, 'is-trigger');
     trigger.title = String(row.trigger);
     meta.append(trigger);
   }
   const headline = document.createElement('strong');
   headline.className = 'jury-item-title';
-  headline.textContent = String(name || (row.trigger ? `Триггер: ${triggerRu(row, dataMartRows)}` : '—'));
+  headline.textContent = String(name || (row.trigger ? `Триггер: ${juryTriggerName(row)}` : '—'));
   if (!name && row.trigger) headline.title = String(row.trigger);
   about.append(meta, headline);
   const detail = voice ? row.title : row.title && row.text;
@@ -7681,15 +8087,25 @@ function maybeStartTaskTutorial() {
   closeSavingsTransfer();
   taskTutorialIndex = 0;
   setHidden(taskTutorialLayer, false);
+  logTutorialStart(taskTutorialSteps);
   renderTaskTutorialStep();
   taskTutorialNext.focus({ preventScroll: true });
   return true;
+}
+
+function replayTaskTutorial() {
+  taskTutorialIndex = 0;
+  setHidden(taskTutorialLayer, false);
+  logTutorialStart(taskTutorialSteps);
+  renderTaskTutorialStep();
+  taskTutorialNext.focus({ preventScroll: true });
 }
 
 // The record also ends day 5 (its end-of-day row waits for it), so the green button shows up right after.
 function finishTaskTutorial({ skipped = false } = {}) {
   if (taskTutorialLayer.classList.contains('is-hidden')) return;
   stopTaskTutorialVoice();
+  if (replayingRoomTutorial) return endRoomTutorialReplay(taskTutorialLayer, taskTutorialFocus);
   appendProfileRecord({
     'Тип события': ADDITIONAL_TASK_TUTORIAL_SEEN_EVENT,
     'Профиль пользователя': getUserProfileId(),
@@ -8179,10 +8595,11 @@ function renderAssetsTutorialStep() {
   playAssetsTutorialVoice(step);
 }
 
-function startAssetsTutorial() {
-  if (!assetsTutorialSteps.length || assetsTaskRecordSeen(ASSETS_TUTORIAL_SEEN_EVENT)) return false;
+function startAssetsTutorial({ replay = false } = {}) {
+  if (!assetsTutorialSteps.length || (!replay && assetsTaskRecordSeen(ASSETS_TUTORIAL_SEEN_EVENT))) return false;
   assetsTutorialIndex = 0;
   setHidden(assetsTutorialLayer, false);
+  logTutorialStart(assetsTutorialSteps);
   renderAssetsTutorialStep();
   assetsTutorialNext.focus({ preventScroll: true });
   return true;
@@ -9402,10 +9819,11 @@ function renderRouteTutorialStep() {
   playRouteTutorialVoice(step);
 }
 
-function startRouteTutorial() {
-  if (!routeTutorialSteps.length || routeTutorialWasSeen()) return false;
+function startRouteTutorial({ replay = false } = {}) {
+  if (!routeTutorialSteps.length || (!replay && routeTutorialWasSeen())) return false;
   routeTutorialIndex = 0;
   setHidden(routeTutorialLayer, false);
+  logTutorialStart(routeTutorialSteps);
   renderRouteTutorialStep();
   routeTutorialNext.focus({ preventScroll: true });
   return true;
@@ -9615,6 +10033,20 @@ function setMorph(name, value) {
   });
 }
 
+function setMonsterAge(age) {
+  monsterAge = age;
+  // Only a real change re-fits the scenes: the bounds are measured again in whatever pose it is in.
+  if (!manifest || !model || appliedMonsterAge === age) return;
+  appliedMonsterAge = age;
+  const stage = applyMonsterAge(model, manifest.ages, age);
+  roomController?.setAgeHeight(stage?.height ?? 1);
+}
+
+// Shape keys the age keeps at a minimum (the baby's round tummy, the teen's slimmer one).
+function ageMorph(name) {
+  return monsterAgeStage(manifest?.ages, monsterAge)?.morphTargets?.[name] ?? 0;
+}
+
 function applyProfile() {
   if (!manifest || !model) return;
 
@@ -9630,7 +10062,9 @@ function applyProfile() {
     model.getObjectByName(boneName)?.scale.setScalar(earScale);
   }
 
-  const hornSize = manifest.profile.horns.sizes[profile.horns] ?? 0;
+  // The baby's horns are only nubs and the teen's have grown, whatever size the player picked.
+  const hornShift = monsterAgeStage(manifest.ages, monsterAge)?.hornShift ?? 0;
+  const hornSize = THREE.MathUtils.clamp((manifest.profile.horns.sizes[profile.horns] ?? 0) + hornShift, -1, 1);
   setMorph(manifest.profile.horns.big, Math.max(hornSize, 0));
   setMorph(manifest.profile.horns.small, Math.max(-hornSize, 0));
 }
@@ -9645,7 +10079,7 @@ function applyNeutralFace() {
     faceMaterial.userData.pet.petOverlay.value = faceOverlays.neutral;
   }
   setMonsterDirt(0);
-  setMorph('Belly_Thin', 0);
+  for (const name of ['Belly_Thin', 'Belly_Round']) setMorph(name, ageMorph(name));
   for (const propName of manifest.props) {
     const prop = model.getObjectByName(propName);
     if (prop) prop.visible = false;
@@ -10611,6 +11045,7 @@ window.addEventListener('resize', () => {
 // even when this profile has already lived through a day.
 async function enterRoom({ settleIn = false } = {}) {
   showOnlyScreen(finishScreen);
+  roomProgressLayer.hidden = true;
   closeRoomAction();
   closeRoomInbox();
   closeTaskList();
@@ -10738,6 +11173,7 @@ async function initializeMonster() {
         if (label) label.textContent = text;
       },
     });
+    setMonsterAge(monsterAge);
     applyProfile();
     applyNeutralFace();
     playDance();
@@ -11180,9 +11616,15 @@ function fitBriefingText() {
   }
 }
 
-// The briefing of the final part runs on the same screen, under its own heading. Its pictures
-// are still being drawn, so a missing one leaves a large icon of the step in the frame.
-const FINAL_BRIEFING_ICONS = ['🎯', '🐷', '✨', '🍲', '📅', '⚠️'];
+// The briefing of the final part runs on the same screen, under its own heading.
+const FINAL_BRIEFING_IMAGE_ALTS = [
+  'Монстрик складывает монеты в копилку ради большой цели',
+  'Монеты переходят из бюджета в копилку',
+  'Характеристики монстрика начинают финал с чистого листа',
+  'Монстрик ест и чистится автоматически',
+  'Дни сменяются до важного события',
+  'Игрушки помогают поддерживать настроение монстрика',
+];
 const briefingEyebrow = briefingScreen.querySelector('.eyebrow');
 const briefingImageFrame = briefingImage.closest('.briefing-image-frame');
 const BRIEFING_EYEBROW = briefingEyebrow.textContent;
@@ -11191,6 +11633,7 @@ let finalBriefingRunning = false;
 briefingImage.addEventListener('load', () => briefingImageFrame.classList.remove('is-placeholder'));
 briefingImage.addEventListener('error', () => {
   if (!briefingImage.getAttribute('src')) return;
+  briefingImageFrame.dataset.placeholder = 'Иллюстрация недоступна';
   briefingImageFrame.classList.add('is-placeholder');
 });
 
@@ -11214,16 +11657,16 @@ function renderBriefingStep() {
   const step = briefingSteps[briefingIndex];
   if (!step) return finishBriefing();
   briefingImageFrame.classList.remove('is-placeholder');
-  briefingImageFrame.dataset.placeholder = finalBriefingRunning
-    ? FINAL_BRIEFING_ICONS[briefingIndex] ?? '✨'
-    : '';
+  briefingImageFrame.dataset.placeholder = '';
 
   const isFirst = briefingIndex === 0;
   const isLast = briefingIndex === briefingSteps.length - 1;
   briefingProgress.textContent = `ШАГ ${briefingIndex + 1} ИЗ ${briefingSteps.length}`;
   briefingText.textContent = String(step.text || '');
   briefingImage.src = publicAssetPath(step.image_folder, step.image, 'images');
-  briefingImage.alt = `Иллюстрация к шагу ${briefingIndex + 1}`;
+  briefingImage.alt = finalBriefingRunning
+    ? FINAL_BRIEFING_IMAGE_ALTS[briefingIndex] ?? `Иллюстрация к шагу ${briefingIndex + 1}`
+    : `Иллюстрация к шагу ${briefingIndex + 1}`;
   briefingBack.hidden = isFirst;
   briefingNext.innerHTML = isLast
     ? '<span>Завершить</span><span aria-hidden="true">✓</span>'
@@ -11237,6 +11680,7 @@ function renderBriefingStep() {
 function showBriefingSteps() {
   briefingIndex = 0;
   showOnlyScreen(briefingScreen);
+  logTutorialStart(briefingSteps);
   renderBriefingStep();
 }
 
@@ -11761,6 +12205,7 @@ function renderBudgetTutorialStep() {
 function startBudgetTutorial() {
   budgetTutorialIndex = 0;
   setHidden(budgetTutorialLayer, false);
+  logTutorialStart(budgetTutorialSteps);
   renderBudgetTutorialStep();
 }
 
@@ -12326,6 +12771,236 @@ function renderBudgetReview({ review, config }) {
     ...BUDGET_REVIEW_ARTICLES.map((article) => reviewArticleCard(article, review, config)),
   );
 }
+
+// --- Room progress, with the same plan/fact cards as the three-day review ---
+
+const roomProgressButton = $('#room-progress-button');
+const roomProgressLayer = $('#room-progress-layer');
+const roomProgressClose = $('#room-progress-close');
+const roomProgressBody = $('.room-progress-body');
+const progressTabs = {
+  budget: $('#progress-budget-tab'),
+  goals: $('#progress-goals-tab'),
+  overall: $('#progress-overall-tab'),
+};
+const progressPanels = {
+  budget: $('#progress-budget-panel'),
+  goals: $('#progress-goals-panel'),
+  overall: $('#progress-overall-panel'),
+};
+const progressBudgetEmpty = $('#progress-budget-empty');
+const progressBudgetContent = $('#progress-budget-content');
+const progressBudgetSelect = $('#progress-budget-select');
+const progressBudgetStatus = $('#progress-budget-status');
+const progressBudgetFund = $('#progress-budget-fund');
+const progressBudgetSource = $('#progress-budget-source');
+const progressBudgetSpent = $('#progress-budget-spent');
+const progressBudgetLeft = $('#progress-budget-left');
+const progressBudgetArticles = $('#progress-budget-articles');
+const progressGoalsSavings = $('#progress-goals-savings');
+const progressGoalsList = $('#progress-goals-list');
+const progressGoalsTotal = $('#progress-goals-total');
+const progressGoalsBought = $('#progress-goals-bought');
+const progressGoalsBoughtList = $('#progress-goals-bought-list');
+const progressOverallDay = $('#progress-overall-day');
+const progressOverallCompleted = $('#progress-overall-completed');
+const progressOverallRemaining = $('#progress-overall-remaining');
+const progressOverallCategories = $('#progress-overall-categories');
+let selectedProgressTab = 'budget';
+let selectedProgressBudget = null;
+
+function selectProgressTab(name, { focus = false } = {}) {
+  if (progressTabs[name].hidden) name = 'budget';
+  selectedProgressTab = name;
+  for (const [key, tab] of Object.entries(progressTabs)) {
+    const active = key === name;
+    tab.setAttribute('aria-selected', String(active));
+    tab.tabIndex = active ? 0 : -1;
+    progressPanels[key].hidden = !active;
+  }
+  roomProgressBody.scrollTop = 0;
+  if (focus) progressTabs[name].focus({ preventScroll: true });
+}
+
+function renderProgressBudget(records, day) {
+  const count = approvedBudgetCount(records);
+  progressBudgetEmpty.hidden = count > 0;
+  progressBudgetContent.hidden = count === 0;
+  if (!count) {
+    selectedProgressBudget = null;
+    return;
+  }
+
+  // Keep the period the player is viewing while the dialog is open; initially show the latest.
+  if (!selectedProgressBudget || selectedProgressBudget > count) selectedProgressBudget = count;
+  progressBudgetSelect.replaceChildren(...Array.from({ length: count }, (_, index) => {
+    const number = index + 1;
+    const first = (number - 1) * BUDGET_PERIOD_DAYS + 1;
+    const option = document.createElement('option');
+    option.value = String(number);
+    option.textContent = `№ ${number} · дни ${first}–${first + BUDGET_PERIOD_DAYS - 1}`;
+    return option;
+  }));
+  progressBudgetSelect.value = String(selectedProgressBudget);
+
+  const review = budgetReview(records, selectedProgressBudget);
+  const reviewConfig = budgetReviewConfig(selectedProgressBudget);
+  if (!review || !reviewConfig) return;
+  const config = { ...reviewConfig, foodPlan: reviewConfig.foodPlan ?? review.foodPlan ?? review.plan.required };
+  const firstDay = (review.number - 1) * BUDGET_PERIOD_DAYS + 1;
+  progressBudgetStatus.textContent = day <= firstDay + BUDGET_PERIOD_DAYS - 1
+    ? 'Текущий период · факт обновляется во время игры'
+    : 'Период завершён';
+  progressBudgetFund.textContent = formatMoney(review.fund);
+  const source = review.source ?? budgetRoundConfig(review.number)?.source ?? '';
+  progressBudgetSource.textContent = review.incomeTotal > 0
+    ? `${source} · вне плана +${formatMoney(review.incomeTotal)}`
+    : source;
+  progressBudgetSpent.textContent = formatMoney(review.spent);
+  progressBudgetLeft.textContent = `Осталось ${formatMoney(review.fund + review.incomeTotal - review.spent)}`;
+  progressBudgetArticles.replaceChildren(
+    ...BUDGET_REVIEW_ARTICLES.map((article) => reviewArticleCard(article, review, config)),
+  );
+}
+
+function renderProgressGoals(records, state) {
+  const chosenIds = new Set(records
+    .filter((record) => record?.['Тип события'] === SAVINGS_GOAL_DECISION_EVENT && record['Цель принята'] === true)
+    .map((record) => String(record['Идентификатор цели'])));
+  const goals = acceptedSavingsGoals(records);
+  const bought = boughtSavingsGoals(records).filter((goal) => chosenIds.has(String(goal.id)));
+  progressTabs.goals.hidden = goals.length + bought.length === 0;
+  if (progressTabs.goals.hidden) return;
+
+  const pool = Math.max(0, state.savings);
+  const progress = savingsGoalsProgress(goals, pool);
+  progressGoalsSavings.textContent = formatMoney(pool);
+  progressGoalsList.replaceChildren(...progress.goals.map((goal) => {
+    const item = document.createElement('li');
+    item.className = 'progress-goal';
+    const heading = reviewElement('div', 'progress-goal-head');
+    heading.append(reviewElement('strong', '', goal.title), reviewElement('span', '', formatMoney(goal.price)));
+    const track = reviewElement('div', 'progress-goal-track');
+    const fill = reviewElement('i');
+    fill.style.width = `${Math.min(100, pool / Math.max(1, goal.price) * 100)}%`;
+    track.append(fill);
+    const foot = reviewElement('div', 'progress-goal-foot');
+    foot.append(reviewElement('span', '', goal.left > 0 ? `Ещё копить ${formatMoney(goal.left)}` : 'Накоплено ✓'));
+    if (goal.left === 0 && !finalOutcome(records)) {
+      const buy = reviewElement('button', 'progress-goal-buy', 'Купить цель');
+      buy.type = 'button';
+      buy.dataset.goalId = String(goal.id);
+      buy.setAttribute('aria-label', `Купить ${goal.title} за ${formatMoney(goal.price)} из копилки`);
+      foot.append(buy);
+    }
+    item.append(heading, track, foot);
+    return item;
+  }));
+  progressGoalsTotal.hidden = goals.length < 2;
+  if (goals.length >= 2) progressGoalsTotal.textContent = `На все выбранные цели ещё ${formatMoney(progress.left)} из копилки`;
+  else if (!goals.length) {
+    progressGoalsTotal.hidden = false;
+    progressGoalsTotal.textContent = 'Все выбранные цели уже куплены.';
+  }
+  progressGoalsBought.hidden = bought.length === 0;
+  progressGoalsBoughtList.replaceChildren(...bought.map((goal) => reviewElement('li', '', `${goal.title} · ${formatMoney(goal.price)}`)));
+}
+
+function progressActivityCard(title, counts) {
+  const card = reviewElement('article', 'progress-activity');
+  card.append(reviewElement('h3', '', title));
+  const numbers = reviewElement('div', 'progress-activity-counts');
+  numbers.append(
+    reviewElement('span', '', `Завершено ${counts.completed} из ${counts.total}`),
+    reviewElement('span', '', `Ждут ${counts.remaining}`),
+  );
+  const track = reviewElement('div', 'progress-activity-track');
+  const fill = reviewElement('i');
+  fill.style.width = `${counts.total ? counts.completed / counts.total * 100 : 0}%`;
+  track.append(fill);
+  const waiting = counts.remaining - counts.availableNow - counts.future;
+  const details = [`Доступно сейчас: ${counts.availableNow}`, `В будущие дни: ${counts.future}`];
+  if (waiting > 0) details.push(`Пока недоступно: ${waiting}`);
+  card.append(numbers, track, reviewElement('small', '', details.join(' · ')));
+  return card;
+}
+
+function renderProgressOverall(records) {
+  const progress = activityProgress(dataMartRows, records);
+  const episodes = progress.economicEpisodes;
+  const tasks = progress.additionalTasks;
+  progressOverallDay.textContent = `Игровой день ${progress.day}`;
+  progressOverallCompleted.textContent = String(episodes.completed + tasks.completed);
+  progressOverallRemaining.textContent = String(episodes.remaining + tasks.remaining);
+  progressOverallCategories.replaceChildren(
+    progressActivityCard('Экономические события', episodes),
+    progressActivityCard('Дополнительные задания', tasks),
+  );
+}
+
+function renderRoomProgress(records = readProfileRecords(getUserProfileId())) {
+  const state = deriveRoomState(records);
+  renderProgressBudget(records, state.day);
+  renderProgressGoals(records, state);
+  renderProgressOverall(records);
+  if (progressTabs[selectedProgressTab].hidden) selectProgressTab('budget');
+}
+
+function closeRoomProgress() {
+  roomProgressLayer.hidden = true;
+  roomProgressButton.focus({ preventScroll: true });
+}
+
+function openRoomProgress() {
+  if (finishScreen.hidden || startingNewDay || !dayTutorialLayer.classList.contains('is-hidden')) return;
+  pauseFinalDays();
+  closeRoomAction();
+  hideRoomMessage();
+  closeRoomInbox();
+  closeSavingsTransfer();
+  closeTaskList();
+  selectedProgressBudget = null;
+  renderRoomProgress();
+  selectProgressTab('budget');
+  roomProgressLayer.hidden = false;
+  roomProgressClose.focus({ preventScroll: true });
+}
+
+roomProgressButton.addEventListener('click', openRoomProgress);
+roomProgressClose.addEventListener('click', closeRoomProgress);
+roomProgressLayer.addEventListener('click', (event) => {
+  if (event.target === roomProgressLayer) closeRoomProgress();
+});
+progressBudgetSelect.addEventListener('change', () => {
+  selectedProgressBudget = Number(progressBudgetSelect.value);
+  const records = readProfileRecords(getUserProfileId());
+  renderProgressBudget(records, deriveRoomState(records).day);
+});
+for (const [name, tab] of Object.entries(progressTabs)) {
+  tab.addEventListener('click', () => selectProgressTab(name));
+  tab.addEventListener('keydown', (event) => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    event.preventDefault();
+    const available = Object.entries(progressTabs).filter(([, item]) => !item.hidden).map(([key]) => key);
+    const index = available.indexOf(name);
+    const next = event.key === 'Home' ? available[0]
+      : event.key === 'End' ? available.at(-1)
+        : available[(index + (event.key === 'ArrowRight' ? 1 : -1) + available.length) % available.length];
+    selectProgressTab(next, { focus: true });
+  });
+}
+progressGoalsList.addEventListener('click', (event) => {
+  const button = event.target.closest('.progress-goal-buy');
+  if (!button) return;
+  const records = readProfileRecords(getUserProfileId());
+  const goal = acceptedSavingsGoals(records).find((item) => String(item.id) === button.dataset.goalId);
+  if (!goal || Number(goal.price) > deriveRoomState(records).savings) return;
+  closeRoomProgress();
+  buyFinalGoal(goal, 'Экран «Прогресс»');
+});
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && !roomProgressLayer.hidden) closeRoomProgress();
+});
 
 // The plan and the fact in words, shared by every review's explanation.
 function reviewPlanAndFactWords(review) {
@@ -13120,6 +13795,7 @@ function startShopTutorial(store) {
   if (!shopTutorialSteps.length) return;
   shopTutorialIndex = 0;
   setHidden(shopTutorialLayer, false);
+  logTutorialStart(shopTutorialSteps);
   renderShopTutorialStep();
 }
 
@@ -13905,6 +14581,7 @@ function startTechTutorial(store) {
   if (!techTutorialSteps.length) return;
   techTutorialIndex = 0;
   setHidden(techTutorialLayer, false);
+  logTutorialStart(techTutorialSteps);
   renderTechTutorialStep();
 }
 
@@ -14558,6 +15235,7 @@ function startToyTutorial() {
   toyTutorialIndex = 0;
   toyTutorialActive = true;
   setHidden(toyTutorialLayer, false);
+  logTutorialStart(toyTutorialSteps);
   renderToyTutorialStep();
   $('#toy-tutorial-next').focus({ preventScroll: true });
 }
@@ -14567,7 +15245,9 @@ function finishToyTutorial(skipped = false) {
   toyTutorialActive = false;
   setHidden(toyTutorialLayer, true);
   toyTutorialFocus.hidden = true;
-  appendProfileRecord({ 'Тип события': TOY_TUTORIAL_EVENT, 'Профиль пользователя': getUserProfileId(), 'Магазин': TOY_STORE_TITLE, 'Игровой день': toyCurrentState().day, 'Пропущен': skipped });
+  if (!readProfileRecords(getUserProfileId()).some((record) => record?.['Тип события'] === TOY_TUTORIAL_EVENT)) {
+    appendProfileRecord({ 'Тип события': TOY_TUTORIAL_EVENT, 'Профиль пользователя': getUserProfileId(), 'Магазин': TOY_STORE_TITLE, 'Игровой день': toyCurrentState().day, 'Пропущен': skipped });
+  }
   goToyStop(0, false);
 }
 $('#toy-tutorial-next').addEventListener('click', () => {
@@ -15162,15 +15842,18 @@ function renderFeedingTutorialStep() {
 }
 
 // Until the first successful feeding, each of the two screens explains itself once per feeding.
-function maybeStartFeedingTutorial(title) {
-  if (!feedingSession?.firstFeeding || feedingSession.tutorials.has(title)) return;
-  feedingSession.tutorials.add(title);
+function maybeStartFeedingTutorial(title, { replay = false } = {}) {
+  if (!replay) {
+    if (!feedingSession?.firstFeeding || feedingSession.tutorials.has(title)) return;
+    feedingSession.tutorials.add(title);
+  }
   feedingTutorialSteps = dataMartRows
     .filter((row) => row?.object_type === FEEDING_TUTORIAL_OBJECT_TYPE && row.title === title)
     .sort((left, right) => Number(left.queue) - Number(right.queue));
   if (!feedingTutorialSteps.length) return;
   feedingTutorialIndex = 0;
   setHidden(feedingTutorialLayer, false);
+  logTutorialStart(feedingTutorialSteps);
   renderFeedingTutorialStep();
 }
 
@@ -15207,6 +15890,8 @@ const CLEANING_EVENT = 'Чистка козявок';
 const CLEANING_TUTORIAL_OBJECT_TYPE = 'Cleaning tutorial';
 // The `title` of the tutorial rows each stage of the first cleaning opens.
 const CLEANING_TUTORIALS = { aim: 'Прицел', trace: 'Фигуры', pull: 'Вытаскиваем', secondEar: 'Второе ухо' };
+// The tutorial of the current stage of the cleaning, for the replay button.
+let cleaningTutorialTitle = CLEANING_TUTORIALS.aim;
 const CLEANING_MUSIC = './Silly_Tails_and_Tussles.mp3';
 const CLEANING_EAR_TITLES = ['Первое ухо', 'Второе ухо'];
 const CLEANING_FOCUS_PADDING = 6;
@@ -15964,9 +16649,12 @@ function renderCleaningTutorialStep() {
 }
 
 // Until the first cleaning is finished, every stage of the game explains itself once per cleaning.
-function maybeStartCleaningTutorial(title) {
-  if (!cleaningSession?.firstCleaning || cleaningSession.tutorials.has(title)) return;
-  cleaningSession.tutorials.add(title);
+function maybeStartCleaningTutorial(title, { replay = false } = {}) {
+  cleaningTutorialTitle = title;
+  if (!replay) {
+    if (!cleaningSession?.firstCleaning || cleaningSession.tutorials.has(title)) return;
+    cleaningSession.tutorials.add(title);
+  }
   cleaningTutorialSteps = dataMartRows
     .filter((row) => row?.object_type === CLEANING_TUTORIAL_OBJECT_TYPE && row.title === title)
     .sort((left, right) => Number(left.queue) - Number(right.queue));
@@ -15974,6 +16662,7 @@ function maybeStartCleaningTutorial(title) {
   cleaningTutorialIndex = 0;
   cleaningPointer = null;
   setHidden(cleaningTutorialLayer, false);
+  logTutorialStart(cleaningTutorialSteps);
   renderCleaningTutorialStep();
   cleaningTutorialNext.focus({ preventScroll: true });
 }
@@ -16003,6 +16692,9 @@ cleaningTutorialSkip.addEventListener('click', finishCleaningTutorial);
 function enterEditor() {
   cancelIntroSequence();
   leaveRoom();
+  setMonsterAge(EDITOR_MONSTER_AGE);
+  applyProfile();
+  applyNeutralFace();
   showOnlyScreen(creatorScreen);
   nameDialog.classList.add('is-hidden');
   attachRenderer(monsterStage);
@@ -16078,6 +16770,60 @@ restartButton.addEventListener('click', async () => {
   attachRenderer(monsterStage);
   runIntroSequence();
 });
+
+// --- Повтор туториала на экранах ------------------------------------------------
+
+// The small ? under the sound button replays the tutorial of the open screen. The room has its own ❓ menu
+// and the briefings are a tutorial in themselves, so they have none. The button hides while a tutorial
+// or the mentor is on screen.
+const tutorialReplayButton = $('#tutorial-replay');
+// `place`: 'below' the sound button, or 'beside' it where the content starts right under the header.
+const SCREEN_TUTORIAL_REPLAYS = [
+  [creatorScreen, 'below', () => (tutorialSteps.length && nameDialog.classList.contains('is-hidden') ? startTutorial : null)],
+  [budgetScreen, 'beside', () => (budgetTutorialSteps.length ? startBudgetTutorial : null)],
+  [tennisEstimateScreen, 'beside', () => () => startTennisEstimateTutorial({ replay: true })],
+  [locScreen, 'beside', () => () => startLocTutorial({ replay: true })],
+  [loansScreen, 'beside', () => () => startLoansTutorial({ replay: true })],
+  [routeScreen, 'beside', () => () => startRouteTutorial({ replay: true })],
+  [assetsScreen, 'beside', () => () => startAssetsTutorial({ replay: true })],
+  [repairScreen, 'beside', () => {
+    const title = REPAIR_TUTORIALS[repairScreen.dataset.stage];
+    return title ? () => maybeStartRepairTutorial(title, { replay: true }) : null;
+  }],
+  [shopScreen, 'below', () => (activeShopStore ? () => startShopTutorial(activeShopStore) : null)],
+  [techShopScreen, 'below', () => () => startTechTutorial(techShopStore)],
+  [toyShopScreen, 'beside', () => startToyTutorial],
+  [feedingScreen, 'below', () => {
+    const title = feedingScreen.dataset.mode === 'scale' ? SCALE_TUTORIAL_TITLE : PANTRY_TUTORIAL_TITLE;
+    return () => maybeStartFeedingTutorial(title, { replay: true });
+  }],
+  [cleaningScreen, 'below', () => () => maybeStartCleaningTutorial(cleaningTutorialTitle, { replay: true })],
+];
+
+function openScreenTutorialReplay() {
+  const entry = SCREEN_TUTORIAL_REPLAYS.find(([screen]) => !screen.hidden);
+  if (!entry || !mentorLayer.hidden || entry[0].querySelector('.tutorial-layer:not(.is-hidden)')) return null;
+  const replay = entry[2]();
+  return replay ? { place: entry[1], replay } : null;
+}
+
+function currentTutorialReplay() {
+  return openScreenTutorialReplay()?.replay ?? null;
+}
+
+function updateTutorialReplayButton() {
+  const current = openScreenTutorialReplay();
+  if (current && tutorialReplayButton.dataset.place !== current.place) tutorialReplayButton.dataset.place = current.place;
+  if (tutorialReplayButton.hidden !== !current) tutorialReplayButton.hidden = !current;
+}
+
+tutorialReplayButton.addEventListener('click', () => {
+  currentTutorialReplay()?.();
+  updateTutorialReplayButton();
+});
+
+// Screens, stages and tutorial layers all switch by attributes; the observer hands them over in batches.
+new MutationObserver(updateTutorialReplayButton).observe(document.body, { subtree: true, attributes: true, attributeFilter: ['hidden', 'class', 'data-stage', 'data-mode'] });
 
 async function boot() {
   removeLegacyRecords();
@@ -16293,8 +17039,6 @@ async function boot() {
     volatileProfileRecords = readProfileRecords(JURY_PROFILE_ID);
     startGateText.textContent = `Жюри: «${juryLaunchRow.title}»`;
     startButtonLabel.textContent = 'Запустить';
-  } else if (launchMode === LAUNCH_NEW) {
-    startGateText.textContent = 'Новый профиль — создадим нового монстрика!';
   } else if (launchMode === LAUNCH_RESUME) {
     const monster = readProfileRecords(getUserProfileId())
       .findLast((record) => record?.['Тип события'] === MONSTER_CREATED_EVENT);

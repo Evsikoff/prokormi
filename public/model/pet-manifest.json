@@ -298,6 +298,58 @@
       ]
     }
   },
+  "ages": {
+    "armature": "Monster",
+    "legBone": "mixamorig:LeftUpLeg",
+    "footBone": "mixamorig:LeftFoot",
+    "hipHeight": 0.4704,
+    "ankleHeight": 0.1349,
+    "stages": {
+      "baby": {
+        "label": "Малыш",
+        "height": 0.8,
+        "hornShift": -1.0,
+        "morphTargets": {
+          "Belly_Round": 1.0
+        },
+        "bones": {
+          "mixamorig:Head": 1.3,
+          "mixamorig:LeftUpLeg": 0.72,
+          "mixamorig:RightUpLeg": 0.72,
+          "mixamorig:LeftFoot": 1.22,
+          "mixamorig:RightFoot": 1.22,
+          "mixamorig:LeftArm": 0.78,
+          "mixamorig:RightArm": 0.78,
+          "mixamorig:LeftHand": 1.15,
+          "mixamorig:RightHand": 1.15
+        }
+      },
+      "child": {
+        "label": "Ребёнок",
+        "height": 1.0,
+        "hornShift": 0.0,
+        "morphTargets": {},
+        "bones": {}
+      },
+      "teen": {
+        "label": "Подросток",
+        "height": 1.14,
+        "hornShift": 0.7,
+        "morphTargets": {
+          "Belly_Thin": 0.6
+        },
+        "bones": {
+          "mixamorig:Spine": 1.08,
+          "mixamorig:Spine1": 1.06,
+          "mixamorig:Head": 0.78,
+          "mixamorig:LeftUpLeg": 1.2,
+          "mixamorig:RightUpLeg": 1.2,
+          "mixamorig:LeftFoot": 0.9,
+          "mixamorig:RightFoot": 0.9
+        }
+      }
+    }
+  },
   "props": [
     "Flies",
     "Glasses",

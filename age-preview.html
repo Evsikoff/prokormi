@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Возрасты монстра</title>
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #f6efe4; color: #2a2550; font: 14px/1.35 system-ui, sans-serif; }
+    #stage { position: fixed; inset: 0; }
+    #stage canvas { display: block; width: 100%; height: 100%; }
+    #bar { position: fixed; left: 12px; top: 12px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    #bar select, #bar button { font: 600 14px system-ui, sans-serif; padding: 6px 10px; border-radius: 8px; border: 1px solid #c9bfd9; background: #fff; color: inherit; }
+    #labels { position: fixed; left: 0; right: 0; bottom: 18px; display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; font: 700 18px system-ui, sans-serif; pointer-events: none; }
+    #json { position: fixed; right: 12px; top: 12px; width: 360px; height: 60vh; font: 12px/1.3 ui-monospace, Consolas, monospace; display: none; }
+    body.tune #json { display: block; }
+  </style>
+</head>
+<body>
+  <div id="stage"></div>
+  <div id="bar">
+    <select id="mood"></select>
+    <select id="clip"></select>
+    <button id="tune" type="button">Пропорции</button>
+  </div>
+  <div id="labels"><span>Малыш</span><span>Ребёнок</span><span>Подросток</span></div>
+  <textarea id="json" spellcheck="false"></textarea>
+  <script type="module">
+    import * as THREE from 'three';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    import { MONSTER_AGES, applyMonsterAge } from '/monster-age.js';
+
+    const HSV_GLSL = `
+vec3 petRgb2hsv(vec3 c) {
+  vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
+  vec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));
+  vec4 q = mix(vec4(p.xyw, c.r), vec4(c.r, p.yzx), step(p.x, c.r));
+  float d = q.x - min(q.w, q.y);
+  return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + 1e-10)), d / (q.x + 1e-10), q.x);
+}
+vec3 petHsv2rgb(vec3 c) {
+  vec3 p = abs(fract(c.xxx + vec3(1.0, 2.0 / 3.0, 1.0 / 3.0)) * 6.0 - 3.0);
+  return c.z * mix(vec3(1.0), clamp(p - 1.0, 0.0, 1.0), c.y);
+}`;
+
+    const params = new URLSearchParams(location.search);
+    const manifest = await (await fetch('/model/pet-manifest.json')).json();
+    let ages = manifest.ages;
+    const jsonBox = document.getElementById('json');
+    jsonBox.value = JSON.stringify(ages, null, 2);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.NeutralToneMapping;
+    document.getElementById('stage').append(renderer.domElement);
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xf6efe4);
+    const camera = new THREE.PerspectiveCamera(22, 1, 0.1, 60);
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x7770a0, 2.0));
+    const key = new THREE.DirectionalLight(0xfff1df, 2.4);
+    key.position.set(-3, 5, 4);
+    scene.add(key);
+    const rim = new THREE.DirectionalLight(0x9ddcff, 1.35);
+    rim.position.set(4, 2, -3);
+    scene.add(rim);
+
+    const loader = new THREE.TextureLoader();
+    const loadTexture = (path, color) => loader.loadAsync(`/model/${path}`).then((texture) => {
+      texture.flipY = false;
+      texture.colorSpace = color ? THREE.SRGBColorSpace : THREE.NoColorSpace;
+      return texture;
+    });
+    const overlays = Object.fromEntries(await Promise.all(Object.entries(manifest.materials.Face.overlays)
+      .map(async ([name, path]) => [name, await loadTexture(path, true)])));
+    const masks = {};
+    for (const [name, settings] of Object.entries(manifest.materials)) {
+      masks[name] = await Promise.all([loadTexture(settings.furMask, false), loadTexture(settings.dirt, true)]);
+    }
+
+    function patch(material) {
+      const [furMask, dirtMap] = masks[material.name];
+      const uniforms = {
+        petFurMask: { value: furMask }, petSaturation: { value: 1 }, petValue: { value: 1 },
+        petDirtMap: { value: dirtMap }, petDirt: { value: 0 },
+        petOverlay: { value: overlays.neutral }, petUseOverlay: { value: material.name === 'Face' ? 1 : 0 },
+      };
+      material.userData.pet = uniforms;
+      material.onBeforeCompile = (shader) => {
+        Object.assign(shader.uniforms, uniforms);
+        shader.fragmentShader = shader.fragmentShader
+          .replace('#include <common>', `#include <common>
+uniform sampler2D petFurMask; uniform float petSaturation; uniform float petValue;
+uniform sampler2D petDirtMap; uniform float petDirt; uniform sampler2D petOverlay; uniform float petUseOverlay;
+${HSV_GLSL}`)
+          .replace('#include <map_fragment>', `#include <map_fragment>
+{
+  vec4 dirt = texture2D(petDirtMap, vMapUv);
+  diffuseColor.rgb = mix(diffuseColor.rgb, dirt.rgb, dirt.a * petDirt);
+  if (petUseOverlay > 0.5) {
+    vec4 overlay = texture2D(petOverlay, vMapUv);
+    diffuseColor.rgb = mix(diffuseColor.rgb, overlay.rgb, overlay.a);
+  }
+  vec3 hsv = petRgb2hsv(max(diffuseColor.rgb, 0.0));
+  hsv.y = clamp(hsv.y * petSaturation, 0.0, 1.0);
+  hsv.z *= petValue;
+  diffuseColor.rgb = petHsv2rgb(hsv);
+}`);
+      };
+      material.needsUpdate = true;
+    }
+
+    const monsters = [];
+    for (const [index, age] of MONSTER_AGES.entries()) {
+      const gltf = await new GLTFLoader().loadAsync('/model/monster.glb');
+      const model = gltf.scene;
+      model.position.x = (index - 1) * 1.45;
+      scene.add(model);
+      const materials = new Set();
+      model.traverse((object) => {
+        if (object.isMesh && manifest.materials[object.material.name]) materials.add(object.material);
+      });
+      materials.forEach(patch);
+      monsters.push({ age, model, materials: [...materials], mixer: new THREE.AnimationMixer(model), clips: gltf.animations });
+    }
+
+    const setMorph = (model, name, value) => model.traverse((object) => {
+      if (object.morphTargetDictionary && name in object.morphTargetDictionary) object.morphTargetInfluences[object.morphTargetDictionary[name]] = value;
+    });
+
+    const moodSelect = document.getElementById('mood');
+    const clipSelect = document.getElementById('clip');
+    Object.entries(manifest.moods).forEach(([name, mood]) => moodSelect.add(new Option(mood.label, name)));
+    clipSelect.add(new Option('поза настроения', ''));
+    manifest.clips.filter((name) => !name.startsWith('Mood_')).forEach((name) => clipSelect.add(new Option(name, name)));
+
+    function apply() {
+      const mood = manifest.moods[moodSelect.value];
+      for (const monster of monsters) {
+        const { model } = monster;
+        const stage = applyMonsterAge(model, ages, monster.age);
+        const horns = Math.max(-1, Math.min(1, (stage.hornShift ?? 0)));
+        setMorph(model, 'Horns_Big', Math.max(horns, 0));
+        setMorph(model, 'Horns_Small', Math.max(-horns, 0));
+        for (const material of monster.materials) {
+          const pet = material.userData.pet;
+          pet.petDirt.value = mood.dirt ?? 0;
+          pet.petSaturation.value = mood.tint?.saturation ?? 1;
+          pet.petValue.value = mood.tint?.value ?? 1;
+          if (material.name === 'Face') pet.petOverlay.value = overlays[mood.overlay];
+        }
+        setMorph(model, 'Belly_Thin', Math.max(mood.morphTargets?.Belly_Thin ?? 0, stage.morphTargets?.Belly_Thin ?? 0));
+        for (const prop of manifest.props) {
+          const node = model.getObjectByName(prop);
+          if (node) node.visible = mood.props.includes(prop);
+        }
+        const clipName = clipSelect.value || mood.clip;
+        const clip = THREE.AnimationClip.findByName(monster.clips, clipName);
+        monster.mixer.stopAllAction();
+        const action = monster.mixer.clipAction(clip);
+        action.setLoop(clipSelect.value ? THREE.LoopRepeat : THREE.LoopOnce, Infinity);
+        action.clampWhenFinished = true;
+        action.reset().play();
+      }
+    }
+    moodSelect.value = params.get('mood') || 'neutral';
+    clipSelect.value = params.get('clip') || '';
+    moodSelect.onchange = apply;
+    clipSelect.onchange = apply;
+    document.getElementById('tune').onclick = () => document.body.classList.toggle('tune');
+    jsonBox.oninput = () => {
+      try { ages = JSON.parse(jsonBox.value); apply(); } catch { /* keep typing */ }
+    };
+    apply();
+
+    function resize() {
+      renderer.setSize(innerWidth, innerHeight, false);
+      camera.aspect = innerWidth / innerHeight;
+      const tan = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+      const distance = Math.max(4.6 / (2 * tan * camera.aspect), 2.5 / (2 * tan));
+      camera.position.set(0, 1.05, distance);
+      camera.lookAt(0, 1.05, 0);
+      camera.updateProjectionMatrix();
+    }
+    addEventListener('resize', resize);
+    resize();
+
+    const clock = new THREE.Clock();
+    renderer.setAnimationLoop(() => {
+      const delta = Math.min(clock.getDelta(), 0.05);
+      monsters.forEach((monster) => monster.mixer.update(delta));
+      renderer.render(scene, camera);
+    });
+    window.agePreview = { monsters, apply, setAges(next) { ages = next; jsonBox.value = JSON.stringify(ages, null, 2); apply(); } };
+  </script>
+</body>
+</html>

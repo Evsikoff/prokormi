@@ -10551,9 +10551,15 @@ function fitBriefingText() {
   }
 }
 
-// The briefing of the final part runs on the same screen, under its own heading. Its pictures
-// are still being drawn, so a missing one leaves a large icon of the step in the frame.
-const FINAL_BRIEFING_ICONS = ['🎯', '🐷', '✨', '🍲', '📅', '⚠️'];
+// The briefing of the final part runs on the same screen, under its own heading.
+const FINAL_BRIEFING_IMAGE_ALTS = [
+  'Монстрик складывает монеты в копилку ради большой цели',
+  'Монеты переходят из бюджета в копилку',
+  'Характеристики монстрика начинают финал с чистого листа',
+  'Монстрик ест и чистится автоматически',
+  'Дни сменяются до важного события',
+  'Игрушки помогают поддерживать настроение монстрика',
+];
 const briefingEyebrow = briefingScreen.querySelector('.eyebrow');
 const briefingImageFrame = briefingImage.closest('.briefing-image-frame');
 const BRIEFING_EYEBROW = briefingEyebrow.textContent;
@@ -10562,6 +10568,7 @@ let finalBriefingRunning = false;
 briefingImage.addEventListener('load', () => briefingImageFrame.classList.remove('is-placeholder'));
 briefingImage.addEventListener('error', () => {
   if (!briefingImage.getAttribute('src')) return;
+  briefingImageFrame.dataset.placeholder = 'Иллюстрация недоступна';
   briefingImageFrame.classList.add('is-placeholder');
 });
 
@@ -10585,16 +10592,16 @@ function renderBriefingStep() {
   const step = briefingSteps[briefingIndex];
   if (!step) return finishBriefing();
   briefingImageFrame.classList.remove('is-placeholder');
-  briefingImageFrame.dataset.placeholder = finalBriefingRunning
-    ? FINAL_BRIEFING_ICONS[briefingIndex] ?? '✨'
-    : '';
+  briefingImageFrame.dataset.placeholder = '';
 
   const isFirst = briefingIndex === 0;
   const isLast = briefingIndex === briefingSteps.length - 1;
   briefingProgress.textContent = `ШАГ ${briefingIndex + 1} ИЗ ${briefingSteps.length}`;
   briefingText.textContent = String(step.text || '');
   briefingImage.src = publicAssetPath(step.image_folder, step.image, 'images');
-  briefingImage.alt = `Иллюстрация к шагу ${briefingIndex + 1}`;
+  briefingImage.alt = finalBriefingRunning
+    ? FINAL_BRIEFING_IMAGE_ALTS[briefingIndex] ?? `Иллюстрация к шагу ${briefingIndex + 1}`
+    : `Иллюстрация к шагу ${briefingIndex + 1}`;
   briefingBack.hidden = isFirst;
   briefingNext.innerHTML = isLast
     ? '<span>Завершить</span><span aria-hidden="true">✓</span>'

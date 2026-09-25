@@ -840,16 +840,19 @@
             </div>
             <div id="room-wallet" class="room-panel room-wallet room-wallet-button" data-room-target="wallet" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="room-transfer-layer" aria-label="Деньги. Нажми, чтобы переложить монеты из копилки в карман">
               <div class="room-money" data-room-target="pocket">
-                <span class="room-money-icon" aria-hidden="true">👛</span>
+                <span class="room-money-icon" aria-hidden="true"><svg class="room-icon" viewBox="0 0 24 24"><use href="./icons/room.svg#purse"></use></svg></span>
                 <span class="room-panel-label">В кармане</span>
-                <strong id="room-pocket">0 🪙</strong>
+                <strong id="room-pocket"><span class="room-coin-amount">0</span><svg class="room-icon room-coin-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="./icons/room.svg#coin"></use></svg><span class="visually-hidden"> монет</span></strong>
               </div>
               <div class="room-money" data-room-target="savings">
-                <span class="room-money-icon" aria-hidden="true">🐷</span>
+                <span class="room-money-icon" aria-hidden="true"><svg class="room-icon" viewBox="0 0 24 24"><use href="./icons/room.svg#piggy"></use></svg></span>
                 <span class="room-panel-label">В копилке</span>
-                <strong id="room-savings">0 🪙</strong>
+                <strong id="room-savings"><span class="room-coin-amount">0</span><svg class="room-icon room-coin-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="./icons/room.svg#coin"></use></svg><span class="visually-hidden"> монет</span></strong>
               </div>
             </div>
+            <button id="room-progress-button" class="room-panel room-progress-button" type="button" data-room-target="progress" aria-label="Прогресс" aria-haspopup="dialog" aria-controls="room-progress-layer" title="Прогресс">
+              <svg class="room-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="./icons/room.svg#progress"></use></svg>
+            </button>
           </div>
 
           <div class="room-panel room-pet-card" data-room-target="pet">
@@ -862,15 +865,15 @@
             </div>
             <div id="room-stats" class="room-stats">
               <div class="room-stat" data-stat="health" data-room-target="health">
-                <span class="room-stat-label"><span aria-hidden="true">❤️</span>Здоровье<b>0</b></span>
+                <span class="room-stat-label"><span aria-hidden="true"><svg class="room-icon" viewBox="0 0 24 24"><use href="./icons/room.svg#health"></use></svg></span>Здоровье<b>0</b></span>
                 <span class="room-stat-scale" role="meter" aria-label="Здоровье" aria-valuemin="-3" aria-valuemax="3" aria-valuenow="0"></span>
               </div>
               <div class="room-stat" data-stat="mood" data-room-target="mood">
-                <span class="room-stat-label"><span aria-hidden="true">😊</span>Настроение<b>0</b></span>
+                <span class="room-stat-label"><span aria-hidden="true"><svg class="room-icon" viewBox="0 0 24 24"><use href="./icons/room.svg#mood"></use></svg></span>Настроение<b>0</b></span>
                 <span class="room-stat-scale" aria-hidden="true"></span>
               </div>
               <div class="room-stat" data-stat="development" data-room-target="development">
-                <span class="room-stat-label"><span aria-hidden="true">🧠</span>Развитие<b>0</b></span>
+                <span class="room-stat-label"><span aria-hidden="true"><svg class="room-icon" viewBox="0 0 24 24"><use href="./icons/room.svg#development"></use></svg></span>Развитие<b>0</b></span>
                 <span class="room-stat-scale" role="meter" aria-label="Развитие" aria-valuemin="-3" aria-valuemax="3" aria-valuenow="0"></span>
               </div>
             </div>
@@ -885,21 +888,22 @@
           <p id="room-action-message" class="room-action-message" role="status" hidden></p>
           <div id="room-action-confirm" class="room-action-confirm" hidden></div>
           <nav id="room-actions" class="room-actions" aria-label="Действия в комнате">
-            <button class="room-action" type="button" data-room-action="shop" aria-label="Магазин" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true">🛒</span></button>
-            <button class="room-action" type="button" data-room-action="tasks" aria-label="Задания" aria-haspopup="dialog"><span aria-hidden="true">📋</span><b id="room-tasks-badge" class="room-action-badge" aria-hidden="true" hidden>0</b></button>
-            <button class="room-action" type="button" data-room-action="feed" aria-label="Кормление" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true">🍲</span></button>
-            <button class="room-action" type="button" data-room-action="clean" aria-label="Чистка козявок" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true">🤧</span></button>
-            <button class="room-action" type="button" data-room-action="profiles" aria-label="Профили" aria-haspopup="dialog"><span aria-hidden="true">👥</span></button>
-            <button class="room-action" type="button" data-room-action="messages" aria-label="Сообщения" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true">💬</span><b id="room-messages-badge" class="room-action-badge" aria-hidden="true" hidden>0</b></button>
+            <button class="room-action" type="button" data-room-action="briefing" aria-label="Обучение" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true"><svg class="room-icon" viewBox="0 0 24 24"><use href="./icons/room.svg#help"></use></svg></span></button>
+            <button class="room-action" type="button" data-room-action="shop" aria-label="Магазин" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true"><svg class="room-icon" viewBox="0 0 24 24"><use href="./icons/room.svg#shop"></use></svg></span></button>
+            <button class="room-action" type="button" data-room-action="tasks" aria-label="Задания" aria-haspopup="dialog"><span aria-hidden="true"><svg class="room-icon" viewBox="0 0 24 24"><use href="./icons/room.svg#tasks"></use></svg></span><b id="room-tasks-badge" class="room-action-badge" aria-hidden="true" hidden>0</b></button>
+            <button class="room-action" type="button" data-room-action="feed" aria-label="Кормление" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true"><svg class="room-icon" viewBox="0 0 24 24"><use href="./icons/room.svg#feed"></use></svg></span></button>
+            <button class="room-action" type="button" data-room-action="clean" aria-label="Чистка козявок" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true"><svg class="room-icon" viewBox="0 0 24 24"><use href="./icons/room.svg#clean"></use></svg></span></button>
+            <button class="room-action" type="button" data-room-action="profiles" aria-label="Профили" aria-haspopup="dialog"><span aria-hidden="true"><svg class="room-icon" viewBox="0 0 24 24"><use href="./icons/room.svg#profiles"></use></svg></span></button>
+            <button class="room-action" type="button" data-room-action="messages" aria-label="Сообщения" aria-expanded="false" aria-controls="room-action-confirm"><span aria-hidden="true"><svg class="room-icon" viewBox="0 0 24 24"><use href="./icons/room.svg#messages"></use></svg></span><b id="room-messages-badge" class="room-action-badge" aria-hidden="true" hidden>0</b></button>
           </nav>
           <button id="room-economic-episode" class="room-economic-episode" type="button" data-room-target="economic-episode" hidden></button>
-          <button id="room-next-day" class="room-next-day" type="button" data-room-target="next-day" hidden><span aria-hidden="true">🌙</span> Следующий день</button>
+          <button id="room-next-day" class="room-next-day" type="button" data-room-target="next-day" hidden><span aria-hidden="true"><svg class="room-icon" viewBox="0 0 24 24"><use href="./icons/room.svg#moon"></use></svg></span> Следующий день</button>
 
           <!-- Финальная часть игры: дни идут сами, панель показывает цель и запускает пересчёт -->
           <ol id="final-ticker" class="final-ticker" aria-live="polite" hidden></ol>
           <div id="final-bar" class="final-bar" hidden>
             <div class="final-goal" data-room-target="final-goal">
-              <span class="final-goal-icon" aria-hidden="true">🎯</span>
+              <span class="final-goal-icon" aria-hidden="true"><svg class="room-icon" viewBox="0 0 24 24"><use href="./icons/room.svg#target"></use></svg></span>
               <span class="final-goal-copy">
                 <small id="final-goal-label">Копим на цель</small>
                 <strong id="final-goal-name"></strong>
@@ -912,11 +916,11 @@
               <div id="final-purchased-list" class="final-purchased-list" aria-label="Купленные цели — пересмотреть сцену"></div>
             </div>
             <div class="final-controls">
-              <button id="final-buy" class="final-buy" type="button" hidden><span aria-hidden="true">🎁</span> <span id="final-buy-label">Купить цель</span></button>
-              <button id="final-run" class="room-next-day final-run" type="button"><span aria-hidden="true">▶</span> Запустить дни</button>
+              <button id="final-buy" class="final-buy" type="button" hidden><span aria-hidden="true"><svg class="room-icon" viewBox="0 0 24 24"><use href="./icons/room.svg#gift"></use></svg></span> <span id="final-buy-label">Купить цель</span></button>
+              <button id="final-run" class="room-next-day final-run" type="button"><span aria-hidden="true"><svg class="room-icon" viewBox="0 0 24 24"><use href="./icons/room.svg#play"></use></svg></span> Запустить дни</button>
             </div>
             <p id="final-over" class="final-over" hidden></p>
-            <button id="final-retry" class="room-next-day final-run" type="button" hidden>↺ Начать финал заново</button>
+            <button id="final-retry" class="room-next-day final-run" type="button" hidden><span aria-hidden="true"><svg class="room-icon" viewBox="0 0 24 24"><use href="./icons/room.svg#retry"></use></svg></span> Начать финал заново</button>
           </div>
         </div>
 
@@ -955,6 +959,67 @@
             </header>
             <ol id="room-tasks-list" class="room-inbox-list room-tasks-list"></ol>
             <p id="room-tasks-empty" class="room-inbox-empty" hidden>Пока заданий нет — загляни позже</p>
+          </section>
+        </div>
+
+        <div id="room-progress-layer" class="room-inbox-layer room-progress-layer" role="dialog" aria-modal="true" aria-labelledby="room-progress-title" hidden>
+          <section class="room-inbox room-progress">
+            <header class="room-inbox-header">
+              <span class="room-progress-header-icon" aria-hidden="true"><svg class="room-icon" viewBox="0 0 24 24"><use href="./icons/room.svg#progress"></use></svg></span>
+              <h2 id="room-progress-title">Прогресс</h2>
+              <button id="room-progress-close" class="room-inbox-close" type="button" aria-label="Закрыть прогресс">×</button>
+            </header>
+            <div class="room-progress-tabs" role="tablist" aria-label="Разделы прогресса">
+              <button id="progress-budget-tab" type="button" role="tab" aria-selected="true" aria-controls="progress-budget-panel" tabindex="0">Бюджет</button>
+              <button id="progress-goals-tab" type="button" role="tab" aria-selected="false" aria-controls="progress-goals-panel" tabindex="-1" hidden>Цели</button>
+              <button id="progress-overall-tab" type="button" role="tab" aria-selected="false" aria-controls="progress-overall-panel" tabindex="-1">Общий прогресс</button>
+            </div>
+            <div class="room-progress-body">
+              <section id="progress-budget-panel" class="room-progress-panel" role="tabpanel" aria-labelledby="progress-budget-tab">
+                <div id="progress-budget-empty" class="room-progress-empty" hidden>Бюджет появится после первого планирования.</div>
+                <div id="progress-budget-content">
+                  <div class="progress-budget-period">
+                    <label for="progress-budget-select">Период</label>
+                    <select id="progress-budget-select" aria-label="Бюджетный период"></select>
+                    <span id="progress-budget-status"></span>
+                  </div>
+                  <div class="budget-overview progress-budget-overview">
+                    <div class="budget-summary-card">
+                      <span>Бюджет на три дня</span>
+                      <strong id="progress-budget-fund">0 🪙</strong>
+                      <span id="progress-budget-source"></span>
+                    </div>
+                    <div class="budget-remaining-card">
+                      <span>Потрачено</span>
+                      <strong id="progress-budget-spent">0 🪙</strong>
+                      <span id="progress-budget-left">Осталось 0 🪙</span>
+                    </div>
+                  </div>
+                  <div id="progress-budget-articles" class="review-articles"></div>
+                </div>
+              </section>
+              <section id="progress-goals-panel" class="room-progress-panel" role="tabpanel" aria-labelledby="progress-goals-tab" hidden>
+                <div class="progress-goals-balance">
+                  <span class="progress-goals-piggy" aria-hidden="true"><svg class="room-icon" viewBox="0 0 24 24"><use href="./icons/room.svg#piggy"></use></svg></span>
+                  <span>В копилке<strong id="progress-goals-savings">0 🪙</strong></span>
+                </div>
+                <p class="progress-goals-note">Цели оплачиваются только из копилки. Деньги в кармане не учитываются.</p>
+                <ul id="progress-goals-list" class="progress-goals-list"></ul>
+                <p id="progress-goals-total" class="progress-goals-total" hidden></p>
+                <div id="progress-goals-bought" class="progress-goals-bought" hidden>
+                  <h3>Уже куплено</h3>
+                  <ul id="progress-goals-bought-list"></ul>
+                </div>
+              </section>
+              <section id="progress-overall-panel" class="room-progress-panel" role="tabpanel" aria-labelledby="progress-overall-tab" hidden>
+                <p id="progress-overall-day" class="progress-overall-day">День 1</p>
+                <div class="progress-overall-summary">
+                  <div><span>Завершено</span><strong id="progress-overall-completed">0</strong></div>
+                  <div><span>Ещё ждут</span><strong id="progress-overall-remaining">0</strong></div>
+                </div>
+                <div id="progress-overall-categories" class="progress-overall-categories"></div>
+              </section>
+            </div>
           </section>
         </div>
 
@@ -1009,6 +1074,43 @@
               <p class="jury-note">Эпизоды и задания запускаются в песочнице жюри — прогресс игрока не меняется.</p>
               <button id="jury-return" class="primary-button room-profiles-new" type="button" hidden>Вернуться к своему монстрику</button>
             </footer>
+          </section>
+        </div>
+
+        <!-- Словарь «Термины и определения»: пункт меню ❓, навигация только нажатиями -->
+        <div id="glossary-layer" class="room-inbox-layer glossary-layer" role="dialog" aria-modal="true" aria-labelledby="glossary-title" hidden>
+          <section class="room-inbox glossary-panel">
+            <header class="room-inbox-header">
+              <span class="room-inbox-icon" aria-hidden="true">📖</span>
+              <h2 id="glossary-title">Термины и определения</h2>
+              <button id="glossary-close" class="room-inbox-close" type="button" aria-label="Закрыть словарь">×</button>
+            </header>
+            <div id="glossary-browse" class="glossary-browse">
+              <div id="glossary-topics" class="glossary-topics" role="group" aria-label="Темы"></div>
+              <div id="glossary-letters" class="glossary-letters" role="group" aria-label="Буквы"></div>
+              <div id="glossary-list" class="glossary-list"></div>
+            </div>
+            <article id="glossary-card" class="glossary-card" hidden>
+              <div id="glossary-card-body" class="glossary-card-body">
+                <button id="glossary-back" class="glossary-back" type="button"></button>
+                <button id="glossary-card-topic" class="glossary-card-topic" type="button"></button>
+                <h3 id="glossary-term"></h3>
+                <p id="glossary-definition" class="glossary-definition"></p>
+                <section class="glossary-example">
+                  <h4>В игре</h4>
+                  <p id="glossary-example"></p>
+                </section>
+                <section id="glossary-related-block" class="glossary-related">
+                  <h4>Смотри также</h4>
+                  <div id="glossary-related"></div>
+                </section>
+              </div>
+              <footer class="glossary-card-nav">
+                <button id="glossary-prev" type="button"></button>
+                <span id="glossary-position"></span>
+                <button id="glossary-next" type="button"></button>
+              </footer>
+            </article>
           </section>
         </div>
 
@@ -1750,6 +1852,7 @@
           <path d="m21 12 7 8m0-8-7 8"></path>
         </svg>
       </button>
+      <button id="tutorial-replay" class="round-button tutorial-replay-button" type="button" aria-label="Повторить обучение" hidden><span aria-hidden="true">?</span></button>
 
       <audio id="background-music" src="./Tiptoeing_Paws.mp3" preload="auto"></audio>
       <audio id="tutorial-audio" preload="auto"></audio>

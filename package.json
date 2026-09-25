@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
     "data:pull": "node scripts/data-mart.js pull",
-    "data:push": "node scripts/data-mart.js push"
+    "data:push": "node scripts/data-mart.js push",
+    "deploy:yandex": "vite build && python scripts/deploy-yandex.py"
   },
   "dependencies": {
     "three": "0.170.0"
