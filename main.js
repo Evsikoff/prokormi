@@ -11184,7 +11184,9 @@ async function initializeMonster() {
       resizeRendererToParent();
       const delta = Math.min(animationClock.getDelta(), 0.05);
       roomController?.update(delta);
+      // The mouth also works while the monster chews its food in the room.
       updateMonsterTalk(delta, parkVoicePlaying || toyMonsterVoicePlaying || isCleaningMonsterTalking()
+        || Boolean(roomController?.active && roomController.chewing)
         || Boolean(festivalLights && festivalVoice && !festivalVoice.paused && !festivalVoice.ended)
         || Boolean(gameConsoleFinal && gameConsoleVoice && !gameConsoleVoice.paused && !gameConsoleVoice.ended)
         || Boolean(telescopeFinal && telescopeVoice && !telescopeVoice.paused && !telescopeVoice.ended));

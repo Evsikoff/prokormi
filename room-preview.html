@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Комната монстра</title>
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #cff4f2; font-family: system-ui, sans-serif; }
+    #stage { position: fixed; inset: 0; }
+    #stage canvas { display: block; width: 100%; height: 100%; }
+    #bar { position: fixed; left: 10px; top: 10px; right: 10px; display: flex; gap: 6px; flex-wrap: wrap; }
+    #bar button, #bar select {
+      border: 0; border-radius: 10px; padding: 7px 11px; font: 600 13px system-ui, sans-serif;
+      background: #fff; color: #2a2550; box-shadow: 0 2px 6px rgba(0,0,0,.18); cursor: pointer;
+    }
+    #bar button.on { background: #7156c8; color: #fff; }
+    #status { position: fixed; left: 12px; bottom: 10px; font: 600 15px system-ui, sans-serif; color: #2a2550; }
+    #loading { position: fixed; inset: 0; display: grid; place-items: center; font: 600 18px system-ui, sans-serif; color: #2a2550; }
+  </style>
+</head>
+<body>
+  <div id="stage"></div>
+  <div id="bar">
+    <select id="age"><option value="baby">Малыш</option><option value="child">Ребёнок</option><option value="teen">Подросток</option></select>
+    <select id="task"></select>
+    <button id="feed" type="button">Насыпать корм</button>
+    <button id="wave" type="button">Помахать</button>
+    <button id="orbit" type="button">Свободная камера</button>
+    <button id="debug" type="button">Препятствия</button>
+  </div>
+  <div id="status"></div>
+  <div id="loading">Собираем комнату…</div>
+  <script type="module">
+    // Dev-only page: the room with the monster, without the rest of the game. Tasks can be forced
+    // from the list, and `?manual=1` stops the clock so a script can step it (window.roomPreview).
+    import * as THREE from 'three';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { MonsterRoom, ROOM_TASK_IDS } from './room.js';
+    import { applyMonsterAge, monsterAgeStage } from './monster-age.js';
+
+    const params = new URLSearchParams(location.search);
+    const stage = document.getElementById('stage');
+    const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.NeutralToneMapping;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    stage.appendChild(renderer.domElement);
+
+    const manifest = await (await fetch('/model/pet-manifest.json')).json();
+    const gltf = await new GLTFLoader().loadAsync('/model/monster.glb');
+    const model = gltf.scene;
+    // The game hides every mood prop until a mood asks for it.
+    for (const name of manifest.props) {
+      const prop = model.getObjectByName(name);
+      if (prop) prop.visible = false;
+    }
+    const mixer = new THREE.AnimationMixer(model);
+    const statusLine = document.getElementById('status');
+    const room = new MonsterRoom({
+      monster: model,
+      mixer,
+      animations: gltf.animations,
+      onStatus: (text) => { statusLine.textContent = text; },
+    });
+
+    const ageSelect = document.getElementById('age');
+    ageSelect.value = params.get('age') || 'baby';
+    function applyAge() {
+      const ageStage = applyMonsterAge(model, manifest.ages, ageSelect.value);
+      const horns = Math.max(-1, Math.min(1, ageStage?.hornShift ?? 0));
+      model.traverse((object) => {
+        const dictionary = object.morphTargetDictionary;
+        if (!dictionary) return;
+        if ('Horns_Big' in dictionary) object.morphTargetInfluences[dictionary.Horns_Big] = Math.max(horns, 0);
+        if ('Horns_Small' in dictionary) object.morphTargetInfluences[dictionary.Horns_Small] = Math.max(-horns, 0);
+      });
+      room.setAgeHeight(monsterAgeStage(manifest.ages, ageSelect.value)?.height ?? 1);
+    }
+    applyAge();
+    ageSelect.addEventListener('change', applyAge);
+
+    await room.initialize();
+    room.enter(params.get('name') || 'Монстрик');
+    document.getElementById('loading').remove();
+
+    const taskSelect = document.getElementById('task');
+    taskSelect.add(new Option('Сам выбирает дела', ''));
+    for (const id of ROOM_TASK_IDS) taskSelect.add(new Option(id, id));
+    taskSelect.addEventListener('change', () => {
+      if (taskSelect.value) room.startTask(taskSelect.value);
+    });
+    document.getElementById('feed').addEventListener('click', () => room.serveFood(100));
+    document.getElementById('wave').addEventListener('click', () => room.wave());
+
+    let controls = null;
+    document.getElementById('orbit').addEventListener('click', (event) => {
+      if (controls) {
+        controls.dispose();
+        controls = null;
+        room.restoreCamera({ snap: true });
+      } else {
+        controls = new OrbitControls(room.camera, renderer.domElement);
+        controls.target.copy(room.cameraLookAt);
+        controls.update();
+      }
+      event.currentTarget.classList.toggle('on', Boolean(controls));
+    });
+    document.getElementById('debug').addEventListener('click', (event) => {
+      event.currentTarget.classList.toggle('on', room.toggleDebug());
+    });
+    if (params.has('debug')) document.getElementById('debug').click();
+
+    function resize() {
+      const width = stage.clientWidth;
+      const height = stage.clientHeight;
+      renderer.setSize(width, height, false);
+      room.resize(width, height);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function frame(delta) {
+      // The room eases its camera back home every frame; with the free camera on it stays put.
+      if (controls) {
+        room.cameraTargetPosition.copy(room.camera.position);
+        room.cameraTargetLookAt.copy(controls.target);
+        room.cameraLookAt.copy(controls.target);
+      }
+      room.update(delta);
+      mixer.update(Math.min(delta, 0.05));
+      controls?.update();
+      renderer.render(room.scene, room.camera);
+    }
+
+    const manual = params.has('manual');
+    // For scripted screenshots: advance the room by `seconds` in fixed steps and draw one frame.
+    window.roomPreview = {
+      room,
+      THREE,
+      step(seconds, fps = 30) {
+        const count = Math.max(1, Math.round(seconds * fps));
+        for (let index = 0; index < count; index += 1) {
+          room.update(1 / fps);
+          mixer.update(1 / fps);
+        }
+        room.updateCamera(1);
+        renderer.render(room.scene, room.camera);
+      },
+      view(position, lookAt) {
+        room.camera.position.fromArray(position);
+        room.camera.lookAt(new THREE.Vector3().fromArray(lookAt));
+        renderer.render(room.scene, room.camera);
+      },
+      home() {
+        room.restoreCamera({ snap: true });
+        renderer.render(room.scene, room.camera);
+      },
+      // Hides the ceiling and the lamp, for views from above.
+      roof(visible) {
+        room.scene.children.forEach((object) => {
+          if (object.position.y > 2.3) object.visible = visible;
+        });
+      },
+    };
+    if (params.get('task')) room.startTask(params.get('task'));
+    if (!manual) {
+      const clock = new THREE.Clock();
+      renderer.setAnimationLoop(() => frame(Math.min(clock.getDelta(), 0.05)));
+    } else {
+      renderer.render(room.scene, room.camera);
+    }
+    window.roomPreviewReady = true;
+  </script>
+</body>
+</html>
